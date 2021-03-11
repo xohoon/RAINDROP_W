@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>RINDROP</title>
+	<!-- link inculde -->
+	<th:block th:include="common/script"></th:block>
+	<!-- link inculde -->
+</head>
+
+<body>
+	<div class="card">
+		<div class="card-body">
+			<h5 class="card-title" style="text-align:center;">모의테스트</h5>
+			<br />
+			<input type="text" id="numRound" class="form-control" placeholder="회차 입력" style="float:left; width:33%;">
+			<input type="text" id="numCount" class="form-control" placeholder="갯수 입력" style="float:left; width:33%; margin-left:10px;">
+			<input type="button" id="numBtn" class="btn btn-warning" value="추출하기" style="float:left; margin-left:10px;"><br /><br />
+			
+			<div id="ajaxReturn1">결과</div><br><br><br><br>
+			<input type="text" id="rankRound" class="form-control" placeholder="회차 입력" style="float:left; width:67%;">
+			<input type="button" id="rankBtn" class="btn btn-success" value="등수 확인" style="float:left; margin-left:10px;"><br /><br />
+			<div id="ajaxReturn2">결과</div><br /><br />
+			<input type="button" id="last_save" class="btn btn-info" value="최근회차">
+			<div id="ajaxReturn3">결과</div><br /><br />
+			<input type="button" id="all_save" class="btn btn-primary" value="전체 추가">
+			<div id="ajaxReturn4">결과</div><br /><br />
+			<div style="text-align:center;">
+				<a th:href="@{'/member/signin/result'}">메인으로 이동</a>
+			</div>
+		</div>
+	</div>
+	<div class="wrap-loading display-none">
+	    <div><img src="/static/images/e1.gif"></div>
+	</div>
+</body>
+<script type="text/javascript" src="/static/js/invest/imitation.js"></script>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+	<meta name="_csrf" th:content="${_csrf.token}" />
+	<title>DROPTOP SIGNUP</title>
+	<!-- link inculde -->
+	<th:block th:include="common/script"></th:block>
+	<!-- link inculde -->
+</head>
+
+<body>
+	<div class="card">
+		<div class="card-body">
+			<div id="join_form">
+				<form name="fm" th:action="@{/member/signup}" method="POST" onsubmit="return memberSubmit();">
+					<input type="hidden" id="secretCode">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+					<p style="float:left">원하는 타입을 선택하세요</p>
+					<div style="float:right;">
+						<input type="radio" id="type1" name="type" value="1">투자자&nbsp;&nbsp;
+					   	<input type="radio" id="type2" name="type" value="2">관리자
+					</div>
+					<input type="text" name="name" id="name" placeholder="이름" class="form-control"><br />
+					<span>이메일 인증</span>
+					<input type="email" name="email" id="email" placeholder="인증받을 이메일" class="form-control" style="float:left; width:80%;">
+					<input type="button" id="send_email" value="발송" class="btn btn-success" style="float:right;"><br /><br /><br />
+					<input type="text" id="emailCode" placeholder="인증번호" class="form-control" style="float:left; width:80%">
+					<input type="button" id="emailCodeBtn" value="인증" class="btn btn-info" style="float:right;"><br /><br /><br />
+					<input type="checkbox" id="CodeCheck" onclick="return false;" style="float:left;display:none;">
+					<input type="password" name="password" id="password"  placeholder="비밀번호" class="form-control" autocomplete="new-password"><br />
+					<input type="password" id="password2"  placeholder="비밀번호 확인" class="form-control">
+					<font id="pin_check" size="2" color="red">상태</font><br /><br />
+					<input type="text" name="phone" id="phone" placeholder="휴대폰 번호" max="99999999999" maxlength="11" class="form-control" onkeyup="SetNum(this);"><br>
+					<span>개인정보 동의 &nbsp;</span><input type="checkbox"><br><br>
+					<input type="submit" id="joinBtn" value="가입하기" class="btn btn-primary" style="width:100%;">
+				</form>
+			</div>
+			<br />
+			<div style="text-align:center;">
+				<a th:href="@{'/main'}">메인으로 이동</a>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript" src="/static/js/member/signup.js"></script>
+</html>

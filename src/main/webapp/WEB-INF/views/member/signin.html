@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>RINDROP</title>
+	<!-- link inculde -->
+	<th:block th:include="common/script"></th:block>
+	<!-- link inculde -->
+</head>
+
+<body>
+	<div class="card">
+		<div class="card-body">
+			<form name="fm" th:action="@{/member/signin}" method="POST" onsubmit="return SigninSubmit();">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+				<span>회원님 타입을 선택하세요</span> 
+				<div style="float:right;">
+					<input type="radio" id="type1" name="type" value="1">투자자&nbsp;&nbsp;
+				   	<input type="radio" id="type2" name="type" value="2">관리자
+				</div>
+			   	<br />
+			   	<br />
+				<input type="email" name="username" id="email" placeholder="이메일" class="form-control">
+			   	<br />
+				<input type="password"  autocomplete="false" style="display:none">
+				<input type="password" name="password" id="password" placeholder="비밀번호" class="form-control" autocomplete="new-password">
+			   	<br />
+				<button type="submit" id="loginBtn" class="btn btn-primary" style="width:100%;">로그인</button>
+			</form>
+			<br />
+			<div style="text-align:center;">
+				<!-- 
+				<button type="button" onClick="location.href='/member/signup'" class="btn btn-info">회원가입</button>
+				 -->
+				<a th:href="@{'/main'}">메인으로 이동</a>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript" src="/static/js/member/signin.js"></script>
+</html>

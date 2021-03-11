@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>RINDROP</title>
+	<!-- link inculde -->
+	<th:block th:include="common/script"></th:block>
+	<!-- link inculde -->
+</head>
+
+<body>
+	<div class="card">
+		<div class="card-body">
+			<span sec:authentication="name" id="user_email" style="display:none;"></span>
+			<h5 style="text-align:center;">모의</h5>
+			<br />
+			<input type="text" class="form-control" id="numRound" placeholder="회차 입력" style="float:left; width:33%;">
+			<input type="text" class="form-control" id="numCount" placeholder="갯수 입력" style="float:left; width:33%; margin-left:10px;">
+			<input type="button" class="btn btn-warning" id="getBtn" value="조합받기" style="float:left; margin-left:10px;"><br><br>
+			<div id="ajaxReturn1">결과</div><br><br>
+			<input type="text" class="form-control" id="rankRound" placeholder="회차 입력" style="float:left; width:40%">
+			<input type="button" class="btn btn-success" id="rankBtn" value="등수 및 당첨금 확인" style="float:right;"><br><br>
+			<div id="ajaxReturn2">결과</div>
+			<br /><br />
+			<div style="text-align:center;">
+				<a th:href="@{'/member/signin/result'}">메인으로 이동</a>
+			</div>
+		</div>
+	</div>
+	<div class="wrap-loading display-none">
+	    <div><img src="/static/images/e1.gif"></div>
+	</div>
+</body>
+<script type="text/javascript" src="/static/js/invest/jackpot.js"></script>
+</html>

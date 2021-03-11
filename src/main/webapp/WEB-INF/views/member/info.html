@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>RINDROP</title>
+	<!-- link inculde -->
+	<th:block th:include="common/script"></th:block>
+	<!-- link inculde -->
+</head>
+
+<body>
+	<div class="card">
+		<div class="card-body" style="text-align:center;">
+			<span sec:authentication="name"></span>님 환영
+			<br />
+			<a href="/member/signin/result">메인으로</a>
+		</div>
+	</div>
+</body>
+
+</html>
