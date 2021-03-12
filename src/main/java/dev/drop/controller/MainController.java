@@ -10,6 +10,17 @@ public class MainController {
 	public String main() {
 		return "main";
 	}
+
+	@RequestMapping("/intro")
+	public String intro() {
+		return "intro";
+	}
+
+	@RequestMapping("/test")
+	public String test() {
+		return "/test/test";
+	}
+
 	// 어드민 페이지
 	@GetMapping("/admin")
 	public String Admin() {

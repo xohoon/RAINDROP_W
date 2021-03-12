@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
 
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" th:href="@{/css/intro.css}">
 <head>
-	<meta charset="UTF-8">
 	<title>RINDROP</title>
-	<!-- link inculde -->
-	<th:block th:include="common/script"></th:block>
-	<!-- link inculde -->
+	<th:block th:include="fragments/header"></th:block>
 </head>
-<th:block th:include="common/header"></th:block>
 <body>
 
 	<!-- 
@@ -58,22 +56,10 @@
 					</div>
 				</div>
 			</th:block>
-			<th:block th:if="${type == null}">
-				<div class="card">
-					<div class="card-body" style="text-align:center;">
-						<a href="/member/signin" class="card-link" style="text-align:center;">로그인</a>
-					</div>
-				</div>
-				<br />
-				<div class="card">
-					<div class="card-body" style="text-align:center;">
-						<a href="/member/signup" class="card-link">회원가입</a>
-					</div>
-				</div>
-			</th:block>
 		</div>
 	</div>
 	<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/member/admin}">ADMIN</a>
 </body>
-<th:block th:include="common/footer"></th:block>
+<th:block th:include="fragments/footer"></th:block>
+<script type="text/javascript" src="/static/js/intro.js"></script>
 </html>
