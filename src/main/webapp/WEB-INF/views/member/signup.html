@@ -17,6 +17,7 @@
 			<div class="card sign_card">
 				<div class="card-body">
 					<div id="join_form">
+						<h2>회원가입 페이지</h2><br />
 						<form name="fm" th:action="@{/member/signup}" method="POST" onsubmit="return memberSubmit();">
 							<input type="hidden" id="secretCode">
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -33,12 +34,16 @@
 							<input type="text" id="emailCode" placeholder="인증번호" class="form-control" style="float:left; width:80%">
 							<input type="button" id="emailCodeBtn" value="인증" class="btn btn-secondary" style="float:right;"><br /><br /><br />
 
+							<span>비밀번호 설정</span><br />
 							<input type="checkbox" id="CodeCheck" onclick="return false;" style="float:left;display:none;">
 							<input type="password" name="password" id="password"  placeholder="비밀번호" class="form-control" autocomplete="new-password"><br />
-							<input type="password" id="password2"  placeholder="비밀번호 확인" class="form-control">
+							<input type="password" id="password2"  placeholder="비밀번호 재입력" class="form-control">
 							<font id="pin_check" size="2" color="red">상태</font><br /><br />
 
+							<span>휴대전화 등록</span><br />
 							<input type="text" name="phone" id="phone" placeholder="휴대폰 번호" max="99999999999" maxlength="11" class="form-control" onkeyup="SetNum(this);"><br>
+							<span>정확한 번호를 입력해주세요. 추후에 문자메시지 기능 연동</span><br /><br />
+
 							<span>개인정보 동의 &nbsp;</span><input type="checkbox"><br /><br />
 							<input type="submit" id="joinBtn" value="가입하기" class="btn btn-success" style="width:100%;">
 						</form>
