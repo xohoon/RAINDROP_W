@@ -17,7 +17,7 @@
 			<div class="card sign_card">
 				<div class="card-body">
 					<div id="join_form">
-						<h2>회원가입 페이지</h2><br />
+						<h3>회원가입 페이지</h3><br />
 						<form name="fm" th:action="@{/member/signup}" method="POST" onsubmit="return memberSubmit();">
 							<input type="hidden" id="secretCode">
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -42,7 +42,6 @@
 
 							<span>휴대전화 등록</span><br />
 							<input type="text" name="phone" id="phone" placeholder="휴대폰 번호" max="99999999999" maxlength="11" class="form-control" onkeyup="SetNum(this);"><br>
-							<span>정확한 번호를 입력해주세요. 추후에 문자메시지 기능 연동</span><br /><br />
 
 							<span>개인정보 동의 &nbsp;</span><input type="checkbox"><br /><br />
 							<input type="submit" id="joinBtn" value="가입하기" class="btn btn-success" style="width:100%;">
