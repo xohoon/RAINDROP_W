@@ -40,20 +40,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter { // Security s
 				.antMatchers("/**")
 				.permitAll()
 				
-				.and() // 로그인 설정
+			.and() // 로그인 설정
 				.formLogin()
 				.loginPage("/member/signin")
 				.defaultSuccessUrl("/member/signin/result") // login direct url
 				.permitAll()
 				
-				.and() // 로그아웃 설정
+			.and() // 로그아웃 설정
 				.logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
 				 // 로그아웃을 실행 할 주소
 				.logoutSuccessUrl("/member/logout/result") // logout direct url
 				.invalidateHttpSession(true) // session
 				
-				.and()
+			.and()
 				.exceptionHandling()
 				.accessDeniedPage("/member/denied"); // 403 예외처리 핸들링
 	}

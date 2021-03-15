@@ -509,7 +509,6 @@ public class InvestController {
 	
 	
 	// ***** 개인투자  ***** //
-	@ResponseBody
 	@GetMapping(
 			value="/boxMain",
 			produces="application/json; charset=utf-8")

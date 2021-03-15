@@ -4,11 +4,14 @@ import java.security.Principal;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import net.bytebuddy.implementation.bind.MethodDelegationBinder;
+
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,11 +56,13 @@ public class MemberController {
 	
 	// 로그인 결과 페이지
 	@GetMapping(value="/signin/result")
-	public String In(Principal principal, Model model) {
+	public String In(Principal principal, Model model, HttpServletRequest request, Authentication auth) {
 		int type;
+		HttpSession session = request.getSession();
 		if(principal != null) {
 			String email = principal.getName();
 			type = memberMapper.type_check(email);
+			session.setAttribute("SIGN_USER", auth.getName());
 		}else {
 			type = 0;
 		}
