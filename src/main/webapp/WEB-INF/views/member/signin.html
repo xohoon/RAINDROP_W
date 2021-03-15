@@ -17,11 +17,14 @@
 					<h3>로그인 페이지</h3><br />
 					<form class="form-signin" name="fm" th:action="@{/member/signin}" method="POST" onsubmit="return SigninSubmit();">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+						<!--
 						<span form-signin-heading>회원님 타입을 선택하세요</span>
 						<div style="float:right;">
 							<input type="radio" id="type1" name="type" value="1">일반 &nbsp;
 							<input type="radio" id="type2" name="type" value="2">관리자
-						</div><br /><br />
+						</div>
+						<br /><br />
+						-->
 						<label for="email" class="sr-only">이메일</label>
 						<input type="email" name="username" id="email" placeholder="인증받은 이메일" class="form-control"><br />
 						<label for="password" class="sr-only">비밀번호</label>

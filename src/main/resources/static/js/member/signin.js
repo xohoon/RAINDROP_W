@@ -15,7 +15,15 @@ function isNullOrBlank(value) {
 	}
 }
 function SigninSubmit() {
-	var type = $(':radio[name="type"]:checked').val();
+	var email = $('#email').val();
+	console.log('TEST::'+email);
+	var type;
+	if(email == "admin") {
+		type = 2;
+	}else {
+		type = 1;
+	}
+
 	type = Number(type);
 	email = $('#email').val();
 	password = $('#password').val();

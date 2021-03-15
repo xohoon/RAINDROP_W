@@ -102,7 +102,7 @@ function memberSubmit() {
 	var email = $('#email').val();
 	var password = $('#password').val();
 	var phone = $('#phone').val();
-	var type = $(':radio[name="type"]:checked').val();
+	var type = 1;
 	type = Number(type);
 	console.log("/"+name+"/"+email+"/"+password+"/"+phone+"/"+type);
 	if(!type) {

@@ -21,14 +21,17 @@
 						<form name="fm" th:action="@{/member/signup}" method="POST" onsubmit="return memberSubmit();">
 							<input type="hidden" id="secretCode">
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+							<!--
 							<p style="float:left">원하는 타입을 선택하세요</p>
 							<div style="float:right;">
 								<input type="radio" id="type1" name="type" value="1">일반 &nbsp;
 								<input type="radio" id="type2" name="type" value="2">관리자
 							</div>
+							-->
+							<span>이름</span>
 							<input type="text" name="name" id="name" placeholder="이름" class="form-control"><br />
 
-							<span>이메일 인증</span><br />
+							<span>이메일 인증 - 로그인시 ID로 사용됩니다.</span><br />
 							<input type="email" name="email" id="email" placeholder="인증받을 이메일" class="form-control" style="float:left; width:80%;">
 							<input type="button" id="send_email" value="발송" class="btn btn-secondary" style="float:right;"><br /><br />
 							<input type="text" id="emailCode" placeholder="인증번호" class="form-control" style="float:left; width:80%">
