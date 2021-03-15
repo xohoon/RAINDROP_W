@@ -42,6 +42,7 @@ public class MemberController {
 		return request.getContextPath();
 	}
 
+	// 로그인 폼
 	@GetMapping(value="/signin")
 	public String InForm() {
 		return "member/signin";
@@ -54,6 +55,7 @@ public class MemberController {
 		return "/main";
 	}
 
+	// 회원가입 폼
 	@GetMapping(value="/signup")
 	public String UpForm() {
 		return "member/signup";
