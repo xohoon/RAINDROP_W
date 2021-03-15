@@ -9,6 +9,7 @@
 	<!-- link inculde -->
 	<th:block th:include="fragments/header"></th:block>
 	<!-- link inculde -->
+	<script type="text/javascript" src="/static/js/member/signup.js" defer></script>
 </head>
 
 <body>
@@ -18,7 +19,7 @@
 				<div class="card-body">
 					<div id="join_form">
 						<h3>회원가입 페이지</h3><br />
-						<form name="fm" th:action="@{/member/signup}" method="POST" onsubmit="return memberSubmit();">
+						<form name="fm" th:action="@{/member/signup}" method="POST" onsubmit="return signupSubmit();">
 							<input type="hidden" id="secretCode">
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 							<!--
@@ -31,14 +32,16 @@
 							<span>이름</span>
 							<input type="text" name="name" id="name" placeholder="이름" class="form-control"><br />
 
-							<span>이메일 인증 - 로그인시 ID로 사용됩니다.</span><br />
+							<span>이메일 인증(로그인 ID로 사용)</span><br />
 							<input type="email" name="email" id="email" placeholder="인증받을 이메일" class="form-control" style="float:left; width:80%;">
 							<input type="button" id="send_email" value="발송" class="btn btn-secondary" style="float:right;"><br /><br />
 							<input type="text" id="emailCode" placeholder="인증번호" class="form-control" style="float:left; width:80%">
-							<input type="button" id="emailCodeBtn" value="인증" class="btn btn-secondary" style="float:right;"><br /><br /><br />
+							<input type="button" id="emailCodeBtn" value="인증" class="btn btn-secondary" style="float:right;"><br />
+							<input type="checkbox" id="CodeCheck" onclick="return false;" style="float:left;display:none;">
+							<input type="hidden" name="type" value="1">
+							<br /><br />
 
 							<span>비밀번호 설정</span><br />
-							<input type="checkbox" id="CodeCheck" onclick="return false;" style="float:left;display:none;">
 							<input type="password" name="password" id="password"  placeholder="비밀번호" class="form-control" autocomplete="new-password"><br />
 							<input type="password" id="password2"  placeholder="비밀번호 재입력" class="form-control">
 							<font id="pin_check" size="2" color="red">상태</font><br /><br />
@@ -58,5 +61,5 @@
 		</div>
 	</div>
 </body>
-<script type="text/javascript" src="/static/js/member/signup.js"></script>
+<th:block th:include="fragments/footer"></th:block>
 </html>

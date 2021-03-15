@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.bytebuddy.implementation.bind.MethodDelegationBinder;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -91,6 +92,7 @@ public class MemberController {
 		System.out.println("::: mail test ::: " + email);
 		JSONObject jsonData = new JSONObject();
 		int mailCheck = memberMapper.mailCheck(email);
+		System.out.println("::: mail test ::: 1");
 		String random = RandomString.random(5);
 		String returnData = "";
 		

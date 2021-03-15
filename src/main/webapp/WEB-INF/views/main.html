@@ -5,61 +5,15 @@
 <link rel="stylesheet" type="text/css" th:href="@{/css/intro.css}">
 <head>
 	<title>RINDROP</title>
-	<th:block th:include="fragments/header"></th:block>
+	<th:header th:replace="fragments/header"></th:block>
 </head>
 <body>
 
-	<!-- 
-	<p th:if="${type == 1}" th:text="test투자자"></p>
-	<p th:if="${type == 2}" th:text="test관리자"></p>
+	<p th:if="${type == 1}" th:text="일반"></p>
+	<p th:if="${type == 2}" th:text="관리자"></p>
 	<p th:if="${type == null}" th:text="로그인안됨"></p>
-	 -->
 	
-	<div class="card">
-		<div class="card-body">
-			<h5 class="card-title" style="text-align:center;">메인페이지</h5>
-			<th:block th:if="${type == 1}">
-				<div class="card">
-					<div class="card-body" style="text-align:center;">
-						<a href="/member/info" class="card-link" >마이페이지</a>
-					</div>
-				</div>
-				<br />
-				<div class="card">
-					<div class="card-body" style="text-align:center;">
-						<a href="/invest/boxMain" class="card-link">럭키박스</a>
-					</div>
-				</div>
-				<br />
-				<div class="card">
-					<div class="card-body" style="text-align:center;">
-						<a href="/invest/jackpot" class="card-link">모의투자</a>
-					</div>
-				</div>
-				<br />
-				<div class="card">
-					<div class="card-body" style="text-align:center;">
-						<a href="/member/logout/result" class="card-link">로그아웃</a>
-					</div>
-				</div>
-			</th:block>
-			<th:block th:if="${type == 2}">
-				<div class="card">
-					<div class="card-body" style="text-align:center;">
-						<a href="/member/admin" class="card-link">관리자 페이지</a>
-					</div>
-				</div>
-				<br />
-				<div class="card">
-					<div class="card-body" style="text-align:center;">
-						<a href="/member/logout/result" class="card-link">로그아웃</a>
-					</div>
-				</div>
-			</th:block>
-		</div>
-	</div>
 	<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/member/admin}">ADMIN</a>
 </body>
 <th:block th:include="fragments/footer"></th:block>
-<script type="text/javascript" src="/static/js/intro.js"></script>
 </html>

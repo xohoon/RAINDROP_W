@@ -96,19 +96,24 @@ function pass_key() {
 	});
 }
 
-function memberSubmit() {
+function signupSubmit() {
 	var form = document.fm;
 	var name = $('#name').val();
 	var email = $('#email').val();
 	var password = $('#password').val();
 	var phone = $('#phone').val();
-	var type = 1;
+	/*
+	var type = "1";
 	type = Number(type);
-	console.log("/"+name+"/"+email+"/"+password+"/"+phone+"/"+type);
+	*/
+	console.log("/"+name+"/"+email+"/"+password+"/"+phone);
+	/*
 	if(!type) {
 		alert("회원님의 타입을 선택해 주세요");
 		return false;
-	}else if(!name) {
+	}else 
+		*/
+	if(!name) {
 		alert("이름을 입력해주세요");
 		return false;
 	}else if($("input:checkbox[id='CodeCheck']").is(":checked") == false) {
