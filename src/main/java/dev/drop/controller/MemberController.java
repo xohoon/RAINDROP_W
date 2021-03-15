@@ -47,24 +47,9 @@ public class MemberController {
 		return "member/signin";
 	}
 	
-	@PostMapping(value="/signin")
-	public String InPro() {
-		return "/member/loginSuccess";
-	}
-	
 	// 로그인 결과 페이지
 	@GetMapping(value="/signin/result")
-	public String In(Principal principal, Model model, HttpServletRequest request, Authentication auth) {
-		int type;
-		HttpSession session = request.getSession();
-		if(principal != null) {
-			String email = principal.getName();
-			type = memberMapper.type_check(email);
-			session.setAttribute("SIGN_USER", auth.getName());
-		}else {
-			type = 0;
-		}
-		model.addAttribute("type", type);
+	public String In() {
 		
 		return "/main";
 	}

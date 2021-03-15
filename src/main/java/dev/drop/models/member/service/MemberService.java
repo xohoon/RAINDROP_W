@@ -42,7 +42,7 @@ public class MemberService implements UserDetailsService {
 		MemberEntity userEntity = userEntityWrapper.get();
 
 		List<GrantedAuthority> authorities = new ArrayList<>();
-		// admin@naver.com 계정말 ADMIN ROLE 부여
+		// admin@naver.com 계정만 ADMIN ROLE 부여
 		if (("admin@naver.com").equals(userEmail)) {
 			authorities.add(new SimpleGrantedAuthority(Role.ADMIN.getValue()));
 		} else {
