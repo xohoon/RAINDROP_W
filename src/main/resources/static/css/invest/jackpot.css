@@ -1,0 +1,15 @@
+.cardall{
+	overflow: hidden;
+	margin-top: 10px;
+}
+.card.card1 {
+	margin-right: 0.5%;
+	float: left;
+	width: 33%;
+}
+.card.card1:last-child {
+    margin-right: 0;
+}
+.card.card2 {
+	margin-top: 10px;
+}
