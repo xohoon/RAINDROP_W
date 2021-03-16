@@ -12,21 +12,23 @@
 
 <body>
 		<div class="cardSet2">
-			<div class="card card2">
-				<div class="card-body">
+			<div class="card border-secondary mb-3 card2">
+				<div class="card-header">타이틀1</div>
+				<div class="card-body text-dark">
 					<span sec:authentication="name" id="user_email" style="display:none;"></span>
 					<input type="text" class="form-control" id="numRound" placeholder="회차 입력">
 					<input type="text" class="form-control" id="numCount" placeholder="갯수 입력">
 					<input type="button" class="btn btn-warning" id="getBtn" value="조합받기">
-					<div id="ajaxReturn1">결과</div><br><br>
 				</div>
+				<div id="ajaxReturn1">결과</div><br><br>
 			</div>
-			<div class="card card2">
-				<div class="card-body">
+			<div class="card border-secondary mb-3 card2">
+				<div class="card-header">타이틀1</div>
+				<div class="card-body text-dark">
 					<input type="text" class="form-control" id="rankRound" placeholder="회차 입력">
 					<input type="button" class="btn btn-success" id="rankBtn" value="등수 및 당첨금 확인">
-					<div id="ajaxReturn2">결과</div>
 				</div>
+				<div id="ajaxReturn2">결과</div>
 			</div>
 		</div>
 		<div style="text-align:center;">
