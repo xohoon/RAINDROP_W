@@ -1,7 +1,11 @@
-.main_list_1 {
+.main_list {
 	margin-top: 10px;
-	width: 50%;
+}
+.main_list_1 {
+	margin-left: 2%;
+	width: 45%;
 }
 .main_list_2 {
-	float: left;
+	margin-right: 2%;
+	width: 45%;
 }

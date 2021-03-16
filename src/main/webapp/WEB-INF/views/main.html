@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
 <meta charset="UTF-8">
+<link href="/static/css/main.css" rel="stylesheet" type="text/css">
+
 <head>
 <title>RINDROP</title>
 <th:header th:replace="fragments/header"></th:block>
 </head>
+
 <body>
 	<div class="container">
 		<div id="carouselExampleSlidesOnly" class="carousel slide"data-bs-ride="carousel">
@@ -24,23 +25,89 @@
 		</div>
 		<br /><br />
 		<div class="main_list">
-			<div class="main_list_1">
-				<span>그룹1</span>
-				<ul class="list-group list-group-flush">
-					<li class="list-group-item">An item</li>
-					<li class="list-group-item">A second item</li>
-					<li class="list-group-item">A third item</li>
-					<li class="list-group-item">A fourth item</li>
-				</ul>
+			<div class="main_list_1 float-start">
+				<span>TEST CONTENTS 111 > 상세보기</span>
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">First</th>
+							<th scope="col">Last</th>
+							<th scope="col">Handle</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row">1</th>
+							<td>Mark</td>
+							<td>Otto</td>
+							<td>@mdo</td>
+						</tr>
+						<tr>
+							<th scope="row">2</th>
+							<td>Jacob</td>
+							<td>Thornton</td>
+							<td>@fat</td>
+						</tr>
+						<tr>
+							<th scope="row">3</th>
+							<td colspan="2">Larry the Bird</td>
+							<td>@twitter</td>
+						</tr>
+						<tr>
+							<th scope="row">4</th>
+							<td colspan="2">Larry the Bird</td>
+							<td>@twitter</td>
+						</tr>
+						<tr>
+							<th scope="row">5</th>
+							<td colspan="2">Larry the Bird</td>
+							<td>@twitter</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
-			<div class="main_list_2">
-				<span>그룹2</span>
-				<ul class="list-group list-group-flush">
-					<li class="list-group-item">An item</li>
-					<li class="list-group-item">A second item</li>
-					<li class="list-group-item">A third item</li>
-					<li class="list-group-item">A fourth item</li>
-				</ul>
+			<div class="main_list_2 float-end">
+				<span>TEST CONTENTS 222 > 상세보기</span>
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">First</th>
+							<th scope="col">Last</th>
+							<th scope="col">Handle</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row">1</th>
+							<td>Mark</td>
+							<td>Otto</td>
+							<td>@mdo</td>
+						</tr>
+						<tr>
+							<th scope="row">2</th>
+							<td>Jacob</td>
+							<td>Thornton</td>
+							<td>@fat</td>
+						</tr>
+						<tr>
+							<th scope="row">3</th>
+							<td colspan="2">Larry the Bird</td>
+							<td>@twitter</td>
+						</tr>
+						<tr>
+							<th scope="row">4</th>
+							<td colspan="2">Larry the Bird</td>
+							<td>@twitter</td>
+						</tr>
+						<tr>
+							<th scope="row">5</th>
+							<td colspan="2">Larry the Bird</td>
+							<td>@twitter</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>
