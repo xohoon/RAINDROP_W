@@ -1,3 +1,6 @@
+.header_img {
+	margin-top: 10px;
+}
 .cardall{
 	overflow: hidden;
 	margin-top: 10px;
@@ -12,4 +15,5 @@
 }
 .card.card2 {
 	margin-top: 10px;
+	width: 50%;
 }
