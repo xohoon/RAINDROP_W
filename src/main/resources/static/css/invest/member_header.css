@@ -1,7 +1,7 @@
 .header_img {
 	margin-top: 10px;
 }
-.cardall{
+.cardSet1{
 	overflow: hidden;
 	margin-top: 10px;
 }
@@ -13,7 +13,16 @@
 .card.card1:last-child {
     margin-right: 0;
 }
-.card.card2 {
+
+.cardSet2{
+	overflow: hidden;
 	margin-top: 10px;
-	width: 50%;
+}
+.card.card2 {
+	margin-right: 2%;
+	float: left;
+	width: 49%;
+}
+.card.card2:last-child {
+    margin-right: 0;
 }
