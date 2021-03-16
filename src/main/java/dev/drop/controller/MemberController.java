@@ -41,6 +41,11 @@ public class MemberController {
 		System.out.println(request.getContextPath());
 		return request.getContextPath();
 	}
+	
+	@RequestMapping("/login")
+	public String login() {
+		return "member/login";
+	}
 
 	// 로그인 폼
 	@GetMapping(value="/signin")
