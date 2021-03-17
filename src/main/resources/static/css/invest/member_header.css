@@ -1,5 +1,25 @@
+/* jackpot, boxmain common css */
 .header_img {
 	margin-top: 1%;
+}
+.returnSuccess {
+	margin-top: 10px;
+}
+.selectBox {
+	margin-top: 10px;
+	width: 30%;
+}
+.set_50 {
+	overflow: hidden;
+	margin-top: 10px;
+}
+.input_50 {
+	margin-right: 1%;
+	float: left;
+	width: 49.5%;
+}
+.input_50:last-child {
+	margin-right: 0;
 }
 
 /* jackpot page css */
@@ -28,3 +48,4 @@
 .card.card2:last-child {
     margin-right: 0;
 }
+

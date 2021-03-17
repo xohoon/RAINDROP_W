@@ -15,12 +15,22 @@
 			<div class="card border-secondary mb-3 card2">
 				<div class="card-header">타이틀1</div>
 				<div class="card-body text-dark">
+					<span>땡차 차례</span>
+					<select class="form-select form-select-sm selectBox" aria-label=".form-select-sm example">
+						<option selected>방식선택</option>
+						<option value="1">방싟1</option>
+						<option value="2">바식2</option>
+						<option value="3">방식3</option>
+					</select>
+					<span> >> 방식에 따른 확률 및 다양한 정보 contents</span>
 					<span sec:authentication="name" id="user_email" style="display:none;"></span>
-					<input type="text" class="form-control" id="numRound" placeholder="회차 입력">
-					<input type="text" class="form-control" id="numCount" placeholder="갯수 입력">
-					<input type="button" class="btn btn-warning" id="getBtn" value="조합받기">
+					<input type="hidden" class="form-control" id="numRound" placeholder="회차 입력">
+					<div class="set_50">
+						<input type="text" class="form-control input_50" id="numCount" placeholder="1-50 사이 숫자를 입력하세요.">
+						<input type="button" class="btn btn-warning input_50" id="getBtn" value="조합받기">
+					</div>
+					<div class="returnSuccess" id="ajaxReturn1">결과과 노출됩니다.</div>
 				</div>
-				<div id="ajaxReturn1">결과</div><br><br>
 			</div>
 			<div class="card border-secondary mb-3 card2">
 				<div class="card-header">타이틀1</div>
