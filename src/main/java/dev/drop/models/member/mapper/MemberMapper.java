@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import dev.drop.models.member.dto.Member;
+import dev.drop.models.member.dto.MemberDTO;
 
 @Mapper
 public interface MemberMapper {
@@ -23,5 +24,5 @@ public interface MemberMapper {
 	
 	String nick_check(@Param(value="email") String email);
 	
-	List<Member> member_list();
+	List<MemberDTO> member_list();
 }

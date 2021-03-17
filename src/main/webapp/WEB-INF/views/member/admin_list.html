@@ -8,20 +8,32 @@
 	<!-- link inculde -->
 </head>
 <body>
-	<br />
-	<div style="text-align:center;">
-		<h5 class="card-title">회원 리스트</h5>
-	</div>
-	<div th:each="list : ${list}" class="col-md-6 col-lg-4 mb-5">
+	<div class="container">
 		<div class="card">
 			<div class="card-body">
-				<span th:text="${list.name}"></span><br />
-				<span th:text="${list.email}"></span>
+				<div style="text-align: center;">
+					<h5 class="card-title">회원 리스트</h5>
+				</div>
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">NAME</th>
+							<th scope="col">E-mail</th>
+							<th scope="col">Phone</th>
+						</tr>
+					</thead>
+					<tbody th:each="memberList, num:${list}">
+						<tr>
+							<th scope="row"><span th:text="${num.count}"></span></th>
+							<td><span th:text="${memberList.name}"></span></td>
+							<td><span th:text="${memberList.email}"></span></td>
+							<td><span th:text="${memberList.phone}"></span></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
-	</div>
-	<div style="text-align:center;">
-		<a th:href="@{'/member/signin/result'}">메인으로 이동</a>
 	</div>
 </body>
 <th:block th:include="fragments/footer"></th:block>

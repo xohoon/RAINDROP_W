@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import dev.drop.models.member.dto.Member;
 import dev.drop.models.member.dto.MemberDTO;
 import dev.drop.models.member.mapper.MemberMapper;
 import dev.drop.models.member.service.MemberService;
@@ -154,7 +153,7 @@ public class MemberController {
 	// 회원 리스트
 	@GetMapping("/admin_list")
 	public String List(Model model) {
-		ArrayList<Member> member = new ArrayList<>();
+		ArrayList<MemberDTO> member = new ArrayList<>();
 		member.addAll(memberMapper.member_list());
 		model.addAttribute("list", member);
 		

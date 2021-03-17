@@ -8,7 +8,7 @@ public class Member {
 	private String email;
 	private String password;
 	private String password2;
-	private int phone_num;
+	private int phone;
 	private int type;
 	private Date join_date;
 	
@@ -36,11 +36,11 @@ public class Member {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public int getPhone_num() {
-		return phone_num;
+	public int getPhone() {
+		return phone;
 	}
-	public void setPhone_num(int phone_num) {
-		this.phone_num = phone_num;
+	public void setPhone(int phone) {
+		this.phone = phone;
 	}
 	public int getType() {
 		return type;
@@ -63,6 +63,6 @@ public class Member {
 	@Override
 	public String toString() {
 		return "Member [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", password2="
-				+ password2 + ", phone_num=" + phone_num + ", type=" + type + ", join_date=" + join_date + "]";
+				+ password2 + ", phone=" + phone + ", type=" + type + ", join_date=" + join_date + "]";
 	}
 }
