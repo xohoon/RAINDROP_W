@@ -7,6 +7,12 @@ var numCount = 0;
 var rankRound = 0;
 
 $('#getBtn').on('click', function() {
+	var userCheck = $("#userCheck").text();
+	if(!userCheck || userCheck == "" || userCheck.length < 5) {
+		alert("로그인이 만료되었습니다. 로그인 페이지로 이동합니다.");
+		location.href="/member/signin";
+		return false;
+	}
 	numCount = $('#numCount').val();
 	numRound = $('#numRound').val();
 	user_email = $('#log_email').text();
@@ -59,6 +65,12 @@ function view(data) {
 }
 
 $('#rankBtn').on('click', function() {
+	var userCheck = $("#userCheck").text();
+	if(!userCheck || userCheck == "" || userCheck.length > 5) {
+		alert("로그인이 만료되었습니다. 로그인 페이지로 이동합니다.");
+		location.href="/member/signin";
+		return false;
+	}
 	rankRound = $('#rankRound').val();
 	user_email = $('#log_email').text();
 	if(!rankRound) {
