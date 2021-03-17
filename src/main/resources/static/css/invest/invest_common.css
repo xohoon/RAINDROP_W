@@ -85,13 +85,18 @@
 	margin-top: 10px;
 }
 .card.card4 {
-	margin-right: 1%;
+	margin-right: 1.33%;
 	float: left;
 	width: 24%;
 }
 .card.card4:last-child {
     margin-right: 0;
 }
+/* last-child 안먹힐때 */
+.card.card4:nth-child(4) {
+    margin-right: 0;
+}
+
 /* jackpot, boxmain common css end*/
 
 /* jackpot page css */
