@@ -32,6 +32,12 @@
 				<li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
 					<a class="nav-link" aria-current="page" href="/member/admin">관리자 페이지</a>
 				</li>
+				<li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+					<a class="nav-link" aria-current="page" href="/invest/imitation">데이터 관리</a>
+				</li>
+				<li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+					<a class="nav-link" aria-current="page" href="/member/admin_list">회원관리</a>
+				</li>
 
 				<li class="nav-item" sec:authorize="isAuthenticated()">
 					<a class="nav-link" href="/member/logout">로그아웃</a>
