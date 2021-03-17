@@ -21,6 +21,18 @@
 .input_50:last-child {
 	margin-right: 0;
 }
+.set_30 {
+	overflow: hidden;
+	margin-top: 10px;
+}
+.input_30 {
+	margin-right: 0.5%;
+	float: left;
+	width: 33%;
+}
+.input_30:last-child {
+	margin-right: 0;
+}
 
 /* jackpot page css */
 .cardSet1{
