@@ -273,9 +273,9 @@ public class InvestController {
 	// ***** 모의투자  ***** //
 	
 	// mine invest
-	@GetMapping(value="/jackpot")
+	@GetMapping(value="/raindrop")
 	public String mine() {
-		return "invest/jackpot";
+		return "invest/raindrop";
 	}
 	
 	// 회원 조합받기
@@ -510,16 +510,12 @@ public class InvestController {
 	
 	// ***** 개인투자  ***** //
 	@GetMapping(
-			value="/boxMain",
+			value="/droptop",
 			produces="application/json; charset=utf-8")
-	public String boxMain() {
+	public String droptop() {
 		
-		return "invest/boxMain";
+		return "invest/droptop";
 	}
-	/*
-	 * @GetMapping(value="/jackpot") public String mine() { return "invest/jackpot";
-	 * }
-	 */
 	
 	
 	// ***** 개인투자  ***** //

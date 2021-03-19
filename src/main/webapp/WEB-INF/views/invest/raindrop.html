@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+
 <head>
 	<meta charset="UTF-8">
 	<title>RINDROP</title>
@@ -7,7 +8,7 @@
 	<th:block th:include="fragments/header"></th:block>
 	<th:block th:include="fragments/invest_common"></th:block>
 	<!-- link inculde -->
-	<script src="/static/js/invest/jackpot.js" type="text/javascript" defer></script>
+	<script src="/static/js/invest/raindrop.js" type="text/javascript" defer></script>
 </head>
 
 <body>
@@ -25,21 +26,21 @@
 					<span> >> 방식에 따른 확률 및 다양한 정보 contents</span>
 					<input type="hidden" class="form-control" id="numRound" placeholder="회차 입력">
 					<div class="set_2">
-						<input type="text" class="form-control input_2" id="numCount" placeholder="1-50 사이 숫자를 입력하세요.">
-						<input type="button" class="btn btn-warning input_2" id="getBtn" value="내놔봐">
+						<input type="text" class="form-control input_2" id="numCount" placeholder="갯수 입력">
+						<input type="button" class="btn btn-warning input_2" id="getBtn" value="옆에꺼보기">
 					</div>
-					<div class="returnSuccess" id="ajaxReturn1">결과과 노출됩니다.</div>
+					<div class="returnSuccess" id="ajaxReturn1">결과</div>
 				</div>
 			</div>
 			<div class="card border-secondary mb-3 card2">
 				<div class="card-header">타이틀1</div>
 				<div class="card-body text-dark">
 					<div class="set_3">
-						<input type="text" class="form-control input_3" id="rankRound" placeholder="최근?입력?">
-						<input type="button" class="btn btn-success input_3" id="rankBtn" value="왼쪽 확인 버튼">
-						<input type="button" class="btn btn-success input_3" id="rankBtn" value="나 당 확인 버튼">
+						<input type="text" class="form-control input_3" id="rankRound" placeholder="다가오는거 픽스">
+						<input type="button" class="btn btn-success input_3" id="rankBtn" value="저번주확인">
+						<input type="button" class="btn btn-success input_3" id="rankBtn" value="내꺼보러갈랭">
 					</div>
-					<div class="returnSuccess" id="ajaxReturn2">결과과 노출됩니다.</div>
+					<div class="returnSuccess" id="ajaxReturn2">결과</div>
 				</div>
 			</div>
 		</div>
