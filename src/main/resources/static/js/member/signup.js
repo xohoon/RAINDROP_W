@@ -76,6 +76,7 @@ $('#emailCodeBtn').on('click', function() {
 		$("#emailCodeBtn").attr('disabled', 'true');
 	}else {
 		alert("인증번호를 다시 확인해주세요.");
+		return false;
 	}
 	
 });

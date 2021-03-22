@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import dev.drop.models.invest.dto.ImitationDTO;
-import dev.drop.models.invest.dto.SaveDTO;
+import dev.drop.models.invest.dto.DroptopListDTO;
+import dev.drop.models.invest.dto.DroptopResultDTO;
 import dev.drop.models.invest.mapper.InvestMapper;
 import dev.drop.models.member.mapper.MemberMapper;
 import dev.drop.utils.Revenue;
@@ -37,12 +37,30 @@ public class InvestController {
 	@Autowired
 	private MemberMapper memberMapper;
 	
+	// ***** 모의투자  ***** //
+	@GetMapping(
+			value="/droptop",
+			produces="application/json; charset=utf-8")
+	public String Dropdop() {
+		
+		
+		return "invest/droptop";
+	}
+	
+	
+	// ***** 모의투자  ***** //
+	
+	
+	
+	
 	
 	// ***** 리얼투자  ***** //
 	
 	// mine invest
 	@GetMapping(value="/raindrop")
-	public String mine() {
+	public String Raindrop() {
+		// 필요한 데이터 추가
+		
 		return "invest/raindrop";
 	}
 	
@@ -61,7 +79,7 @@ public class InvestController {
 		JSONObject jsonData = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
 		
-		SaveDTO saveDTO = new SaveDTO();
+		DroptopResultDTO saveDTO = new DroptopResultDTO();
 		ArrayList<String> ranList = new ArrayList<>();
 		
 		int member_id = investMapper.get_memberId(user_email);
@@ -171,8 +189,8 @@ public class InvestController {
 	public Object myRank(int rankRound, String user_email) {
 		JSONObject jsonData = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
-		ImitationDTO imiDTO = new ImitationDTO();
-		SaveDTO saveDTO = new SaveDTO();
+		DroptopListDTO imiDTO = new DroptopListDTO();
+		DroptopResultDTO saveDTO = new DroptopResultDTO();
 		ArrayList<Integer> testGame = new ArrayList<>();
 		ArrayList<Integer> saveList = new ArrayList<>();
 		
@@ -275,16 +293,4 @@ public class InvestController {
 	
 	// ***** 리얼투자  ***** //
 	
-	
-	// ***** 모의투자  ***** //
-	@GetMapping(
-			value="/droptop",
-			produces="application/json; charset=utf-8")
-	public String droptop() {
-		
-		return "invest/droptop";
-	}
-	
-	
-	// ***** 모의투자  ***** //
 }

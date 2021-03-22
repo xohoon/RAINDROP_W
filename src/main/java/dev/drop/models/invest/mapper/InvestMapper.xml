@@ -32,7 +32,7 @@
 	</select>
 	
 	<!-- 모의추첨 번호가져오기 -->
-	<select id="imiData" resultType="dev.drop.models.invest.dto.ImitationDTO">
+	<select id="imiData" resultType="dev.drop.models.invest.dto.DroptopListDTO">
         SELECT * FROM test_saving WHERE round_id = #{i} AND round = #{round};
     </select>
     
@@ -63,7 +63,7 @@
 	</select>
 	
 	<!-- 저장된 회차별 1등 번호 가져오기 -->
-	<select id="dataAll" resultType="dev.drop.models.invest.dto.SaveDTO">
+	<select id="dataAll" resultType="dev.drop.models.invest.dto.DroptopResultDTO">
         SELECT * FROM list WHERE id = #{id};
     </select>
     
@@ -98,7 +98,7 @@
 	</insert>
 	
 	<!-- 지정된 회차별 1등 번호 가져오기 -->
-	<select id="decidedRound" resultType="dev.drop.models.invest.dto.SaveDTO">
+	<select id="decidedRound" resultType="dev.drop.models.invest.dto.DroptopResultDTO">
         SELECT * FROM list WHERE id = #{round};
     </select>
     
@@ -124,7 +124,7 @@
 	</select>
 	
 	<!-- 모의추첨 번호가져오기 -->
-	<select id="roundData" resultType="dev.drop.models.invest.dto.ImitationDTO">
+	<select id="roundData" resultType="dev.drop.models.invest.dto.DroptopListDTO">
         SELECT * FROM member_saving WHERE round_id = #{i} AND round = #{round} AND member_id = #{member_id};
     </select>
 	

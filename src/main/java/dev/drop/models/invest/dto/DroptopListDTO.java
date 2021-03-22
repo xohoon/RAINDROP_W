@@ -1,6 +1,6 @@
 package dev.drop.models.invest.dto;
 
-public class ImitationDTO {
+public class DroptopListDTO {
 	private int member_id;
 	private int round;
 	private int round_id;

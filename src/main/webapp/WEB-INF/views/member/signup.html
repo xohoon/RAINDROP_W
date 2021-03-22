@@ -20,15 +20,12 @@
 					<div id="join_form">
 						<h3>회원가입 페이지</h3><br />
 						<form name="fm" th:action="@{/member/signup}" method="POST" onsubmit="return signupSubmit();">
+						
 							<input type="hidden" id="secretCode">
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-							<!--
-							<p style="float:left">원하는 타입을 선택하세요</p>
-							<div style="float:right;">
-								<input type="radio" id="type1" name="type" value="1">일반 &nbsp;
-								<input type="radio" id="type2" name="type" value="2">관리자
-							</div>
-							-->
+							<input type="hidden" name="in_date" th:value="${#calendars.format(#calendars.createNow(), 'yyy-MM-dd HH:mm:ss')}" />
+							<input type="hidden" name="status_1" value="N" />
+							
 							<span>이름</span>
 							<input type="text" name="name" id="name" placeholder="이름" class="form-control"><br />
 
@@ -38,7 +35,6 @@
 							<input type="text" id="emailCode" placeholder="인증번호" class="form-control" style="float:left; width:80%">
 							<input type="button" id="emailCodeBtn" value="인증" class="btn btn-secondary" style="float:right;"><br />
 							<input type="checkbox" id="CodeCheck" onclick="return false;" style="float:left;display:none;">
-							<input type="hidden" name="type" value="1">
 							<br /><br />
 
 							<span>비밀번호 설정</span><br />

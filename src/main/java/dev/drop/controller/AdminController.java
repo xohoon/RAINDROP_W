@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import dev.drop.models.invest.dto.ImitationDTO;
-import dev.drop.models.invest.dto.SaveDTO;
+import dev.drop.models.invest.dto.DroptopListDTO;
+import dev.drop.models.invest.dto.DroptopResultDTO;
 import dev.drop.models.invest.mapper.InvestMapper;
 import dev.drop.models.member.dto.MemberDTO;
 import dev.drop.models.member.mapper.MemberMapper;
@@ -65,7 +65,7 @@ public class AdminController {
 		JSONObject jsonData = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
 		System.out.println(":: TEST DATA SCRIPT ::");
-		SaveDTO saveDTO = new SaveDTO();
+		DroptopResultDTO saveDTO = new DroptopResultDTO();
 		ArrayList<String> ranList = new ArrayList<>();
 		// round는 일시적으로 원하는 만큼 받고 나중에 자동으로 전환
 //			int round = NewRound.newRound();
@@ -177,8 +177,8 @@ public class AdminController {
 	public Object RankingCount(int rankRound) {
 		JSONObject jsonData = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
-		ImitationDTO imiDTO = new ImitationDTO();
-		SaveDTO saveDTO = new SaveDTO();
+		DroptopListDTO imiDTO = new DroptopListDTO();
+		DroptopResultDTO saveDTO = new DroptopResultDTO();
 		ArrayList<String> testGame = new ArrayList<>();
 		ArrayList<String> saveList = new ArrayList<>();
 //			int round = NewRound.newRound();

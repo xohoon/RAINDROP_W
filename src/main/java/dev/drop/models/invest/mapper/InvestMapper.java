@@ -3,8 +3,8 @@ package dev.drop.models.invest.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import dev.drop.models.invest.dto.ImitationDTO;
-import dev.drop.models.invest.dto.SaveDTO;
+import dev.drop.models.invest.dto.DroptopListDTO;
+import dev.drop.models.invest.dto.DroptopResultDTO;
 
 @Mapper
 public interface InvestMapper {
@@ -37,7 +37,7 @@ public interface InvestMapper {
 	
 	int gameTotal(@Param(value="round") int round);
 	
-	ImitationDTO imiData(@Param(value="i") int i, @Param(value="round") int round);
+	DroptopListDTO imiData(@Param(value="i") int i, @Param(value="round") int round);
 	
 	int testIdGet(@Param(value="round") int round);
 	
@@ -61,7 +61,7 @@ public interface InvestMapper {
 	// 최근회사 확인
 	int search_last();
 	
-	SaveDTO dataAll(@Param(value="id") int id);
+	DroptopResultDTO dataAll(@Param(value="id") int id);
 	
 	int LastNum();
 	
@@ -99,7 +99,7 @@ public interface InvestMapper {
 			@Param(value="last_round") int last_round, 
 			@Param(value="all_round") int all_round);
 	
-	SaveDTO decidedRound(@Param(value="round") int round);
+	DroptopResultDTO decidedRound(@Param(value="round") int round);
 	
 	// ***** caseController  ***** //
 	
@@ -121,7 +121,7 @@ public interface InvestMapper {
 
 	int roundTotal(@Param(value="round") int round, @Param(value="member_id") int member_id);
 
-	ImitationDTO roundData(@Param(value="i") int i, @Param(value="round") int round, @Param(value="member_id") int member_id);
+	DroptopListDTO roundData(@Param(value="i") int i, @Param(value="round") int round, @Param(value="member_id") int member_id);
 	
 	// ***** 나의 투자  ***** //
 	

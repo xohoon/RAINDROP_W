@@ -1,6 +1,6 @@
 package dev.drop.models.invest.dto;
 
-public class SaveDTO {
+public class DroptopResultDTO {
 	private int ranking;
 	private int round;
 	private int num1;
