@@ -32,13 +32,13 @@ public class AdminController {
 	private InvestMapper investMapper;
 	
 	// 어드민 페이지
-	@GetMapping("/")
+	@GetMapping("/index")
 	public String DispAdmin() {
 		return "/admin/index";
 	}
 
 	// 회원 리스트
-	@GetMapping("/member_list")
+	@GetMapping(value="/member_list")
 	public String List(Model model) {
 		ArrayList<MemberDTO> member = new ArrayList<>();
 		member.addAll(memberMapper.member_list());

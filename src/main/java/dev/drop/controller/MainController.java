@@ -20,12 +20,6 @@ public class MainController {
 	public String test() {
 		return "/test/test";
 	}
-
-	// 어드민 페이지
-	@GetMapping("/admin")
-	public String Admin() {
-		return "/member/admin";
-	}
 	
 	// test page
 	@GetMapping("/module/header")
