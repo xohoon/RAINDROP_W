@@ -144,19 +144,5 @@ public class MemberController {
 		return "/member/info";
 	}
 	
-	// 어드민 페이지
-	@GetMapping("/admin")
-	public String DispAdmin() {
-		return "/member/admin";
-	}
 	
-	// 회원 리스트
-	@GetMapping("/admin_list")
-	public String List(Model model) {
-		ArrayList<MemberDTO> member = new ArrayList<>();
-		member.addAll(memberMapper.member_list());
-		model.addAttribute("list", member);
-		
-		return "/member/admin_list";
-	}
 }
