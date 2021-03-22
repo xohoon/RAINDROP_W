@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	console.log("::conn::~!~!@");
+	console.log("droptop jsFile");
 });
 
 var html = '';

@@ -1,7 +1,5 @@
 package dev.drop.models.member.domain.entity;
 
-import java.security.Timestamp;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

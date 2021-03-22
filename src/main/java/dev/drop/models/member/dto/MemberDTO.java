@@ -1,6 +1,5 @@
 package dev.drop.models.member.dto;
 
-import java.security.Timestamp;
 import java.time.LocalDateTime;
 
 import dev.drop.models.member.domain.entity.MemberEntity;

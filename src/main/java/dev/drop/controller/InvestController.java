@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import dev.drop.models.invest.dto.DroptopListDTO;
 import dev.drop.models.invest.dto.DroptopResultDTO;
 import dev.drop.models.invest.mapper.InvestMapper;
-import dev.drop.models.member.mapper.MemberMapper;
 import dev.drop.utils.Revenue;
 
 import java.text.DecimalFormat;
@@ -18,15 +17,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping(value="/invest")
@@ -34,8 +24,6 @@ public class InvestController {
 	
 	@Autowired
 	private InvestMapper investMapper;
-	@Autowired
-	private MemberMapper memberMapper;
 	
 	// ***** 모의투자  ***** //
 	@GetMapping(

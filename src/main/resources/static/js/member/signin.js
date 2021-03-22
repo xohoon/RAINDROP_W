@@ -1,11 +1,12 @@
 $(document).ready(function() {
-	console.log("jsp???");
+	console.log("signin jsFile");
 });
 var mail_reg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 var password_reg = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
 var blank_reg = new RegExp('\\s');
 var email = "";
 var password = "";
+
 //공백 및 null 값 확인
 function isNullOrBlank(value) {
 	if (typeof value == "undefined" || value == null || value == "" || blank_reg.test(value)) {
@@ -14,23 +15,15 @@ function isNullOrBlank(value) {
 		return false;
 	}
 }
+
+// 로그인 유효성 검사
 function SigninSubmit() {
 	var email = $('#email').val();
-	console.log('TEST::'+email);
-	var type;
-	if(email == "admin") {
-		type = 2;
-	}else {
-		type = 1;
-	}
 
 	type = Number(type);
 	email = $('#email').val();
 	password = $('#password').val();
-	if(!type) {
-		alert("회원님의 타입을 선택해 주세요");
-		return false;
-	}else if(isNullOrBlank(email)) {
+	if(isNullOrBlank(email)) {
 		alert("이메일은 공백을 포함할 수 없습니다.");
 		return false;
 	}else if(mail_reg.test(email) == false) {

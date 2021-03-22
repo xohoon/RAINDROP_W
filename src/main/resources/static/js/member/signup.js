@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	console.log("jspFile? form join");
+	console.log("signup jsFile");
 	pass_key();
 });
 var token = $("input[name='_csrf']").val();
@@ -13,6 +13,42 @@ var password_reg = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
 var blank_reg = new RegExp('\\s');
 var emailCode1 = "";
 var emailCode2 = "";
+
+//회원가입 유효성 검사
+function signupSubmit() {
+	var form = document.fm;
+	var name = $('#name').val();
+	var email = $('#email').val();
+	var password = $('#password').val();
+	var phone = $('#phone').val();
+	
+//	console.log("/"+name+"/"+email+"/"+password+"/"+phone);
+	
+	if(!name) {
+		alert("이름을 입력해주세요");
+		return false;
+	}else if($("input:checkbox[id='CodeCheck']").is(":checked") == false) {
+		alert("메일 인증을  완료해주세요.");
+		return false;
+	}else if(isNullOrBlank(password)) {
+		alert("비밀번호는 공백을 포함 할 수 없습니다.");
+		return false;
+	}else if(password_reg.test(password) == false) {
+		alert('비밀번호는 영문,숫자,특수문자 각 최소 1자 이상 8~15 자 입니다.');
+		return false;
+	}else if($('#pin_check').text() != "일치"){
+		console.log("conde"+$('#pin_check').text());
+		alert("비밀번호를 일치시켜주세요");
+		return false;
+	}else if(isNullOrBlank(phone)) {
+		alert("휴대전화 번호는 -기호 없이 나란히 입력해주세요.");
+		return false;
+	}else if(phone.length != 11) {
+		alert("휴대전화번호를 총 11자리입니다.");
+		return false;
+	}
+};
+
 
 // 공백 및 null 값 확인
 function isNullOrBlank(value) {
@@ -30,6 +66,7 @@ function SetNum(obj) {
 	obj.value = val.replace(re,"");
 }
 
+// 메일전송
 $('#send_email').on('click', function() {
 	var email = $('#email').val();
 	console.log(">>??"+email);
@@ -65,6 +102,7 @@ $('#send_email').on('click', function() {
 	}
 });
 
+// 전송된 인정번호 일치 여부 확인
 $('#emailCodeBtn').on('click', function() {
 	emailCode2 = $('#emailCode').val();
 	emailCode1 = $('#secretCode').val();
@@ -81,6 +119,7 @@ $('#emailCodeBtn').on('click', function() {
 	
 });
 
+// 비밀번호 확인 일치 여부 실시간 확인
 function pass_key() {
 	$("#password2").keyup(function() {
 		var pw1 = $('#password').val();
@@ -97,44 +136,3 @@ function pass_key() {
 	});
 }
 
-function signupSubmit() {
-	var form = document.fm;
-	var name = $('#name').val();
-	var email = $('#email').val();
-	var password = $('#password').val();
-	var phone = $('#phone').val();
-	/*
-	var type = "1";
-	type = Number(type);
-	*/
-	console.log("/"+name+"/"+email+"/"+password+"/"+phone);
-	/*
-	if(!type) {
-		alert("회원님의 타입을 선택해 주세요");
-		return false;
-	}else 
-		*/
-	if(!name) {
-		alert("이름을 입력해주세요");
-		return false;
-	}else if($("input:checkbox[id='CodeCheck']").is(":checked") == false) {
-		alert("메일 인증을  완료해주세요.");
-		return false;
-	}else if(isNullOrBlank(password)) {
-		alert("비밀번호는 공백을 포함 할 수 없습니다.");
-		return false;
-	}else if(password_reg.test(password) == false) {
-		alert('비밀번호는 영문,숫자,특수문자 각 최소 1자 이상 8~15 자 입니다.');
-		return false;
-	}else if($('#pin_check').text() != "일치"){
-		console.log("conde"+$('#pin_check').text());
-		alert("비밀번호를 일치시켜주세요");
-		return false;
-	}else if(isNullOrBlank(phone)) {
-		alert("휴대전화 번호는 -기호 없이 나란히 입력해주세요.");
-		return false;
-	}else if(phone.length != 11) {
-		alert("휴대전화번호를 총 11자리입니다.");
-		return false;
-	}
-};
