@@ -18,11 +18,5 @@ public interface MemberMapper {
 			@Param(value="password") String password, 
 			@Param(value="phone") int phone);
 	
-	Integer type_check(@Param(value="email") String email);
-	
-	Integer id_check(@Param(value="email_check") String email_check);
-	
-	String nick_check(@Param(value="email") String email);
-	
 	List<MemberDTO> member_list();
 }

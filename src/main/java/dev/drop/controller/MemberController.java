@@ -1,20 +1,19 @@
 package dev.drop.controller;
 
-import java.security.Principal;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import dev.drop.models.admin.mapper.AdminMapper;
 import dev.drop.models.member.dto.MemberDTO;
 import dev.drop.models.member.mapper.MemberMapper;
 import dev.drop.models.member.service.MemberService;
@@ -31,11 +30,30 @@ public class MemberController {
 	private MemberMapper memberMapper;
 	@Autowired
 	JavaMailSender emailSender;
+	@Autowired
+	private AdminMapper adminMapper;
 	
 	@ModelAttribute(value="contextPath")
 	public String getContextPath(HttpServletRequest request) {
 		System.out.println(request.getContextPath());
 		return request.getContextPath();
+	}
+	
+	// 회원정보
+	@ResponseBody
+	@GetMapping(
+			value="/user_info",
+			produces="application/json; charset=utf-8")
+	public Object UserInfo(@RequestParam String email) {
+		System.out.println("TEST:::1?");
+		JSONObject jsonData = new JSONObject();
+		MemberDTO memberDTO = new MemberDTO();
+		memberDTO = adminMapper.userInfo(email);
+		System.out.println("TEST:::"+memberDTO.toString());
+		
+		jsonData.put("userPoint", memberDTO.getPoint());
+		jsonData.put("userCoin", memberDTO.getCoin());
+		return jsonData;
 	}
 	
 	@RequestMapping("/login")
@@ -132,14 +150,4 @@ public class MemberController {
 		return "/member/denied";
 	}
 
-	// 내 정보 페이지
-	@GetMapping(value="/info")
-	public String MyInfo(Principal principal, Model model) {
-		String email = principal.getName();
-		int type = memberMapper.type_check(email);
-		model.addAttribute("type", type);
-		return "/member/info";
-	}
-	
-	
 }

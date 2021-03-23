@@ -14,19 +14,8 @@
  		VALUES(#{name}, #{email}, #{password}, now(), #{phone}, #{type});
     </insert>
     
-    <select id="type_check" parameterType="String" resultType="int">
-    	SELECT type FROM member WHERE email = #{email};
-    </select>
-    
-    <select id="id_check" parameterType="String" resultType="int">
-    	SELECT id FROM member WHERE email = #{email_check};
-    </select>
-    
-    <select id="nick_check" resultType="String">
-    	SELECT nick FROM member WHERE email = #{email};
-    </select>
-
 	<select id="member_list" resultType="dev.drop.models.member.dto.Member">
     	SELECT * FROM member;
     </select>
+    
 </mapper>

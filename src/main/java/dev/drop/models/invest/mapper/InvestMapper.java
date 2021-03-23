@@ -122,6 +122,7 @@ public interface InvestMapper {
 	int roundTotal(@Param(value="round") int round, @Param(value="member_id") int member_id);
 
 	DroptopListDTO roundData(@Param(value="i") int i, @Param(value="round") int round, @Param(value="member_id") int member_id);
+
 	
 	// ***** 나의 투자  ***** //
 	

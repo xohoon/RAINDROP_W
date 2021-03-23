@@ -22,7 +22,7 @@ import dev.drop.utils.Revenue;
 import lombok.AllArgsConstructor;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping(value="/admin")
 @AllArgsConstructor
 public class AdminController {
 
@@ -47,7 +47,6 @@ public class AdminController {
 		return "/admin/member_list";
 	}
 	
-
 	// ***** 관리자  ***** //
 
 	// imitation GET

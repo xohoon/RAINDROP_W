@@ -20,7 +20,6 @@
 					<div id="join_form">
 						<h3>회원가입 페이지</h3><br />
 						<form name="fm" th:action="@{/member/signup}" method="POST" onsubmit="return signupSubmit();">
-						
 							<input type="hidden" id="secretCode">
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 							<input type="hidden" name="in_date" th:value="${#calendars.format(#calendars.createNow(), 'yyy-MM-dd HH:mm:ss')}" />

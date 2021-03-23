@@ -31,7 +31,6 @@ public class InvestController {
 			produces="application/json; charset=utf-8")
 	public String Dropdop() {
 		
-		
 		return "invest/droptop";
 	}
 	
