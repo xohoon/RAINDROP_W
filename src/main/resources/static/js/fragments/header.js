@@ -4,7 +4,6 @@ $(function(){
 	if(email || email.length > 5) {
 		userAjax(email);
 	}
-	
 });
 
 function userAjax(email) {
@@ -19,8 +18,6 @@ function userAjax(email) {
 		success : function(result, data) {
 			$("#userPoint").text(result.userPoint+"P");
 			$("#userCoin").text(result.userCoin+"Coin");
-			console.log("SUCCESS::" + result.userPoint);
-			console.log("SUCCESS::" + result.userCoin);
 		},
 		error : function(data) {
 			console.log("ERROR::" + data);

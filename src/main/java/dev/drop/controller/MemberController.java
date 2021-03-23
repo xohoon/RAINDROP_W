@@ -49,11 +49,16 @@ public class MemberController {
 		JSONObject jsonData = new JSONObject();
 		MemberDTO memberDTO = new MemberDTO();
 		memberDTO = adminMapper.userInfo(email);
-		System.out.println("TEST:::"+memberDTO.toString());
 		
 		jsonData.put("userPoint", memberDTO.getPoint());
 		jsonData.put("userCoin", memberDTO.getCoin());
 		return jsonData;
+	}
+	
+	// 회원 상세정보 페이지
+	@RequestMapping("/info")
+	public String Info() {
+		return "member/info";
 	}
 	
 	@RequestMapping("/login")
