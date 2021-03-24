@@ -1,13 +1,11 @@
 $(function(){
 	var email = $('#userCheck').text();
-	console.log('TEST11::'+email);
 	if(email || email.length > 5) {
 		userAjax(email);
 	}
 });
 
 function userAjax(email) {
-	console.log('TEST22::'+email);
 	$.ajax({
 		type : 'GET',
 		url : '/member/user_info',

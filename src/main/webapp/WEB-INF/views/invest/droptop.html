@@ -15,7 +15,7 @@
 			<div class="card border-secondary mb-3 card2">
 				<div class="card-header">타이틀1</div>
 				<div class="card-body text-dark">
-					<span>땡차 차례</span>
+					<span th:text="${comming_round}"></span><span>회</span>
 					<select class="form-select form-select-sm selectBox" aria-label=".form-select-sm example">
 						<option selected>방식선택</option>
 						<option value="1">방싟1</option>
@@ -25,7 +25,8 @@
 					<span> >> 방식에 따른 확률 및 다양한 정보 contents</span>
 					<input type="hidden" class="form-control" id="numRound" placeholder="회차 입력">
 					<div class="set_2">
-						<input type="text" class="form-control input_2" id="numCount" placeholder="1-50 사이 숫자를 입력하세요.">
+						<input type="hidden" id="numCount" value="50" />
+						<span class="input_2">50회 도전</span>
 						<input type="button" class="btn btn-warning input_2" id="getBtn" value="내놔봐">
 					</div>
 					<div class="returnSuccess" id="ajaxReturn1">결과과 노출됩니다.</div>
