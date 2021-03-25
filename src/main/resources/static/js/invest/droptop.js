@@ -6,6 +6,7 @@ var html = '';
 var numCount = 0;
 var rankRound = 0;
 
+// droptop 50개 추출
 $('#getBtn').on('click', function() {
 	var userCheck = $("#userCheck").text();
 	if(!userCheck || userCheck == "" || userCheck.length < 5) {
@@ -15,41 +16,50 @@ $('#getBtn').on('click', function() {
 	}
 	numCount = $('#numCount').val();
 	numRound = $('#numRound').val();
-	user_email = $('#log_email').text();
-	/*
-	if(numCount >= 50) {
-		alert('50게임 이하로 가능합니다');
-		return false;
-	}
-	*/
-	if(!numRound) {
-		alert('회차를 입력해주세요');
-		return false;
-	}else if(!numCount) {
-		alert('갯수를 입력해주세요');
-		return false;
-	}else {
-		$.ajax({
-			type : 'GET',
-			url : '/invest/conn',
-			dataType : 'JSON',
-			data : {
-				numCount : numCount,
-				numRound : numRound, 
-				user_email : user_email
+	user_email = userCheck;
+	lastNumSave_chk("droptop", userCheck);
+	var dropCheck = $("#dropCheck").val();
+	if(dropCheck == "pass") {
+		console.log("TEST::"+numRound+"::"+numCount+"::"+user_email);
+		/*
+		if(numCount >= 50) {
+			alert('50게임 이하로 가능합니다');
+			return false;
+		}
+		*/
+		if(!numRound) {
+			alert('회차를 입력해주세요');
+			return false;
+		}else if(!numCount) {
+			alert('갯수를 입력해주세요');
+			return false;
+		}else {
+			$.ajax({
+				type : 'GET',
+				url : '/invest/droptop_list_saving',
+				dataType : 'JSON',
+				data : {
+					numCount : numCount,
+					numRound : numRound, 
+					user_email : user_email
 				},
-			success : view,
-			beforeSend:function() {
-				$('.wrap-loading').removeClass('display-none');
-			},
-			complete:function() {
-				$('.wrap-loading').addClass('display-none');
-			},
-			error : function(result) {
-				console.log('ERROR');
-			}
-		});
+				success : view,
+				beforeSend:function() {
+					$('.wrap-loading').removeClass('display-none');
+				},
+				complete:function() {
+					$('.wrap-loading').addClass('display-none');
+				},
+				error : function(result) {
+					console.log('ERROR');
+				}
+			});
+		}
+	}else if(dropCheck == "block") {
+		alert("이번주 추첨이 완료되었습니다.");
+		return false;
 	}
+	
 });
 
 function view(data) {

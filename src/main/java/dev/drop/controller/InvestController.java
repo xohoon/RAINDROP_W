@@ -30,6 +30,8 @@ public class InvestController {
 	private InvestMapper investMapper;
 	
 	// ***** 모의투자  ***** //
+	
+	// droptop 페이지 진입
 	@GetMapping(
 			value="/droptop",
 			produces="application/json; charset=utf-8")
@@ -53,27 +55,10 @@ public class InvestController {
 		return "invest/droptop";
 	}
 	
-	
-	// ***** 모의투자  ***** //
-	
-	
-	
-	
-	
-	// ***** 리얼투자  ***** //
-	
-	// mine invest
-	@GetMapping(value="/raindrop")
-	public String Raindrop() {
-		// 필요한 데이터 추가
-		
-		return "invest/raindrop";
-	}
-	
-	// 회원 조합받기
+	// 회원 droptop 50개 추출
 	@ResponseBody
 	@GetMapping(
-			value="/conn",
+			value="/droptop_list_saving",
 			produces="application/json; charset=utf-8")
 	public Object Main(int numCount, int numRound, String user_email) {
 		
@@ -89,7 +74,7 @@ public class InvestController {
 		ArrayList<String> ranList = new ArrayList<>();
 		
 		int member_id = investMapper.get_memberId(user_email);
-//			int round = NewRound.newRound();
+//				int round = NewRound.newRound();
 		int round = numRound;
 		int round_id = investMapper.roundIdGet(round, member_id);
 		int success = 0;
@@ -167,7 +152,7 @@ public class InvestController {
 				int saving6 = Integer.parseInt(ranList.get(5));
 				round_id++;
 				System.out.println("저장되는 번호 :: "+saving1+"^"+saving2+"^"+saving3+"^"+saving4+"^"+saving5+"^"+saving6+"^");
-				investMapper.saving(member_id, saving1, saving2, saving3, saving4, saving5, saving6, round, ranSum, round_id);
+				investMapper.droptop_list_saving(member_id, saving1, saving2, saving3, saving4, saving5, saving6, round, ranSum, round_id);
 				success++;
 				ranList = new ArrayList<>();
 			}
@@ -186,6 +171,42 @@ public class InvestController {
 		
 		return jsonArray;
 	}
+	
+	@GetMapping(value="/dropCheck")
+	public Object DropCheck(String whatDrop, int round) {
+		JSONObject jsonData = new JSONObject();
+		int dropChk = 0;
+		if(whatDrop == "droptop") {
+			dropChk = investMapper.droptopCheck(round);
+		}else if(whatDrop == "raindrop") {
+			dropChk = investMapper.raindropCheck(round);
+		}
+		if(dropChk != 0) {
+			jsonData.put("chk", "pass");
+		}else {
+			jsonData.put("chk", "block");
+		}
+		return jsonData;
+	}
+	
+	
+	// ***** 모의투자  ***** //
+	
+	
+	
+	
+	
+	// ***** 리얼투자  ***** //
+	
+	// mine invest
+	@GetMapping(value="/raindrop")
+	public String Raindrop() {
+		// 필요한 데이터 추가
+		
+		return "invest/raindrop";
+	}
+	
+	
 	
 	// 나의 회차별 등수 및 당첨금액 확인
 	@ResponseBody

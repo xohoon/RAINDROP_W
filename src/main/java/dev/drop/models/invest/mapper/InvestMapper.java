@@ -10,7 +10,24 @@ import dev.drop.models.invest.dto.DroptopResultDTO;
 public interface InvestMapper {
 	
 	// ***** 모의투자  ***** //
-
+	
+	void droptop_list_saving(@Param(value="member_id") int member_id,
+			@Param(value="saving1") int saving1,
+			@Param(value="saving2") int saving2,
+			@Param(value="saving3") int saving3,
+			@Param(value="saving4") int saving4,
+			@Param(value="saving5") int saving5,
+			@Param(value="saving6") int saving6, 
+			@Param(value="round") int round, 
+			@Param(value="ranSum") int ranSum, 
+			@Param(value="round_id") int round_id);
+	
+	// 중복 추첨 체크
+	int droptopCheck(@Param(value="round") int round);
+	int raindropCheck(@Param(value="round") int round);
+	
+	// ***** 모의투자  ***** //
+	
 	void saveRanking(
 			@Param(value="rank01") int rank01, 
 			@Param(value="rank02") int rank02, 
@@ -41,7 +58,6 @@ public interface InvestMapper {
 	
 	int testIdGet(@Param(value="round") int round);
 	
-	// ***** 모의투자  ***** //
 	
 	
 	// ***** caseController  ***** //
@@ -106,16 +122,6 @@ public interface InvestMapper {
 	
 	// ***** 나의 투자  ***** //
 	
-	void saving(@Param(value="member_id") int member_id,
-			@Param(value="saving1") int saving1,
-			@Param(value="saving2") int saving2,
-			@Param(value="saving3") int saving3,
-			@Param(value="saving4") int saving4,
-			@Param(value="saving5") int saving5,
-			@Param(value="saving6") int saving6, 
-			@Param(value="round") int round, 
-			@Param(value="ranSum") int ranSum, 
-			@Param(value="round_id") int round_id);
 
 	int roundIdGet(@Param(value="round") int round, @Param(value="member_id") int member_id);
 

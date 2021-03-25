@@ -8,6 +8,21 @@
 
 	<!-- ***** 모의투자  ***** -->
 	
+	<!-- 모의 회원 추첨번호 저장 -->
+    <insert id="droptop_list_saving">
+		INSERT INTO droptop_list(member_id, num1, num2, num3, num4, num5, num6, in_date, round, sum, round_id) 
+		VALUES(#{member_id}, #{saving1}, #{saving2}, #{saving3}, #{saving4}, #{saving5}, #{saving6}, now(), #{round}, #{ranSum}, #{round_id});
+	</insert>
+	
+	<!-- 주복 추첨 체크 -->
+	<select id="droptopCheck" resultType="int">
+		SELECT COUNT(*) FROM droptop_list WHERE round = #{round};
+	</select>
+	
+	<select id="raindropCheck" resultType="int">
+		SELECT COUNT(*) FROM raindrop_list WHERE round = #{round};
+	</select>
+	
 	<!-- 모의로또 등수 저장 -->
 	<insert id="saveRanking">
 		INSERT INTO test_ranking(round, rank01, rank02, rank03, rank04, rank05, game_total, revenue_total, revenue_after_tax) 
@@ -64,17 +79,17 @@
 	
 	<!-- 저장된 회차별 1등 번호 가져오기 -->
 	<select id="dataAll" resultType="dev.drop.models.invest.dto.DroptopResultDTO">
-        SELECT * FROM list WHERE id = #{id};
+        SELECT * FROM prize_list WHERE id = #{id};
     </select>
     
     <!-- 마지막 회차 저장 위한 id값 -->
     <select id="LastNum" resultType="int">
-    	SELECT max(id) FROM list;
+    	SELECT max(id) FROM prize_list;
     </select>
     
 	<!-- i번째 회차 합계 -->
 	<select id="getSum" resultType="int">
-		SELECT sum FROM list  WHERE id = #{i};
+		SELECT sum FROM prize_list  WHERE id = #{i};
 	</select>
 	
 	<!-- 50단위로 확률 계산 -->
@@ -99,7 +114,7 @@
 	
 	<!-- 지정된 회차별 1등 번호 가져오기 -->
 	<select id="decidedRound" resultType="dev.drop.models.invest.dto.DroptopResultDTO">
-        SELECT * FROM list WHERE id = #{round};
+        SELECT * FROM prize_list WHERE id = #{round};
     </select>
     
 	<!-- ***** caseController  ***** -->
@@ -107,25 +122,19 @@
 	
 	<!-- ***** 나의투자  ***** -->
 	
-	<!-- 회원 추첨번호 저장 -->
-    <insert id="saving">
-		INSERT INTO member_saving(member_id, num1, num2, num3, num4, num5, num6, saveTime, round, Sum, round_id) 
-		VALUES(#{member_id}, #{saving1}, #{saving2}, #{saving3}, #{saving4}, #{saving5}, #{saving6}, now(), #{round}, #{ranSum}, #{round_id});
-	</insert>
-	
 	<!-- 저장된 회차 round_id 갯수 가져오기 -->
     <select id="roundIdGet" resultType="int">
-    	SELECT count(*) FROM member_saving WHERE round = #{round} AND member_id = #{member_id};
+    	SELECT count(*) FROM droptop_list WHERE round = #{round} AND member_id = #{member_id};
     </select>
     
     <!-- 회차별 총 게임수 -->
 	<select id="roundTotal" resultType="int">
-		SELECT count(round_id) FROM member_saving WHERE round = #{round} AND member_id = #{member_id};
+		SELECT count(round_id) FROM droptop_list WHERE round = #{round} AND member_id = #{member_id};
 	</select>
 	
 	<!-- 모의추첨 번호가져오기 -->
 	<select id="roundData" resultType="dev.drop.models.invest.dto.DroptopListDTO">
-        SELECT * FROM member_saving WHERE round_id = #{i} AND round = #{round} AND member_id = #{member_id};
+        SELECT * FROM droptop_list WHERE round_id = #{i} AND round = #{round} AND member_id = #{member_id};
     </select>
 	
 	<!-- ***** 나의투자  ***** -->
