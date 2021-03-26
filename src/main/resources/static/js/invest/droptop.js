@@ -73,7 +73,7 @@ function view(data) {
 	});
 	$('#ajaxReturn1').html(html);
 	html = '';
-//	$("#getBtn").attr('disabled', 'true');
+	$("#getBtn").attr('disabled', 'true');
 }
 
 $('#rankBtn').on('click', function() {

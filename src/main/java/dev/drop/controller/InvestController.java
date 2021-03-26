@@ -181,15 +181,19 @@ public class InvestController {
 		JSONObject jsonData = new JSONObject();
 		int dropChk = 0;
 		int member_id = investMapper.get_memberId(user_email);
-		if(whatDrop == "droptop") {
+		System.out.println("MEMBER NUM :: "+member_id+whatDrop);
+		
+		if(whatDrop.equals("droptop")) {
+			System.out.println("whatdrop? :: "+whatDrop);
 			dropChk = investMapper.droptopCheck(round, member_id);
-		}else if(whatDrop == "raindrop") {
+		}else if(whatDrop.equals("raindrop")) {
+			System.out.println("whatdrop? :: "+whatDrop);
 			dropChk = investMapper.raindropCheck(round, member_id);
 		}
 		System.out.println("controller :: " + dropChk);
-		if(dropChk != 0) {
+		if(dropChk == 0) {
 			jsonData.put("chk", "pass");
-		}else {
+		}else if(dropChk > 0){
 			jsonData.put("chk", "block");
 		}
 		return jsonData;

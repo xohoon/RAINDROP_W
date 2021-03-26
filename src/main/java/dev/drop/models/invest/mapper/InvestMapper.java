@@ -11,17 +11,17 @@ public interface InvestMapper {
 	
 	// ***** DROPTOP  ***** //
 	
-	void droptop_list_saving(@Param(value="member_id") int member_id,
-			@Param(value="saving1") int saving1,
-			@Param(value="saving2") int saving2,
-			@Param(value="saving3") int saving3,
-			@Param(value="saving4") int saving4,
-			@Param(value="saving5") int saving5,
+	// 번호 저장
+	void droptop_list_saving(@Param(value="member_id") int member_id, 
+			@Param(value="saving1") int saving1, 
+			@Param(value="saving2") int saving2, 
+			@Param(value="saving3") int saving3, 
+			@Param(value="saving4") int saving4, 
+			@Param(value="saving5") int saving5, 
 			@Param(value="saving6") int saving6, 
 			@Param(value="round") int round, 
 			@Param(value="ranSum") int ranSum, 
 			@Param(value="round_id") int round_id);
-	
 	
 	// 저장된 회차 round_id 갯수 가져오기
 	int roundIdGet(@Param(value="round") int round, @Param(value="member_id") int member_id);
@@ -37,7 +37,6 @@ public interface InvestMapper {
 	
 	// 모의추첨 번호가져오기
 	DroptopListDTO roundData(@Param(value="i") int i, @Param(value="round") int round, @Param(value="member_id") int member_id);
-	
 	
 	// ***** DROPTOP  ***** //
 	
