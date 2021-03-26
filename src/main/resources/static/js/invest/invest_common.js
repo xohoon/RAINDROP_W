@@ -1,5 +1,9 @@
 $(function(){
 	console.log("invest_common jsFile");
+	var whatDrop = $("#whatDrop").val();
+	var round = $("#numRound").val();
+	var user_email = $("#userCheck").text();
+	lastNumSave_chk(whatDrop, round, user_email);
 });
 function lastNumSave_chk(whatDrop, round, user_email) {
 	console.log("TEST::"+whatDrop+"::"+round);

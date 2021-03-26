@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import dev.drop.models.admin.mapper.AdminMapper;
+import dev.drop.models.cases.mapper.CaseMapper;
 import dev.drop.models.invest.dto.DroptopListDTO;
 import dev.drop.models.invest.dto.DroptopResultDTO;
 import dev.drop.models.invest.mapper.InvestMapper;
@@ -30,6 +32,10 @@ public class AdminController {
 	private MemberMapper memberMapper;
 	@Autowired
 	private InvestMapper investMapper;
+	@Autowired
+	private AdminMapper adminMapper;
+	@Autowired
+	private CaseMapper caseMapper;
 	
 	// 어드민 페이지
 	@GetMapping("/index")
@@ -69,7 +75,7 @@ public class AdminController {
 		// round는 일시적으로 원하는 만큼 받고 나중에 자동으로 전환
 //			int round = NewRound.newRound();
 		int round = numRound;
-		int round_id = investMapper.testIdGet(round);
+		int round_id = adminMapper.testIdGet(round);
 		int count = 0;
 		
 		for(int l = 1; l<=999999; l++) {
@@ -149,7 +155,7 @@ public class AdminController {
 				int testNum05 = Integer.parseInt(ranList.get(4));
 				int testNum06 = Integer.parseInt(ranList.get(5));
 				round_id++;
-				investMapper.testSaving(round, testNum01, testNum02, testNum03, testNum04, testNum05, testNum06, testSum, admin, round_id);
+				adminMapper.testSaving(round, testNum01, testNum02, testNum03, testNum04, testNum05, testNum06, testSum, admin, round_id);
 				System.out.println("저장된 조합 :: " + ranList.toString() + " :: SUM :: " + testSum);
 				count++;
 				ranList = new ArrayList<>();
@@ -182,7 +188,7 @@ public class AdminController {
 		ArrayList<String> saveList = new ArrayList<>();
 //			int round = NewRound.newRound();
 		int round = rankRound;
-		int total = investMapper.gameTotal(round);
+		int total = adminMapper.gameTotal(round);
 		System.out.println("::" + total);
 		int rankCount = 0;
 		int rank01 = 0;
@@ -199,7 +205,7 @@ public class AdminController {
 		*/
 		
 		for(int i = 1; i <= total; i++) {
-			imiDTO = investMapper.imiData(i, round);
+			imiDTO = adminMapper.imiData(i, round);
 			testGame.add(Integer.toString(imiDTO.getNum1()));
 			testGame.add(Integer.toString(imiDTO.getNum2()));
 			testGame.add(Integer.toString(imiDTO.getNum3()));
@@ -207,7 +213,7 @@ public class AdminController {
 			testGame.add(Integer.toString(imiDTO.getNum5()));
 			testGame.add(Integer.toString(imiDTO.getNum6()));
 			
-			saveDTO = investMapper.decidedRound(round);
+			saveDTO = caseMapper.decidedRound(round);
 			saveList.add(Integer.toString(saveDTO.getNum1()));
 			saveList.add(Integer.toString(saveDTO.getNum2()));
 			saveList.add(Integer.toString(saveDTO.getNum3()));
@@ -261,7 +267,7 @@ public class AdminController {
 		
 		long revenue_total = Revenue.total(round, rank01, rank02, rank03, rank04, rank05);
 		double after_tax = revenue_total*0.7;
-		investMapper.saveRanking(rank01, rank02, rank03, rank04, rank05, round, total, revenue_total, after_tax);
+		adminMapper.saveRanking(rank01, rank02, rank03, rank04, rank05, round, total, revenue_total, after_tax);
 		
 		DecimalFormat formater = new DecimalFormat("###,###");
 		

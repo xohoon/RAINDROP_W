@@ -11,11 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import dev.drop.models.cases.mapper.CaseMapper;
 import dev.drop.models.invest.mapper.InvestMapper;
 
 @Controller
 @RequestMapping(value="/case")
 public class CaseController {
+	@Autowired
+	private CaseMapper caseMapper;
 	@Autowired
 	private InvestMapper investMapper;
 
@@ -52,7 +55,7 @@ public class CaseController {
 		String url = "https://www.dhlottery.co.kr/gameResult.do?method=byWin&drwNo=" + last;
 		Document doc = null;
 		String result = "";
-		int search_num = investMapper.search_last();
+		int search_num = caseMapper.search_last();
 		if(search_num != last_num) {
 			try {
 				doc = Jsoup.connect(url).get();
@@ -76,7 +79,7 @@ public class CaseController {
 			int num7 = Integer.parseInt(test07.text());
 			int sum = num1+num2+num3+num4+num5+num6;
 			
-			investMapper.save(num1, num2, num3, num4, num5, num6, num7, sum);
+			caseMapper.save(num1, num2, num3, num4, num5, num6, num7, sum);
 			
 			System.out.println(last+"회차 앙 성공띄!");
 			result = "성공";
@@ -122,7 +125,7 @@ public class CaseController {
 		int last_num = Integer.parseInt(last_result.substring(0, 3));
 		// 최근 회차 가지고오는 코드
 		
-		int list_count = investMapper.count_list();
+		int list_count = caseMapper.count_list();
 		String result_message = "";
 		if(list_count > 0) {
 			result_message = "최근회차를 저장해주세요";
@@ -153,7 +156,7 @@ public class CaseController {
 				int num7 = Integer.parseInt(test07.text());
 				int sum = num1+num2+num3+num4+num5+num6;
 				
-				investMapper.save(num1, num2, num3, num4, num5, num6, num7, sum);
+				caseMapper.save(num1, num2, num3, num4, num5, num6, num7, sum);
 				
 				System.out.println(i+"회차 앙 성공띄!");
 			}
@@ -265,7 +268,7 @@ public class CaseController {
 		int case12 = 0;
 		
 		for(int i = 1; i<=last_round; i++) {
-			int sum = investMapper.getSum(i);
+			int sum = caseMapper.getSum(i);
 			if(20 <= sum && sum <= 100) {
 				case01++;
 			}else if(101 <= sum && sum <=110) {
@@ -293,7 +296,7 @@ public class CaseController {
 			}
 		}
 		int all_round = case01 + case02 + case03 + case04 + case05 + case06 + case07 + case08 + case09 + case10 + case11 + case12;
-		investMapper.caseSum10(case01, case02, case03, case04 , case05 , case06 , case07, case08, case09, case10, case11, case12, last_round, all_round);
+		caseMapper.caseSum10(case01, case02, case03, case04 , case05 , case06 , case07, case08, case09, case10, case11, case12, last_round, all_round);
 		
 		return "caseSum success";
 	}

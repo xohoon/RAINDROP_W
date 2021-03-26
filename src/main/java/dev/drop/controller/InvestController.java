@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import dev.drop.models.cases.mapper.CaseMapper;
 import dev.drop.models.invest.dto.DroptopListDTO;
 import dev.drop.models.invest.dto.DroptopResultDTO;
 import dev.drop.models.invest.mapper.InvestMapper;
@@ -28,6 +29,8 @@ public class InvestController {
 	
 	@Autowired
 	private InvestMapper investMapper;
+	@Autowired
+	private CaseMapper caseMapper;
 	
 	// ***** 모의투자  ***** //
 	
@@ -177,10 +180,11 @@ public class InvestController {
 	public Object DropCheck(String whatDrop, int round, String user_email) {
 		JSONObject jsonData = new JSONObject();
 		int dropChk = 0;
+		int member_id = investMapper.get_memberId(user_email);
 		if(whatDrop == "droptop") {
-			dropChk = investMapper.droptopCheck(round, user_email);
+			dropChk = investMapper.droptopCheck(round, member_id);
 		}else if(whatDrop == "raindrop") {
-			dropChk = investMapper.raindropCheck(round, user_email);
+			dropChk = investMapper.raindropCheck(round, member_id);
 		}
 		System.out.println("controller :: " + dropChk);
 		if(dropChk != 0) {
@@ -246,7 +250,7 @@ public class InvestController {
 			testGame.add(imiDTO.getNum5());
 			testGame.add(imiDTO.getNum6());
 			
-			saveDTO = investMapper.decidedRound(round);
+			saveDTO = caseMapper.decidedRound(round);
 			saveList.add(saveDTO.getNum1());
 			saveList.add(saveDTO.getNum2());
 			saveList.add(saveDTO.getNum3());

@@ -23,9 +23,10 @@
 						<option value="3">방식3</option>
 					</select>
 					<span> >> 방식에 따른 확률 및 다양한 정보 contents</span>
-					<input type="hidden" class="form-control" id="numRound" placeholder="회차 입력" th:value="${comming_round}">
+					<input type="hidden" id="whatDrop" value="droptop">
+					<input type="hidden" id="numRound" placeholder="회차 입력" th:value="${comming_round}">
+					<input type="hidden" id="numCount" value="50" />
 					<div class="set_2">
-						<input type="hidden" id="numCount" value="50" />
 						<span class="input_2">50회 도전</span>
 						<input type="button" class="btn btn-warning input_2" id="getBtn" value="내놔봐">
 					</div>
