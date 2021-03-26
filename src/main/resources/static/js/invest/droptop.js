@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(function(){
 	console.log("droptop jsFile");
 });
 
@@ -17,10 +17,11 @@ $('#getBtn').on('click', function() {
 	numCount = $('#numCount').val();
 	numRound = $('#numRound').val();
 	user_email = userCheck;
-	lastNumSave_chk("droptop", userCheck);
+	lastNumSave_chk("droptop", numRound, userCheck);
 	var dropCheck = $("#dropCheck").val();
+	alert("뭐니"+dropCheck);
 	if(dropCheck == "pass") {
-		console.log("TEST::"+numRound+"::"+numCount+"::"+user_email);
+		console.log("TEST2::"+numRound+"::"+numCount+"::"+user_email);
 		/*
 		if(numCount >= 50) {
 			alert('50게임 이하로 가능합니다');
@@ -57,6 +58,9 @@ $('#getBtn').on('click', function() {
 		}
 	}else if(dropCheck == "block") {
 		alert("이번주 추첨이 완료되었습니다.");
+		return false;
+	}else if(dropCheck == "error") {
+		alert("왜 에러냐");
 		return false;
 	}
 	

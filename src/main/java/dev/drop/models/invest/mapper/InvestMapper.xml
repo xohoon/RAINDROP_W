@@ -16,11 +16,11 @@
 	
 	<!-- 주복 추첨 체크 -->
 	<select id="droptopCheck" resultType="int">
-		SELECT COUNT(*) FROM droptop_list WHERE round = #{round};
+		SELECT COUNT(*) FROM droptop_list WHERE round = #{round} AND email = #{user_email};
 	</select>
 	
 	<select id="raindropCheck" resultType="int">
-		SELECT COUNT(*) FROM raindrop_list WHERE round = #{round};
+		SELECT COUNT(*) FROM raindrop_list WHERE round = #{round} AND email = #{user_email};
 	</select>
 	
 	<!-- 모의로또 등수 저장 -->

@@ -23,8 +23,10 @@ public interface InvestMapper {
 			@Param(value="round_id") int round_id);
 	
 	// 중복 추첨 체크
-	int droptopCheck(@Param(value="round") int round);
-	int raindropCheck(@Param(value="round") int round);
+	int droptopCheck(@Param(value="round") int round, 
+			@Param(value="user_email") String user_email);
+	int raindropCheck(@Param(value="round") int round,
+			@Param(value="user_email") String user_email);
 	
 	// ***** 모의투자  ***** //
 	

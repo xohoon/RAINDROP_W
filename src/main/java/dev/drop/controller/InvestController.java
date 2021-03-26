@@ -172,15 +172,17 @@ public class InvestController {
 		return jsonArray;
 	}
 	
+	@ResponseBody
 	@GetMapping(value="/dropCheck")
-	public Object DropCheck(String whatDrop, int round) {
+	public Object DropCheck(String whatDrop, int round, String user_email) {
 		JSONObject jsonData = new JSONObject();
 		int dropChk = 0;
 		if(whatDrop == "droptop") {
-			dropChk = investMapper.droptopCheck(round);
+			dropChk = investMapper.droptopCheck(round, user_email);
 		}else if(whatDrop == "raindrop") {
-			dropChk = investMapper.raindropCheck(round);
+			dropChk = investMapper.raindropCheck(round, user_email);
 		}
+		System.out.println("controller :: " + dropChk);
 		if(dropChk != 0) {
 			jsonData.put("chk", "pass");
 		}else {

@@ -1,27 +1,24 @@
-function lastNumSave_chk(whatDrop, round) {
-	var chkDrop;
-	if(whatDrop == "raindrop") {
-
-	}else if(whatDrop == "droptop") {
-		
-	}
+$(function(){
+	console.log("invest_common jsFile");
+});
+function lastNumSave_chk(whatDrop, round, user_email) {
+	console.log("TEST::"+whatDrop+"::"+round);
 	$.ajax({
 		type : 'GET',
 		url : '/invest/dropCheck',
 		dataType : "JSON",
 		data : {
-			whatDrop : whatDrop
+			whatDrop : whatDrop,
+			round : round,
+			user_email : user_email
 		},
 		success : function(result, data) {
 			if(result.chk == "pass") {
-				chkDrop = "pass";
-				$("#dropCheck").val(chkDrop);
+				$("#dropCheck").val("pass");
 			}else if(result.chk == "block") {
-				chkDrop = "block";
-				$("#dropCheck").val(chkDrop);
+				$("#dropCheck").val("block");
 			}else {
-				chkDrop = "error";
-				$("#dropCheck").val(chkDrop);
+				$("#dropCheck").val("error");
 			}
 		},
 		error : function(data) {
