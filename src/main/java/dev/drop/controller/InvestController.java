@@ -210,8 +210,23 @@ public class InvestController {
 	
 	// mine invest
 	@GetMapping(value="/raindrop")
-	public String Raindrop() {
-		// 필요한 데이터 추가
+	public String Raindrop(Model model) {
+
+		// 최근 회차 가지고오는 코드
+		String last_url = "https://dhlottery.co.kr/gameResult.do?method=byWin";
+		Document last_doc = null;
+		try {
+			last_doc = Jsoup.connect(last_url).get();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		Elements last1 = last_doc.select("div.win_result");
+		Elements last_1 = last1.get(0).select("h4");
+		String last_result = last_1.text();
+		int last_num = Integer.parseInt(last_result.substring(0, 3));
+		// 최근 회차 가지고오는 코드
+		model.addAttribute("comming_round", last_num+1);
+		
 		
 		return "invest/raindrop";
 	}
