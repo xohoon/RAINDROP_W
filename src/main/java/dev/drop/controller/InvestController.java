@@ -34,7 +34,7 @@ public class InvestController {
 	
 	// ***** 모의투자  ***** //
 	
-	// droptop 페이지 진입
+	// droptop 접근
 	@GetMapping(
 			value="/droptop",
 			produces="application/json; charset=utf-8")
@@ -58,7 +58,7 @@ public class InvestController {
 		return "invest/droptop";
 	}
 	
-	// 회원 droptop 50개 추출
+	// 회원 droptop 50 in
 	@ResponseBody
 	@GetMapping(
 			value="/droptop_list_saving",
@@ -70,6 +70,7 @@ public class InvestController {
 		 * 회원 추출 번호
 		 * 
 		*/
+		
 		JSONObject jsonData = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
 		
@@ -175,30 +176,6 @@ public class InvestController {
 		return jsonArray;
 	}
 	
-	@ResponseBody
-	@GetMapping(value="/dropCheck")
-	public Object DropCheck(String whatDrop, int round, String user_email) {
-		JSONObject jsonData = new JSONObject();
-		int dropChk = 0;
-		int member_id = investMapper.get_memberId(user_email);
-		System.out.println("MEMBER NUM :: "+member_id+whatDrop);
-		
-		if(whatDrop.equals("droptop")) {
-			System.out.println("whatdrop? :: "+whatDrop);
-			dropChk = investMapper.droptopCheck(round, member_id);
-		}else if(whatDrop.equals("raindrop")) {
-			System.out.println("whatdrop? :: "+whatDrop);
-			dropChk = investMapper.raindropCheck(round, member_id);
-		}
-		System.out.println("controller :: " + dropChk);
-		if(dropChk == 0) {
-			jsonData.put("chk", "pass");
-		}else if(dropChk > 0){
-			jsonData.put("chk", "block");
-		}
-		return jsonData;
-	}
-	
 	
 	// ***** 모의투자  ***** //
 	
@@ -208,7 +185,7 @@ public class InvestController {
 	
 	// ***** 리얼투자  ***** //
 	
-	// mine invest
+	// raindrop 접근
 	@GetMapping(value="/raindrop")
 	public String Raindrop(Model model) {
 
@@ -227,11 +204,8 @@ public class InvestController {
 		// 최근 회차 가지고오는 코드
 		model.addAttribute("comming_round", last_num+1);
 		
-		
 		return "invest/raindrop";
 	}
-	
-	
 	
 	// 나의 회차별 등수 및 당첨금액 확인
 	@ResponseBody
@@ -345,6 +319,31 @@ public class InvestController {
 	
 	// ***** 리얼투자  ***** //
 	
+	// 최근 추첨 여부 확인
+	@ResponseBody
+	@GetMapping(value="/dropCheck")
+	public Object DropCheck(String whatDrop, int round, String user_email) {
+		JSONObject jsonData = new JSONObject();
+		int dropChk = 0;
+		int member_id = investMapper.get_memberId(user_email);
+		System.out.println("MEMBER NUM :: "+member_id+whatDrop);
+		
+		if(whatDrop.equals("droptop")) {
+			System.out.println("whatdrop? :: "+whatDrop);
+			dropChk = investMapper.droptopCheck(round, member_id);
+		}else if(whatDrop.equals("raindrop")) {
+			System.out.println("whatdrop? :: "+whatDrop);
+			dropChk = investMapper.raindropCheck(round, member_id);
+		}
+		System.out.println("controller :: " + dropChk);
+		if(dropChk == 0) {
+			jsonData.put("chk", "pass");
+		}else if(dropChk > 0){
+			jsonData.put("chk", "block");
+		}
+		return jsonData;
+	}
+		
 	// 최신회차 가져오기
 	@ResponseBody
 	@GetMapping(
