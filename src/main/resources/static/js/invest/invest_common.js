@@ -26,6 +26,7 @@ function lastRound() {
 	});
 }
 */
+var numCount = 0;
 // 최근 추첨 여부 확인
 function lastNumSave_chk(whatDrop, round, user_email) {
 	console.log("TEST::"+whatDrop+"::"+round);
@@ -53,3 +54,62 @@ function lastNumSave_chk(whatDrop, round, user_email) {
 	});
 }
 
+// 저장
+$('#saveBtn').on('click', function() {
+	var userCheck = $("#userCheck").text();
+	var CoinCheck = $("#CoinCheck").val();
+	var whatDrop = $("#whatDrop").val();
+	numCount = $('#numCount').val();
+	numRound = $('#numRound').val();
+	user_email = userCheck;
+	var dropCheck = $("#dropCheck").val();
+	if(!userCheck || userCheck == "" || userCheck.length < 5) {
+		alert("로그인이 만료되었습니다. 로그인 페이지로 이동합니다.");
+		location.href="/member/signin";
+		return false;
+	}
+	if(whatDrop == "raindrop") {
+		if(numCount > CoinCheck) {
+			alert("코인이 부족합니다.1"+CoinCheck+"개 이하로 입력해주세요.");
+			return false;
+		}else if(numCount > 10) {
+			alert("너무 많은 도박은 해롭습니다. 매주 10코인 이하로 가능합니다.");
+			return false;
+		}
+		numCount = numCount*5;
+	}
+	if(dropCheck == "pass") {
+		if(!numCount) {
+			alert('갯수를 입력해주세요');
+			return false;
+		}else {
+			$.ajax({
+				type : 'GET',
+				url : '/invest/list_saving',
+				dataType : 'JSON',
+				data : {
+					numCount : numCount,
+					numRound : numRound, 
+					user_email : user_email,
+					whatDrop : whatDrop
+				},
+				success : view,
+				beforeSend:function() {
+					$('.wrap-loading').removeClass('display-none');
+				},
+				complete:function() {
+					$('.wrap-loading').addClass('display-none');
+				},
+				error : function(result) {
+					console.log('ERROR');
+				}
+			});
+		}
+	}else if(dropCheck == "block") {
+		alert("이번주 추첨은 이미 완료되었습니다.");
+		return false;
+	}else if(dropCheck == "error") {
+		alert("왜 에러냐");
+		return false;
+	}
+});
