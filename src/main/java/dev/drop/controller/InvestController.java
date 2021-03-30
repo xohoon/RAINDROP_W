@@ -72,7 +72,6 @@ public class InvestController {
 			}else if(whatDrop.equals("droptop")) {
 				imiDTO = investMapper.top_roundData(i, round, member_id);
 			}
-			System.out.println("TEST::"+imiDTO.toString());
 			testGame.add(imiDTO.getNum1());
 			testGame.add(imiDTO.getNum2());
 			testGame.add(imiDTO.getNum3());

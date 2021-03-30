@@ -8,18 +8,18 @@
 
 	<!-- 회차별 1등번호 저장 -->
 	<insert id="save">
-		INSERT INTO list(num1, num2, num3, num4, num5, num6, num7, sum) 
+		INSERT INTO prize_list(num1, num2, num3, num4, num5, num6, num7, sum) 
 		VALUES(#{num1}, #{num2}, #{num3}, #{num4}, #{num5}, #{num6}, #{num7}, #{sum});
 	</insert>
 	
 	<!-- 전체 회차 저장 전 카운트 -->
 	<select id="count_list" resultType="int">
-		SELECT COUNT(*) FROM list;
+		SELECT COUNT(*) FROM prize_list;
 	</select>
 	
 	<!-- 최근회차 저장 되었는지 확인 -->
 	<select id="search_last" resultType="int">
-		SELECT id FROM list ORDER BY id DESC LIMIT 1;
+		SELECT id FROM prize_list ORDER BY id DESC LIMIT 1;
 	</select>
 	
 	<!-- i번째 회차 합계 -->

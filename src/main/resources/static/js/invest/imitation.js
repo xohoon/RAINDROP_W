@@ -11,7 +11,7 @@ var numCount = 0;
 
 $('#numBtn').on('click', function() {
 	var userCheck = $("#userCheck").text();
-	if(!userCheck || userCheck == "" || userCheck.length > 5) {
+	if(!userCheck || userCheck == "" || userCheck.length < 5) {
 		alert("로그인이 만료되었습니다. 로그인 페이지로 이동합니다.");
 		location.href="/member/signin";
 		return false;
@@ -63,7 +63,7 @@ function numView(data) {
 
 $('#rankBtn').on('click', function() {
 	var userCheck = $("#userCheck").text();
-	if(!userCheck || userCheck == "" || userCheck.length > 5) {
+	if(!userCheck || userCheck == "" || userCheck.length < 5) {
 		alert("로그인이 만료되었습니다. 로그인 페이지로 이동합니다.");
 		location.href="/member/signin";
 		return false;
@@ -112,7 +112,7 @@ function rankView(data) {
 // 마지막 회차 추가
 $('#last_save').on('click', function() {
 	var userCheck = $("#userCheck").text();
-	if(!userCheck || userCheck == "" || userCheck.length > 5) {
+	if(!userCheck || userCheck == "" || userCheck.length < 5) {
 		alert("로그인이 만료되었습니다. 로그인 페이지로 이동합니다.");
 		location.href="/member/signin";
 		return false;
@@ -153,7 +153,7 @@ function last_view(data) {
 // 전체 회차 추가
 $('#all_save').on('click', function() {
 	var userCheck = $("#userCheck").text();
-	if(!userCheck || userCheck == "" || userCheck.length > 5) {
+	if(!userCheck || userCheck == "" || userCheck.length < 5) {
 		alert("로그인이 만료되었습니다. 로그인 페이지로 이동합니다.");
 		location.href="/member/signin";
 		return false;

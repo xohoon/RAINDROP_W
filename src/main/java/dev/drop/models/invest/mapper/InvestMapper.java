@@ -26,7 +26,9 @@ public interface InvestMapper {
 			@Param(value="round_id") int round_id);
 	
 	// 모의추첨 번호가져오기
-	DroptopListDTO top_roundData(@Param(value="i") int i, @Param(value="round") int round, @Param(value="member_id") int member_id);
+	DroptopListDTO top_roundData(@Param(value="i") int i, 
+			@Param(value="round") int round, 
+			@Param(value="member_id") int member_id);
 	
 	// 중복 추첨 체크
 	int droptopCheck(@Param(value="round") int round, 
@@ -68,7 +70,9 @@ public interface InvestMapper {
 			@Param(value="member_id") int member_id);
 	
 	// 모의추첨 번호가져오기
-	DroptopListDTO rain_roundData(@Param(value="i") int i, @Param(value="round") int round, @Param(value="member_id") int member_id);
+	DroptopListDTO rain_roundData(@Param(value="i") int i,
+			@Param(value="round") int round, 
+			@Param(value="member_id") int member_id);
 	
 	// 등수 저장
 	void rain_saveRanking(
