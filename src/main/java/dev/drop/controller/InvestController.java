@@ -51,12 +51,12 @@ public class InvestController {
 		int member_id = investMapper.get_memberId(user_email);
 		
 		int round = rankRound;
+		int total = 0;
 		if(whatDrop.equals("raindrop")) {
-			
+			total = investMapper.raindrop_roundTotal(round, member_id);
 		}else if(whatDrop.equals("droptop")) {
-			
+			total = investMapper.droptop_roundTotal(round, member_id);
 		}
-		int total = investMapper.roundTotal(round, member_id);
 		int rankCount = 0;
 		int rank01 = 0;
 		int rank02 = 0;
@@ -67,7 +67,11 @@ public class InvestController {
 		System.out.println("총 : "+total);
 		System.out.println("ROUND : "+rankRound);
 		for(int i = 1; i <= total; i++) {
-			imiDTO = investMapper.roundData(i, round, member_id);
+			if(whatDrop.equals("raindrop")) {
+				imiDTO = investMapper.rain_roundData(i, round, member_id);
+			}else if(whatDrop.equals("droptop")) {
+				imiDTO = investMapper.top_roundData(i, round, member_id);
+			}
 			System.out.println("TEST::"+imiDTO.toString());
 			testGame.add(imiDTO.getNum1());
 			testGame.add(imiDTO.getNum2());
@@ -130,7 +134,11 @@ public class InvestController {
 		long revenue_total = Revenue.total(round, rank01, rank02, rank03, rank04, rank05);
 		double after_tax = revenue_total*0.7;
 		// 저장 제외
-//		investMapper.saveRanking(rank01, rank02, rank03, rank04, rank05, round, total, revenue_total, after_tax);
+		if(whatDrop.equals("raindrop")) {
+			investMapper.rain_saveRanking(member_id, rank01, rank02, rank03, rank04, rank05, round, total, revenue_total, after_tax);
+		}else if(whatDrop.equals("droptop")) {
+			investMapper.top_saveRanking(member_id, rank01, rank02, rank03, rank04, rank05, round, total, revenue_total, after_tax);
+		}
 		
 		DecimalFormat formater = new DecimalFormat("###,###");
 		

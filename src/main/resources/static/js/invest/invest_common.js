@@ -116,8 +116,8 @@ $('#rankBtn').on('click', function() {
 	var userCheck = $("#userCheck").text();
 	var whatDrop = $("#whatDrop").val();
 	rankRound = $('#rankRound').val();
-	user_email = $('#log_email').text();
-	if(!userCheck || userCheck == "" || userCheck.length > 5) {
+	user_email = userCheck
+	if(!userCheck || userCheck == "" || userCheck.length < 5) {
 		alert("로그인이 만료되었습니다. 로그인 페이지로 이동합니다.");
 		location.href="/member/signin";
 		return false;
