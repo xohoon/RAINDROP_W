@@ -7,7 +7,7 @@ var numCount = 0;
 var rankRound = 0;
 
 // droptop 50개 추출
-$('#getBtn').on('click', function() {
+$('#topBtn').on('click', function() {
 	var userCheck = $("#userCheck").text();
 	if(!userCheck || userCheck == "" || userCheck.length < 5) {
 		alert("로그인이 만료되었습니다. 로그인 페이지로 이동합니다.");
@@ -16,10 +16,11 @@ $('#getBtn').on('click', function() {
 	}
 	numCount = $('#numCount').val();
 	numRound = $('#numRound').val();
+	var whatDrop = $("#whatDrop").val();
 	user_email = userCheck;
 	var dropCheck = $("#dropCheck").val();
 	if(dropCheck == "pass") {
-		console.log("TEST2::"+numRound+"::"+numCount+"::"+user_email);
+		console.log("DROPTOP DATA ::"+numRound+"::"+numCount+"::"+user_email+"::"+whatDrop);
 		/*
 		if(numCount >= 50) {
 			alert('50게임 이하로 가능합니다');
@@ -35,12 +36,13 @@ $('#getBtn').on('click', function() {
 		}else {
 			$.ajax({
 				type : 'GET',
-				url : '/invest/droptop_list_saving',
+				url : '/invest/list_saving',
 				dataType : 'JSON',
 				data : {
 					numCount : numCount,
 					numRound : numRound, 
-					user_email : user_email
+					user_email : user_email,
+					whatDrop : whatDrop
 				},
 				success : view,
 				beforeSend:function() {

@@ -7,12 +7,50 @@
 <mapper namespace="dev.drop.models.invest.mapper.InvestMapper">
 
 	<!-- ***** DROPTOP  ***** -->
-	
-	<!-- 모의 회원 추첨번호 저장 -->
+	<!-- DROPTOP 추첨번호 저장 -->
     <insert id="droptop_list_saving">
 		INSERT INTO droptop_list(member_id, num1, num2, num3, num4, num5, num6, in_date, round, sum, round_id) 
 		VALUES(#{member_id}, #{saving1}, #{saving2}, #{saving3}, #{saving4}, #{saving5}, #{saving6}, now(), #{round}, #{ranSum}, #{round_id});
 	</insert>
+	
+    <!-- 회차별 총 게임수 -->
+	<select id="roundTotal" resultType="int">
+		SELECT count(round_id) FROM droptop_list WHERE round = #{round} AND member_id = #{member_id};
+	</select>
+	
+	<!-- 모의추첨 번호가져오기 -->
+	<select id="roundData" resultType="dev.drop.models.invest.dto.DroptopListDTO">
+        SELECT * FROM droptop_list WHERE round_id = #{i} AND round = #{round} AND member_id = #{member_id};
+    </select>
+    
+    <!-- 중복 추첨 체크 -->
+	<select id="droptopCheck" resultType="int">
+		SELECT COUNT(*) FROM droptop_list WHERE round = #{round} AND member_id = #{member_id};
+	</select>
+	<!-- ***** DROPTOP  ***** -->
+	
+	
+	
+	<!-- ***** RAINDROP  ***** -->
+	<!-- RAINDROP 추첨번호 저장 -->
+    <insert id="raindrop_list_saving">
+		INSERT INTO raindrop_list(member_id, num1, num2, num3, num4, num5, num6, in_date, round, sum, round_id) 
+		VALUES(#{member_id}, #{saving1}, #{saving2}, #{saving3}, #{saving4}, #{saving5}, #{saving6}, now(), #{round}, #{ranSum}, #{round_id});
+	</insert>
+	
+    <!-- 중복 추첨 체크 -->
+	<select id="raindropCheck" resultType="int">
+		SELECT COUNT(*) FROM raindrop_list WHERE round = #{round} AND member_id = #{member_id};
+	</select>
+	<!-- ***** RAINDROP  ***** -->
+	
+	
+	
+	<!-- ***** COMMON  ***** -->
+	<!-- 회원 ID 가져오기 -->
+	<select id="get_memberId" resultType="int">
+		SELECT id FROM member WHERE email = #{user_email};
+	</select>
 	
 	<!-- 저장된 회차 round_id 갯수 가져오기 -->
     <select id="roundIdGet" resultType="int">
@@ -28,44 +66,6 @@
 	<select id="dataAll" resultType="dev.drop.models.invest.dto.DroptopResultDTO">
         SELECT * FROM prize_list WHERE id = #{id};
     </select>
-    
-    <!-- 회차별 총 게임수 -->
-	<select id="roundTotal" resultType="int">
-		SELECT count(round_id) FROM droptop_list WHERE round = #{round} AND member_id = #{member_id};
-	</select>
-	
-	<!-- 모의추첨 번호가져오기 -->
-	<select id="roundData" resultType="dev.drop.models.invest.dto.DroptopListDTO">
-        SELECT * FROM droptop_list WHERE round_id = #{i} AND round = #{round} AND member_id = #{member_id};
-    </select>
-    
-	
-	<!-- ***** DROPTOP  ***** -->
-	
-	
-	
-	<!-- ***** RAINDROP  ***** -->
-	
-	<!-- ***** RAINDROP  ***** -->
-	
-	
-	
-	<!-- ***** COMMON  ***** -->
-
-	<!-- 중복 추첨 체크 -->
-	<select id="droptopCheck" resultType="int">
-		SELECT COUNT(*) FROM droptop_list WHERE round = #{round} AND member_id = #{member_id};
-	</select>
-	<select id="raindropCheck" resultType="int">
-		SELECT COUNT(*) FROM raindrop_list WHERE round = #{round} AND member_id = #{member_id};
-	</select>
-	
-	<!-- 회원 ID 가져오기 -->
-	<select id="get_memberId" resultType="int">
-		SELECT id FROM member WHERE email = #{user_email};
-	</select>
-	
-	
 	<!-- ***** COMMON  ***** -->
 	
 	

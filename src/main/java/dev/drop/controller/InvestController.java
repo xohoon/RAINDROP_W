@@ -61,9 +61,9 @@ public class InvestController {
 	// 회원 droptop 50 in
 	@ResponseBody
 	@GetMapping(
-			value="/droptop_list_saving",
+			value="/list_saving",
 			produces="application/json; charset=utf-8")
-	public Object Main(int numCount, int numRound, String user_email) {
+	public Object Main(int numCount, int numRound, String user_email, String whatDrop) {
 		
 		/*
 		 * 
@@ -73,12 +73,10 @@ public class InvestController {
 		
 		JSONObject jsonData = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
-		
 		DroptopResultDTO saveDTO = new DroptopResultDTO();
 		ArrayList<String> ranList = new ArrayList<>();
 		
 		int member_id = investMapper.get_memberId(user_email);
-//				int round = NewRound.newRound();
 		int round = numRound;
 		int round_id = investMapper.roundIdGet(round, member_id);
 		int success = 0;
@@ -156,7 +154,11 @@ public class InvestController {
 				int saving6 = Integer.parseInt(ranList.get(5));
 				round_id++;
 				System.out.println("저장되는 번호 :: "+saving1+"^"+saving2+"^"+saving3+"^"+saving4+"^"+saving5+"^"+saving6+"^");
-				investMapper.droptop_list_saving(member_id, saving1, saving2, saving3, saving4, saving5, saving6, round, ranSum, round_id);
+				if(whatDrop.equals("droptop")) {
+					investMapper.droptop_list_saving(member_id, saving1, saving2, saving3, saving4, saving5, saving6, round, ranSum, round_id);
+				}else if(whatDrop.equals("raindrop")) {
+					investMapper.raindrop_list_saving(member_id, saving1, saving2, saving3, saving4, saving5, saving6, round, ranSum, round_id);
+				}
 				success++;
 				ranList = new ArrayList<>();
 			}
@@ -315,7 +317,6 @@ public class InvestController {
 		
 		return jsonArray;
 	}
-	
 	
 	// ***** 리얼투자  ***** //
 	
