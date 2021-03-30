@@ -10,6 +10,9 @@ import dev.drop.models.invest.dto.DroptopResultDTO;
 public interface InvestMapper {
 	
 	// ***** DROPTOP  ***** //
+	// 회차별 총 게임수
+	int roundTotal(@Param(value="round") int round, @Param(value="member_id") int member_id);
+		
 	// DROPTOP 번호 저장
 	void droptop_list_saving(@Param(value="member_id") int member_id, 
 			@Param(value="saving1") int saving1, 
@@ -21,9 +24,6 @@ public interface InvestMapper {
 			@Param(value="round") int round, 
 			@Param(value="ranSum") int ranSum, 
 			@Param(value="round_id") int round_id);
-	
-	// 회차별 총 게임수
-	int roundTotal(@Param(value="round") int round, @Param(value="member_id") int member_id);
 	
 	// 모의추첨 번호가져오기
 	DroptopListDTO roundData(@Param(value="i") int i, @Param(value="round") int round, @Param(value="member_id") int member_id);

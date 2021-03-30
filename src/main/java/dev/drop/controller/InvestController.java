@@ -32,7 +32,122 @@ public class InvestController {
 	@Autowired
 	private CaseMapper caseMapper;
 	
-	// ***** 모의투자  ***** //
+	// ***** DROPTOP  ***** //
+	
+
+	// 나의 회차별 등수 및 당첨금액 확인
+	@ResponseBody
+	@GetMapping(
+			value="/myRank",
+			produces="application/json; charset=utf-8")
+	public Object myRank(int rankRound, String user_email, String whatDrop) {
+		JSONObject jsonData = new JSONObject();
+		JSONArray jsonArray = new JSONArray();
+		DroptopListDTO imiDTO = new DroptopListDTO();
+		DroptopResultDTO saveDTO = new DroptopResultDTO();
+		ArrayList<Integer> testGame = new ArrayList<>();
+		ArrayList<Integer> saveList = new ArrayList<>();
+		
+		int member_id = investMapper.get_memberId(user_email);
+		
+		int round = rankRound;
+		if(whatDrop.equals("raindrop")) {
+			
+		}else if(whatDrop.equals("droptop")) {
+			
+		}
+		int total = investMapper.roundTotal(round, member_id);
+		int rankCount = 0;
+		int rank01 = 0;
+		int rank02 = 0;
+		int rank03 = 0;
+		int rank04 = 0;
+		int rank05 = 0;
+		System.out.println("회원아이디 : "+member_id);
+		System.out.println("총 : "+total);
+		System.out.println("ROUND : "+rankRound);
+		for(int i = 1; i <= total; i++) {
+			imiDTO = investMapper.roundData(i, round, member_id);
+			System.out.println("TEST::"+imiDTO.toString());
+			testGame.add(imiDTO.getNum1());
+			testGame.add(imiDTO.getNum2());
+			testGame.add(imiDTO.getNum3());
+			testGame.add(imiDTO.getNum4());
+			testGame.add(imiDTO.getNum5());
+			testGame.add(imiDTO.getNum6());
+			
+			saveDTO = caseMapper.decidedRound(round);
+			saveList.add(saveDTO.getNum1());
+			saveList.add(saveDTO.getNum2());
+			saveList.add(saveDTO.getNum3());
+			saveList.add(saveDTO.getNum4());
+			saveList.add(saveDTO.getNum5());
+			saveList.add(saveDTO.getNum6());
+			
+			for(int a = 0; a < testGame.size(); a++) {
+				for(int b = 0; b < saveList.size(); b++) {
+					if(testGame.get(a).equals(saveList.get(b))) {
+						rankCount++;
+					}
+				}
+			}
+			//7번은 보너스 번호
+			saveList.add(saveDTO.getNum7());
+			
+			if(rankCount == 6) {
+				rank01++;
+				rankCount = 0;
+				System.out.println("1등"+rank01);
+			}else if(rankCount == 5) {
+				for(int c = 0; c < testGame.size(); c++) {
+					if(testGame.get(c).equals(saveList.get(6))) {
+						
+						rank02++;
+						rankCount = 0;
+						System.out.println("2등"+rank02);
+					}
+				}
+				if(rankCount == 5) {
+					rank03++;
+					rankCount = 0;
+					System.out.println("3등"+rank03);
+				}
+			}else if(rankCount == 4) {
+				rank04++;
+				rankCount = 0;
+				System.out.println("4등"+rank04);
+			}else if(rankCount == 3) {
+				rank05++;
+				rankCount = 0;
+				System.out.println("5등"+rank05);
+			}
+			
+			// List reset
+			rankCount = 0;
+			testGame = new ArrayList<>();
+			saveList = new ArrayList<>();
+		}
+		long revenue_total = Revenue.total(round, rank01, rank02, rank03, rank04, rank05);
+		double after_tax = revenue_total*0.7;
+		// 저장 제외
+//		investMapper.saveRanking(rank01, rank02, rank03, rank04, rank05, round, total, revenue_total, after_tax);
+		
+		DecimalFormat formater = new DecimalFormat("###,###");
+		
+		jsonData.put("round", round);
+		jsonData.put("rank1", rank01);
+		jsonData.put("rank2", rank02);
+		jsonData.put("rank3", rank03);
+		jsonData.put("rank4", rank04);
+		jsonData.put("rank5", rank05);
+		jsonData.put("total", total);
+		jsonData.put("revenue_total", formater.format(revenue_total));
+		jsonData.put("tax", formater.format(after_tax));
+		
+		jsonArray.add(jsonData);
+		
+		return jsonArray;
+	}
 	
 	// droptop 접근
 	@GetMapping(
@@ -58,7 +173,40 @@ public class InvestController {
 		return "invest/droptop";
 	}
 	
-	// 회원 droptop 50 in
+	// ***** DROPTOP  ***** //
+	
+	
+	
+	
+	
+	// ***** RAINDROP  ***** //
+	// raindrop 접근
+	@GetMapping(value="/raindrop")
+	public String Raindrop(Model model) {
+
+		// 최근 회차 가지고오는 코드
+		String last_url = "https://dhlottery.co.kr/gameResult.do?method=byWin";
+		Document last_doc = null;
+		try {
+			last_doc = Jsoup.connect(last_url).get();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		Elements last1 = last_doc.select("div.win_result");
+		Elements last_1 = last1.get(0).select("h4");
+		String last_result = last_1.text();
+		int last_num = Integer.parseInt(last_result.substring(0, 3));
+		// 최근 회차 가지고오는 코드
+		model.addAttribute("comming_round", last_num+1);
+		
+		return "invest/raindrop";
+	}
+	// ***** RAINDROP  ***** //
+	
+	
+	
+	// ***** COMMON  ***** //
+	// 번호 저장 공통
 	@ResponseBody
 	@GetMapping(
 			value="/list_saving",
@@ -178,148 +326,6 @@ public class InvestController {
 		return jsonArray;
 	}
 	
-	
-	// ***** 모의투자  ***** //
-	
-	
-	
-	
-	
-	// ***** 리얼투자  ***** //
-	
-	// raindrop 접근
-	@GetMapping(value="/raindrop")
-	public String Raindrop(Model model) {
-
-		// 최근 회차 가지고오는 코드
-		String last_url = "https://dhlottery.co.kr/gameResult.do?method=byWin";
-		Document last_doc = null;
-		try {
-			last_doc = Jsoup.connect(last_url).get();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		Elements last1 = last_doc.select("div.win_result");
-		Elements last_1 = last1.get(0).select("h4");
-		String last_result = last_1.text();
-		int last_num = Integer.parseInt(last_result.substring(0, 3));
-		// 최근 회차 가지고오는 코드
-		model.addAttribute("comming_round", last_num+1);
-		
-		return "invest/raindrop";
-	}
-	
-	// 나의 회차별 등수 및 당첨금액 확인
-	@ResponseBody
-	@GetMapping(
-			value="/myRank",
-			produces="application/json; charset=utf-8")
-	public Object myRank(int rankRound, String user_email) {
-		JSONObject jsonData = new JSONObject();
-		JSONArray jsonArray = new JSONArray();
-		DroptopListDTO imiDTO = new DroptopListDTO();
-		DroptopResultDTO saveDTO = new DroptopResultDTO();
-		ArrayList<Integer> testGame = new ArrayList<>();
-		ArrayList<Integer> saveList = new ArrayList<>();
-		
-		int member_id = investMapper.get_memberId(user_email);
-		
-		int round = rankRound;
-		int total = investMapper.roundTotal(round, member_id);
-		int rankCount = 0;
-		int rank01 = 0;
-		int rank02 = 0;
-		int rank03 = 0;
-		int rank04 = 0;
-		int rank05 = 0;
-		System.out.println("회원아이디 : "+member_id);
-		System.out.println("총 : "+total);
-		System.out.println("ROUND : "+rankRound);
-		for(int i = 1; i <= total; i++) {
-			imiDTO = investMapper.roundData(i, round, member_id);
-			System.out.println("TEST::"+imiDTO.toString());
-			testGame.add(imiDTO.getNum1());
-			testGame.add(imiDTO.getNum2());
-			testGame.add(imiDTO.getNum3());
-			testGame.add(imiDTO.getNum4());
-			testGame.add(imiDTO.getNum5());
-			testGame.add(imiDTO.getNum6());
-			
-			saveDTO = caseMapper.decidedRound(round);
-			saveList.add(saveDTO.getNum1());
-			saveList.add(saveDTO.getNum2());
-			saveList.add(saveDTO.getNum3());
-			saveList.add(saveDTO.getNum4());
-			saveList.add(saveDTO.getNum5());
-			saveList.add(saveDTO.getNum6());
-			
-			for(int a = 0; a < testGame.size(); a++) {
-				for(int b = 0; b < saveList.size(); b++) {
-					if(testGame.get(a).equals(saveList.get(b))) {
-						rankCount++;
-					}
-				}
-			}
-			//7번은 보너스 번호
-			saveList.add(saveDTO.getNum7());
-			
-			if(rankCount == 6) {
-				rank01++;
-				rankCount = 0;
-				System.out.println("1등"+rank01);
-			}else if(rankCount == 5) {
-				for(int c = 0; c < testGame.size(); c++) {
-					if(testGame.get(c).equals(saveList.get(6))) {
-						
-						rank02++;
-						rankCount = 0;
-						System.out.println("2등"+rank02);
-					}
-				}
-				if(rankCount == 5) {
-					rank03++;
-					rankCount = 0;
-					System.out.println("3등"+rank03);
-				}
-			}else if(rankCount == 4) {
-				rank04++;
-				rankCount = 0;
-				System.out.println("4등"+rank04);
-			}else if(rankCount == 3) {
-				rank05++;
-				rankCount = 0;
-				System.out.println("5등"+rank05);
-			}
-			
-			// List reset
-			rankCount = 0;
-			testGame = new ArrayList<>();
-			saveList = new ArrayList<>();
-		}
-		long revenue_total = Revenue.total(round, rank01, rank02, rank03, rank04, rank05);
-		double after_tax = revenue_total*0.7;
-		// 저장 제외
-//		investMapper.saveRanking(rank01, rank02, rank03, rank04, rank05, round, total, revenue_total, after_tax);
-		
-		DecimalFormat formater = new DecimalFormat("###,###");
-		
-		jsonData.put("round", round);
-		jsonData.put("rank1", rank01);
-		jsonData.put("rank2", rank02);
-		jsonData.put("rank3", rank03);
-		jsonData.put("rank4", rank04);
-		jsonData.put("rank5", rank05);
-		jsonData.put("total", total);
-		jsonData.put("revenue_total", formater.format(revenue_total));
-		jsonData.put("tax", formater.format(after_tax));
-		
-		jsonArray.add(jsonData);
-		
-		return jsonArray;
-	}
-	
-	// ***** 리얼투자  ***** //
-	
 	// 최근 추첨 여부 확인
 	@ResponseBody
 	@GetMapping(value="/dropCheck")
@@ -368,4 +374,6 @@ public class InvestController {
 		jsonData.put("getRound", last_num);
 		return jsonData;
 	}
+	
+	// ***** COMMON  ***** //
 }
