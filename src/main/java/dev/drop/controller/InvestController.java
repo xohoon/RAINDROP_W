@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import dev.drop.models.cases.mapper.CaseMapper;
-import dev.drop.models.invest.dto.DroptopListDTO;
-import dev.drop.models.invest.dto.DroptopResultDTO;
+import dev.drop.models.invest.dto.SaveListDTO;
+import dev.drop.models.invest.dto.PrizeListDTO;
 import dev.drop.models.invest.mapper.InvestMapper;
 import dev.drop.utils.Revenue;
 
@@ -43,18 +43,21 @@ public class InvestController {
 	public Object myRank(int rankRound, String user_email, String whatDrop) {
 		JSONObject jsonData = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
-		DroptopListDTO imiDTO = new DroptopListDTO();
-		DroptopResultDTO saveDTO = new DroptopResultDTO();
+		SaveListDTO imiDTO = new SaveListDTO();
+		PrizeListDTO saveDTO = new PrizeListDTO();
 		ArrayList<Integer> testGame = new ArrayList<>();
 		ArrayList<Integer> saveList = new ArrayList<>();
+		DecimalFormat formater = new DecimalFormat("###,###");
 		
 		int member_id = investMapper.get_memberId(user_email);
-		
 		int round = rankRound;
 		int total = 0;
+		int result = 0;
 		if(whatDrop.equals("raindrop")) {
+			result = investMapper.rain_resultCheck(member_id, round);
 			total = investMapper.rain_roundTotal(round, member_id);
 		}else if(whatDrop.equals("droptop")) {
+			result = investMapper.top_resultCheck(member_id, round);
 			total = investMapper.top_roundTotal(round, member_id);
 		}
 		int rankCount = 0;
@@ -63,93 +66,100 @@ public class InvestController {
 		int rank03 = 0;
 		int rank04 = 0;
 		int rank05 = 0;
-		System.out.println("회원아이디 : "+member_id);
-		System.out.println("총 : "+total);
-		System.out.println("ROUND : "+rankRound);
-		for(int i = 1; i <= total; i++) {
-			if(whatDrop.equals("raindrop")) {
-				imiDTO = investMapper.rain_roundData(i, round, member_id);
-			}else if(whatDrop.equals("droptop")) {
-				imiDTO = investMapper.top_roundData(i, round, member_id);
-			}
-			testGame.add(imiDTO.getNum1());
-			testGame.add(imiDTO.getNum2());
-			testGame.add(imiDTO.getNum3());
-			testGame.add(imiDTO.getNum4());
-			testGame.add(imiDTO.getNum5());
-			testGame.add(imiDTO.getNum6());
-			
-			saveDTO = caseMapper.decidedRound(round);
-			saveList.add(saveDTO.getNum1());
-			saveList.add(saveDTO.getNum2());
-			saveList.add(saveDTO.getNum3());
-			saveList.add(saveDTO.getNum4());
-			saveList.add(saveDTO.getNum5());
-			saveList.add(saveDTO.getNum6());
-			
-			for(int a = 0; a < testGame.size(); a++) {
-				for(int b = 0; b < saveList.size(); b++) {
-					if(testGame.get(a).equals(saveList.get(b))) {
-						rankCount++;
+		if(result == 0) {
+			System.out.println("회원아이디 : "+member_id);
+			System.out.println("총 : "+total);
+			System.out.println("ROUND : "+rankRound);
+			for(int i = 1; i <= total; i++) {
+				if(whatDrop.equals("raindrop")) {
+					imiDTO = investMapper.rain_roundData(i, round, member_id);
+				}else if(whatDrop.equals("droptop")) {
+					imiDTO = investMapper.top_roundData(i, round, member_id);
+				}
+				testGame.add(imiDTO.getNum1());
+				testGame.add(imiDTO.getNum2());
+				testGame.add(imiDTO.getNum3());
+				testGame.add(imiDTO.getNum4());
+				testGame.add(imiDTO.getNum5());
+				testGame.add(imiDTO.getNum6());
+				
+				saveDTO = caseMapper.roundResult(round);
+				saveList.add(saveDTO.getNum1());
+				saveList.add(saveDTO.getNum2());
+				saveList.add(saveDTO.getNum3());
+				saveList.add(saveDTO.getNum4());
+				saveList.add(saveDTO.getNum5());
+				saveList.add(saveDTO.getNum6());
+				
+				for(int a = 0; a < testGame.size(); a++) {
+					for(int b = 0; b < saveList.size(); b++) {
+						if(testGame.get(a).equals(saveList.get(b))) {
+							rankCount++;
+						}
 					}
 				}
-			}
-			//7번은 보너스 번호
-			saveList.add(saveDTO.getNum7());
-			
-			if(rankCount == 6) {
-				rank01++;
-				rankCount = 0;
-				System.out.println("1등"+rank01);
-			}else if(rankCount == 5) {
-				for(int c = 0; c < testGame.size(); c++) {
-					if(testGame.get(c).equals(saveList.get(6))) {
-						
-						rank02++;
-						rankCount = 0;
-						System.out.println("2등"+rank02);
-					}
-				}
-				if(rankCount == 5) {
-					rank03++;
+				//7번은 보너스 번호
+				saveList.add(saveDTO.getNum7());
+				// 등수 로직
+				if(rankCount == 6) {
+					rank01++;
 					rankCount = 0;
-					System.out.println("3등"+rank03);
+					System.out.println("1등"+rank01);
+				}else if(rankCount == 5) {
+					for(int c = 0; c < testGame.size(); c++) {
+						if(testGame.get(c).equals(saveList.get(6))) {
+							
+							rank02++;
+							rankCount = 0;
+							System.out.println("2등"+rank02);
+						}
+					}
+					if(rankCount == 5) {
+						rank03++;
+						rankCount = 0;
+						System.out.println("3등"+rank03);
+					}
+				}else if(rankCount == 4) {
+					rank04++;
+					rankCount = 0;
+					System.out.println("4등"+rank04);
+				}else if(rankCount == 3) {
+					rank05++;
+					rankCount = 0;
+					System.out.println("5등"+rank05);
 				}
-			}else if(rankCount == 4) {
-				rank04++;
+				
+				// List reset
 				rankCount = 0;
-				System.out.println("4등"+rank04);
-			}else if(rankCount == 3) {
-				rank05++;
-				rankCount = 0;
-				System.out.println("5등"+rank05);
+				testGame = new ArrayList<>();
+				saveList = new ArrayList<>();
 			}
-			
-			// List reset
-			rankCount = 0;
-			testGame = new ArrayList<>();
-			saveList = new ArrayList<>();
-		}
-		long revenue_total = Revenue.total(round, rank01, rank02, rank03, rank04, rank05);
-		double after_tax = revenue_total*0.7;
-		// 저장 제외
-		if(whatDrop.equals("raindrop")) {
-			investMapper.rain_saveRanking(member_id, rank01, rank02, rank03, rank04, rank05, round, total, revenue_total, after_tax);
-		}else if(whatDrop.equals("droptop")) {
-			investMapper.top_saveRanking(member_id, rank01, rank02, rank03, rank04, rank05, round, total, revenue_total, after_tax);
+			// 회차별 등수 당첨금액 계산
+			long revenue_total = Revenue.total(round, rank01, rank02, rank03, rank04, rank05);
+			double after_tax = revenue_total*0.7;
+			// 저장
+			if(whatDrop.equals("raindrop")) {
+				investMapper.rain_saveRanking(member_id, rank01, rank02, rank03, rank04, rank05, round, total, revenue_total, after_tax);
+			}else if(whatDrop.equals("droptop")) {
+				investMapper.top_saveRanking(member_id, rank01, rank02, rank03, rank04, rank05, round, total, revenue_total, after_tax);
+			}
+			jsonData.put("round", round);
+			jsonData.put("rank1", rank01);
+			jsonData.put("rank2", rank02);
+			jsonData.put("rank3", rank03);
+			jsonData.put("rank4", rank04);
+			jsonData.put("rank5", rank05);
+			jsonData.put("total", total);
+			jsonData.put("revenue_total", formater.format(revenue_total));
+			//result = 0 end
+		}else if(result >= 1){
+			if(whatDrop.equals("raindrop")) {
+				investMapper.rain_getResult(round, member_id);
+			}else if(whatDrop.equals("droptop")) {
+				investMapper.top_getResult(round, member_id);
+			}
 		}
 		
-		DecimalFormat formater = new DecimalFormat("###,###");
-		
-		jsonData.put("round", round);
-		jsonData.put("rank1", rank01);
-		jsonData.put("rank2", rank02);
-		jsonData.put("rank3", rank03);
-		jsonData.put("rank4", rank04);
-		jsonData.put("rank5", rank05);
-		jsonData.put("total", total);
-		jsonData.put("revenue_total", formater.format(revenue_total));
-		jsonData.put("tax", formater.format(after_tax));
 		
 		jsonArray.add(jsonData);
 		
@@ -228,7 +238,7 @@ public class InvestController {
 		
 		JSONObject jsonData = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
-		DroptopResultDTO saveDTO = new DroptopResultDTO();
+		PrizeListDTO saveDTO = new PrizeListDTO();
 		ArrayList<String> ranList = new ArrayList<>();
 		
 		int member_id = investMapper.get_memberId(user_email);
@@ -268,7 +278,7 @@ public class InvestController {
 			ArrayList<String> saveList = new ArrayList<String>();
 			int last = investMapper.LastNum();
 			for(int i = 1; i <= last; i++) {
-				saveDTO = investMapper.dataAll(i);
+				saveDTO = caseMapper.roundResult(i);
 				saveList.add(Integer.toString(saveDTO.getNum1()));
 				saveList.add(Integer.toString(saveDTO.getNum2()));
 				saveList.add(Integer.toString(saveDTO.getNum3()));

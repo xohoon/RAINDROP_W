@@ -1,6 +1,7 @@
 package dev.drop.models.invest.dto;
 
-public class DroptopListDTO {
+public class SaveListDTO {
+	
 	private int member_id;
 	private int round;
 	private int round_id;
@@ -12,6 +13,7 @@ public class DroptopListDTO {
 	private int num6;
 	private int ranking;
 	private int sum;
+	
 	public int getMember_id() {
 		return member_id;
 	}

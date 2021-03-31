@@ -48,7 +48,7 @@
 	</insert>
 	
 	<!-- 지정된 회차별 1등 번호 가져오기 -->
-	<select id="decidedRound" resultType="dev.drop.models.invest.dto.DroptopResultDTO">
+	<select id="roundResult" resultType="dev.drop.models.invest.dto.PrizeListDTO">
         SELECT * FROM prize_list WHERE id = #{round};
     </select>
     

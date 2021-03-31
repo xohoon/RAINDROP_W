@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import dev.drop.models.admin.mapper.AdminMapper;
 import dev.drop.models.cases.mapper.CaseMapper;
-import dev.drop.models.invest.dto.DroptopListDTO;
-import dev.drop.models.invest.dto.DroptopResultDTO;
+import dev.drop.models.invest.dto.SaveListDTO;
+import dev.drop.models.invest.dto.PrizeListDTO;
 import dev.drop.models.invest.mapper.InvestMapper;
 import dev.drop.models.member.dto.MemberDTO;
 import dev.drop.models.member.mapper.MemberMapper;
@@ -70,7 +70,7 @@ public class AdminController {
 		JSONObject jsonData = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
 		System.out.println(":: TEST DATA SCRIPT ::");
-		DroptopResultDTO saveDTO = new DroptopResultDTO();
+		PrizeListDTO saveDTO = new PrizeListDTO();
 		ArrayList<String> ranList = new ArrayList<>();
 		// round는 일시적으로 원하는 만큼 받고 나중에 자동으로 전환
 //			int round = NewRound.newRound();
@@ -112,7 +112,7 @@ public class AdminController {
 			ArrayList<String> saveList = new ArrayList<String>();
 			int last = investMapper.LastNum();
 			for(int i = 1; i <= last; i++) {
-				saveDTO = investMapper.dataAll(i);
+				saveDTO = caseMapper.roundResult(i);
 				saveList.add(Integer.toString(saveDTO.getNum1()));
 				saveList.add(Integer.toString(saveDTO.getNum2()));
 				saveList.add(Integer.toString(saveDTO.getNum3()));
@@ -182,8 +182,8 @@ public class AdminController {
 	public Object RankingCount(int rankRound) {
 		JSONObject jsonData = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
-		DroptopListDTO imiDTO = new DroptopListDTO();
-		DroptopResultDTO saveDTO = new DroptopResultDTO();
+		SaveListDTO imiDTO = new SaveListDTO();
+		PrizeListDTO saveDTO = new PrizeListDTO();
 		ArrayList<String> testGame = new ArrayList<>();
 		ArrayList<String> saveList = new ArrayList<>();
 //			int round = NewRound.newRound();
@@ -213,7 +213,7 @@ public class AdminController {
 			testGame.add(Integer.toString(imiDTO.getNum5()));
 			testGame.add(Integer.toString(imiDTO.getNum6()));
 			
-			saveDTO = caseMapper.decidedRound(round);
+			saveDTO = caseMapper.roundResult(round);
 			saveList.add(Integer.toString(saveDTO.getNum1()));
 			saveList.add(Integer.toString(saveDTO.getNum2()));
 			saveList.add(Integer.toString(saveDTO.getNum3()));

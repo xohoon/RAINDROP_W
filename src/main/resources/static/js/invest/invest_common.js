@@ -160,7 +160,6 @@ function rankView(data) {
 	  	html += '<h4>4등 :: ' + val.rank4 + '</h4>';
 	  	html += '<h4>5등 :: ' + val.rank5 + '</h4>';
 	  	html += '<h4>당첨 총 금액 :: ' + val.revenue_total + '</h4>';
-	  	html += '<h4>세금 제외금액 :: ' + val.tax + '</h4>';
 	  	html += '</div>';
 	});
 	$('#returnRank').html(html);

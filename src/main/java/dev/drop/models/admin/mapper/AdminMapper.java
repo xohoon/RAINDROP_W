@@ -3,7 +3,7 @@ package dev.drop.models.admin.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import dev.drop.models.invest.dto.DroptopListDTO;
+import dev.drop.models.invest.dto.SaveListDTO;
 import dev.drop.models.member.dto.MemberDTO;
 
 @Mapper
@@ -27,7 +27,7 @@ public interface AdminMapper {
 			@Param(value="admin") String admin, 
 			@Param(value="round_id") int round_id);
 	
-	DroptopListDTO imiData(@Param(value="i") int i, @Param(value="round") int round);
+	SaveListDTO imiData(@Param(value="i") int i, @Param(value="round") int round);
 	
 	void saveRanking(
 			@Param(value="rank01") int rank01, 

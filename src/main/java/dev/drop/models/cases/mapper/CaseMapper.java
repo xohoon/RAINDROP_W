@@ -3,7 +3,7 @@ package dev.drop.models.cases.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import dev.drop.models.invest.dto.DroptopResultDTO;
+import dev.drop.models.invest.dto.PrizeListDTO;
 
 @Mapper
 public interface CaseMapper {
@@ -57,6 +57,6 @@ public interface CaseMapper {
 			@Param(value="last_round") int last_round, 
 			@Param(value="all_round") int all_round);
 	
-	DroptopResultDTO decidedRound(@Param(value="round") int round);
+	PrizeListDTO roundResult(@Param(value="round") int round);
 	
 }
