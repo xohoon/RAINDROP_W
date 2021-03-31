@@ -53,9 +53,9 @@ public class InvestController {
 		int round = rankRound;
 		int total = 0;
 		if(whatDrop.equals("raindrop")) {
-			total = investMapper.raindrop_roundTotal(round, member_id);
+			total = investMapper.rain_roundTotal(round, member_id);
 		}else if(whatDrop.equals("droptop")) {
-			total = investMapper.droptop_roundTotal(round, member_id);
+			total = investMapper.top_roundTotal(round, member_id);
 		}
 		int rankCount = 0;
 		int rank01 = 0;
@@ -233,7 +233,12 @@ public class InvestController {
 		
 		int member_id = investMapper.get_memberId(user_email);
 		int round = numRound;
-		int round_id = investMapper.roundIdGet(round, member_id);
+		int round_id = 0;
+		if(whatDrop.equals("raindrop")) {
+			round_id = investMapper.rain_roundIdGet(round, member_id);
+		}else if(whatDrop.equals("droptop")) {
+			round_id = investMapper.top_roundIdGet(round, member_id);
+		}
 		int success = 0;
 		
 		for(int l = 1; l<=9999; l++) {
@@ -310,9 +315,9 @@ public class InvestController {
 				round_id++;
 				System.out.println("저장되는 번호 :: "+saving1+"^"+saving2+"^"+saving3+"^"+saving4+"^"+saving5+"^"+saving6+"^");
 				if(whatDrop.equals("droptop")) {
-					investMapper.droptop_list_saving(member_id, saving1, saving2, saving3, saving4, saving5, saving6, round, ranSum, round_id);
+					investMapper.top_list_saving(member_id, saving1, saving2, saving3, saving4, saving5, saving6, round, ranSum, round_id);
 				}else if(whatDrop.equals("raindrop")) {
-					investMapper.raindrop_list_saving(member_id, saving1, saving2, saving3, saving4, saving5, saving6, round, ranSum, round_id);
+					investMapper.rain_list_saving(member_id, saving1, saving2, saving3, saving4, saving5, saving6, round, ranSum, round_id);
 				}
 				success++;
 				ranList = new ArrayList<>();
@@ -344,10 +349,10 @@ public class InvestController {
 		
 		if(whatDrop.equals("droptop")) {
 			System.out.println("whatdrop? :: "+whatDrop);
-			dropChk = investMapper.droptopCheck(round, member_id);
+			dropChk = investMapper.top_Check(round, member_id);
 		}else if(whatDrop.equals("raindrop")) {
 			System.out.println("whatdrop? :: "+whatDrop);
-			dropChk = investMapper.raindropCheck(round, member_id);
+			dropChk = investMapper.rain_Check(round, member_id);
 		}
 		System.out.println("controller :: " + dropChk);
 		if(dropChk == 0) {

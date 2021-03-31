@@ -11,10 +11,10 @@ public interface InvestMapper {
 	
 	// ***** DROPTOP  ***** //
 	// 회차별 총 게임수
-	int droptop_roundTotal(@Param(value="round") int round, @Param(value="member_id") int member_id);
+	int top_roundTotal(@Param(value="round") int round, @Param(value="member_id") int member_id);
 		
 	// DROPTOP 번호 저장
-	void droptop_list_saving(@Param(value="member_id") int member_id, 
+	void top_list_saving(@Param(value="member_id") int member_id, 
 			@Param(value="saving1") int saving1, 
 			@Param(value="saving2") int saving2, 
 			@Param(value="saving3") int saving3, 
@@ -31,7 +31,7 @@ public interface InvestMapper {
 			@Param(value="member_id") int member_id);
 	
 	// 중복 추첨 체크
-	int droptopCheck(@Param(value="round") int round, 
+	int top_Check(@Param(value="round") int round, 
 			@Param(value="member_id") int member_id);
 	
 	// 등수 저장
@@ -46,15 +46,18 @@ public interface InvestMapper {
 			@Param(value="total") int total, 
 			@Param(value="revenue_total") double revenue_total,
 			@Param(value="after_tax") double after_tax);
+	
+	// 저장된 회차 round_id 갯수 가져오기
+	int top_roundIdGet(@Param(value="round") int round, @Param(value="member_id") int member_id);
 	// ***** DROPTOP  ***** //
 	
 	
 	// ***** RAINDROP  ***** //
 	// 회차별 총 게임수
-	int raindrop_roundTotal(@Param(value="round") int round, @Param(value="member_id") int member_id);
+	int rain_roundTotal(@Param(value="round") int round, @Param(value="member_id") int member_id);
 	
 	// RAINDROP 번호 저장
-	void raindrop_list_saving(@Param(value="member_id") int member_id, 
+	void rain_list_saving(@Param(value="member_id") int member_id, 
 			@Param(value="saving1") int saving1, 
 			@Param(value="saving2") int saving2, 
 			@Param(value="saving3") int saving3, 
@@ -66,7 +69,7 @@ public interface InvestMapper {
 			@Param(value="round_id") int round_id);
 	
 	// 중복 추첨 체크
-	int raindropCheck(@Param(value="round") int round,
+	int rain_Check(@Param(value="round") int round,
 			@Param(value="member_id") int member_id);
 	
 	// 모의추첨 번호가져오기
@@ -86,13 +89,13 @@ public interface InvestMapper {
 			@Param(value="total") int total, 
 			@Param(value="revenue_total") double revenue_total,
 			@Param(value="after_tax") double after_tax);
+
+	// 저장된 회차 round_id 갯수 가져오기
+	int rain_roundIdGet(@Param(value="round") int round, @Param(value="member_id") int member_id);
 	// ***** RAINDROP  ***** //
 	
 	
 	// ***** COMMON  ***** //
-	// 저장된 회차 round_id 갯수 가져오기
-	int roundIdGet(@Param(value="round") int round, @Param(value="member_id") int member_id);
-
 	// 마지막 회차 저장 위한 id값
 	int LastNum();
 	

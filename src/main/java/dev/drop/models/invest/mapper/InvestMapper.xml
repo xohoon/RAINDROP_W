@@ -8,18 +8,18 @@
 
 	<!-- ***** DROPTOP  ***** -->
 	<!-- DROPTOP 추첨번호 저장 -->
-    <insert id="droptop_list_saving">
+    <insert id="top_list_saving">
 		INSERT INTO droptop_list(member_id, num1, num2, num3, num4, num5, num6, in_date, round, sum, round_id) 
 		VALUES(#{member_id}, #{saving1}, #{saving2}, #{saving3}, #{saving4}, #{saving5}, #{saving6}, now(), #{round}, #{ranSum}, #{round_id});
 	</insert>
     
     <!-- 중복 추첨 체크 -->
-	<select id="droptopCheck" resultType="int">
+	<select id="top_Check" resultType="int">
 		SELECT COUNT(*) FROM droptop_list WHERE round = #{round} AND member_id = #{member_id};
 	</select>
 	
 	<!-- 회차별 총 게임수 -->
-	<select id="droptop_roundTotal" resultType="int">
+	<select id="top_roundTotal" resultType="int">
 		SELECT count(round_id) FROM droptop_list WHERE round = #{round} AND member_id = #{member_id};
 	</select>
 	
@@ -33,24 +33,29 @@
 		INSERT INTO droptop_result(member_id, round, rank01, rank02, rank03, rank04, rank05, game_total, revenue_total, revenue_after_tax, in_date) 
 		VALUES(#{member_id}, #{round}, #{rank01}, #{rank02}, #{rank03}, #{rank04}, #{rank05}, #{total}, #{revenue_total}, #{after_tax}, now());
 	</insert>
+	
+	<!-- 저장된 회차 round_id 갯수 가져오기 -->
+    <select id="top_roundIdGet" resultType="int">
+    	SELECT count(*) FROM droptop_list WHERE round = #{round} AND member_id = #{member_id};
+    </select>
 	<!-- ***** DROPTOP  ***** -->
 	
 	
 	
 	<!-- ***** RAINDROP  ***** -->
 	<!-- RAINDROP 추첨번호 저장 -->
-    <insert id="raindrop_list_saving">
+    <insert id="rain_list_saving">
 		INSERT INTO raindrop_list(member_id, num1, num2, num3, num4, num5, num6, in_date, round, sum, round_id) 
 		VALUES(#{member_id}, #{saving1}, #{saving2}, #{saving3}, #{saving4}, #{saving5}, #{saving6}, now(), #{round}, #{ranSum}, #{round_id});
 	</insert>
 	
     <!-- 중복 추첨 체크 -->
-	<select id="raindropCheck" resultType="int">
+	<select id="rain_Check" resultType="int">
 		SELECT COUNT(*) FROM raindrop_list WHERE round = #{round} AND member_id = #{member_id};
 	</select>
 	
 	<!-- 회차별 총 게임수 -->
-	<select id="raindrop_roundTotal" resultType="int">
+	<select id="rain_roundTotal" resultType="int">
 		SELECT count(round_id) FROM raindrop_list WHERE round = #{round} AND member_id = #{member_id};
 	</select>
 	
@@ -64,6 +69,11 @@
 		INSERT INTO raindrop_result(member_id, round, rank01, rank02, rank03, rank04, rank05, game_total, revenue_total, revenue_after_tax, in_date) 
 		VALUES(#{member_id}, #{round}, #{rank01}, #{rank02}, #{rank03}, #{rank04}, #{rank05}, #{total}, #{revenue_total}, #{after_tax}, now());
 	</insert>
+	
+	<!-- 저장된 회차 round_id 갯수 가져오기 -->
+    <select id="rain_roundIdGet" resultType="int">
+    	SELECT count(*) FROM raindrop_list WHERE round = #{round} AND member_id = #{member_id};
+    </select>
 	<!-- ***** RAINDROP  ***** -->
 	
 	
@@ -73,11 +83,6 @@
 	<select id="get_memberId" resultType="int">
 		SELECT id FROM member WHERE email = #{user_email};
 	</select>
-	
-	<!-- 저장된 회차 round_id 갯수 가져오기 -->
-    <select id="roundIdGet" resultType="int">
-    	SELECT count(*) FROM droptop_list WHERE round = #{round} AND member_id = #{member_id};
-    </select>
 	
 	<!-- 마지막 회차 저장 위한 id값 -->
     <select id="LastNum" resultType="int">
