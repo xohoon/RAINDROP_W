@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import dev.drop.models.invest.dto.SaveListDTO;
+import dev.drop.models.invest.dto.SaveResultDTO;
 
 @Mapper
 public interface InvestMapper {
@@ -53,7 +54,7 @@ public interface InvestMapper {
 	int rain_resultCheck(@Param(value="member_id") int member_id, @Param(value="round") int round);
 	
 	// 결과값 가져오기
-	int rain_getResult(@Param(value="round") int round, @Param(value="member_id") int member_id);
+	SaveResultDTO rain_getResult(@Param(value="round") int round, @Param(value="member_id") int member_id);
 	// ***** RAINDROP  ***** //
 	// ***** RAINDROP  ***** //
 	// ***** DROPTOP  ***** //
@@ -102,7 +103,7 @@ public interface InvestMapper {
 	int top_resultCheck(@Param(value="member_id") int member_id, @Param(value="round") int round);
 	
 	// 결과값 가져오기
-	int top_getResult(@Param(value="round") int round, @Param(value="member_id") int member_id);
+	SaveResultDTO top_getResult(@Param(value="round") int round, @Param(value="member_id") int member_id);
 	// ***** DROPTOP  ***** //
 	
 	// ***** COMMON  ***** //

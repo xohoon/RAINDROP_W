@@ -135,7 +135,8 @@ $('#rankBtn').on('click', function() {
 				user_email : user_email,
 				whatDrop : whatDrop
 				},
-			success : rankView,
+			success : rankView
+			,
 			beforeSend:function() {
 				$('.wrap-loading').removeClass('display-none');
 			},
@@ -152,15 +153,19 @@ $('#rankBtn').on('click', function() {
 // 랭크 뷰
 function rankView(data) {
 	$.each(data, function(idx, val) {
-		html += '<br /><div>';
-		html += '<h4>' + val.round + '회 총 ' + val.total + '게임 결과</h4>';
-	  	html += '<h4>1등 :: ' + val.rank1 +'</h4>';
-	  	html += '<h4>2등 :: ' + val.rank2 + '</h4>';
-	  	html += '<h4>3등 :: ' + val.rank3 + '</h4>';
-	  	html += '<h4>4등 :: ' + val.rank4 + '</h4>';
-	  	html += '<h4>5등 :: ' + val.rank5 + '</h4>';
-	  	html += '<h4>당첨 총 금액 :: ' + val.revenue_total + '</h4>';
-	  	html += '</div>';
+		if(val.gameResult == "true") {
+			html += '<br /><div>';
+			html += '<h4>' + val.round + '회 총 ' + val.total + '게임 결과</h4>';
+			html += '<h4>1등 :: ' + val.rank1 +'</h4>';
+			html += '<h4>2등 :: ' + val.rank2 + '</h4>';
+			html += '<h4>3등 :: ' + val.rank3 + '</h4>';
+			html += '<h4>4등 :: ' + val.rank4 + '</h4>';
+			html += '<h4>5등 :: ' + val.rank5 + '</h4>';
+			html += '<h4>당첨 총 금액 :: ' + val.revenue_total + '</h4>';
+			html += '</div>';
+		}else if(val.gameResult == "false") {
+			html += '<div>게임한적없다</div>';
+		}
 	});
 	$('#returnRank').html(html);
 	html = '';

@@ -1,6 +1,6 @@
 package dev.drop.models.invest.dto;
 
-public class SvaeResultDTO {
+public class SaveResultDTO {
 	
 	private int id;
 	private int member_id;
@@ -8,7 +8,7 @@ public class SvaeResultDTO {
 	private int rank01;
 	private int rank02;
 	private int rank03;
-	private int rnak04;
+	private int rank04;
 	private int rank05;
 	private int game_total;
 	private Double revenue_total;
@@ -52,11 +52,11 @@ public class SvaeResultDTO {
 	public void setRank03(int rank03) {
 		this.rank03 = rank03;
 	}
-	public int getRnak04() {
-		return rnak04;
+	public int getRank04() {
+		return rank04;
 	}
-	public void setRnak04(int rnak04) {
-		this.rnak04 = rnak04;
+	public void setRank04(int rank04) {
+		this.rank04 = rank04;
 	}
 	public int getRank05() {
 		return rank05;
@@ -98,7 +98,7 @@ public class SvaeResultDTO {
 	@Override
 	public String toString() {
 		return "SvaeResultDTO [id=" + id + ", member_id=" + member_id + ", round=" + round + ", rank01=" + rank01
-				+ ", rank02=" + rank02 + ", rank03=" + rank03 + ", rnak04=" + rnak04 + ", rank05=" + rank05
+				+ ", rank02=" + rank02 + ", rank03=" + rank03 + ", rank04=" + rank04 + ", rank05=" + rank05
 				+ ", game_total=" + game_total + ", revenue_total=" + revenue_total + ", revenue_after_tax="
 				+ revenue_after_tax + ", in_date=" + in_date + ", up_date=" + up_date + "]";
 	}
