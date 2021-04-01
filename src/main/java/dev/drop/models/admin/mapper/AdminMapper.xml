@@ -29,7 +29,7 @@
 	</insert>
 	
 	<!-- 모의추첨 번호가져오기 -->
-	<select id="imiData" resultType="dev.drop.models.invest.dto.DroptopListDTO">
+	<select id="imiData" resultType="dev.drop.models.invest.dto.SaveListDTO">
         SELECT * FROM test_saving WHERE round_id = #{i} AND round = #{round};
     </select>
     
