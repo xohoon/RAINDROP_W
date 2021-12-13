@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ 
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dev.drop.models.admin.mapper.AdminMapper">
+	
+	<!-- 회원정보 GET -->
+	<select id="userInfo" resultType="dev.drop.models.member.dto.MemberDTO">
+    	SELECT * FROM member WHERE email = #{email};
+    </select>
+    
+    <!-- 회차별 총 게임수 -->
+	<select id="gameTotal" resultType="int">
+		SELECT count(round_id) FROM test_saving WHERE round = #{round};
+	</select>
+	
+	<!-- 저장된 회차 round_id 갯수 가져오기 -->
+    <select id="testIdGet" resultType="int">
+    	SELECT count(*) FROM test_saving WHERE round_id AND round = #{round};
+    </select>
+    
+    <!-- 모의로또 저장 -->
+	<insert id="testSaving">
+		INSERT INTO test_saving(admin, round, num1, num2, num3, num4, num5, num6, sum, round_id) 
+		VALUES(#{admin}, #{round}, 
+			#{testNum01}, #{testNum02}, #{testNum03}, #{testNum04}, #{testNum05}, #{testNum06}, #{testSum}, #{round_id});
+	</insert>
+	
+	<!-- 모의추첨 번호가져오기 -->
+	<select id="imiData" resultType="dev.drop.models.invest.dto.SaveListDTO">
+        SELECT * FROM test_saving WHERE round_id = #{i} AND round = #{round};
+    </select>
+    
+    <!-- 모의로또 등수 저장 -->
+	<insert id="saveRanking">
+		INSERT INTO c(round, rank01, rank02, rank03, rank04, rank05, game_total, revenue_total, revenue_after_tax)
+		VALUES(#{round}, #{rank01}, #{rank02}, #{rank03}, #{rank04}, #{rank05}, #{total}, #{revenue_total}, #{after_tax});
+	</insert>
+	
+</mapper>

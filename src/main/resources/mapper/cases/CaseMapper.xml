@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ 
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="dev.drop.models.cases.mapper.CaseMapper">
+
+	<!-- 회차별 1등번호 저장 -->
+	<insert id="save">
+		INSERT INTO prize_list(num1, num2, num3, num4, num5, num6, num7, sum) 
+		VALUES(#{num1}, #{num2}, #{num3}, #{num4}, #{num5}, #{num6}, #{num7}, #{sum});
+	</insert>
+	
+	<!-- 전체 회차 저장 전 카운트 -->
+	<select id="count_list" resultType="int">
+		SELECT COUNT(*) FROM prize_list;
+	</select>
+	
+	<!-- 최근회차 저장 되었는지 확인 -->
+	<select id="search_last" resultType="int">
+		SELECT id FROM prize_list ORDER BY id DESC LIMIT 1;
+	</select>
+	
+	<!-- i번째 회차 합계 -->
+	<select id="getSum" resultType="int">
+		SELECT sum FROM prize_list  WHERE id = #{i};
+	</select>
+	
+	<!-- 50단위로 확률 계산 -->
+	<insert id="caseSum50">
+		INSERT INTO case_sum50(case100, case150, case200, case255, all_round, last_round)
+		VALUES(#{case01}, #{case02}, #{case03}, #{case04}, #{all_round}, #{last_round});
+	</insert>
+	
+	<!-- 20단위로 확률 계산 -->
+	<insert id="caseSum20">
+		INSERT INTO case_sum20(case100, case120, case140, case160, case180, case200, case255, all_round, last_round)
+		VALUES(#{case01}, #{case02}, #{case03}, #{case04}, #{case05}, #{case06}, #{case07}, #{all_round}, #{last_round});
+	</insert>
+	
+	<!-- 10단위로 확률 계산 -->
+	<insert id="caseSum10">
+		INSERT INTO case_sum10(case100, case110, case120, case130, case140, case150, case160, case170, case180, case190, case200, case255
+			, all_round, last_round)
+		VALUES(#{case01}, #{case02}, #{case03}, #{case04}, #{case05}, #{case06}, #{case07}, #{case08}, #{case09}, #{case10}, #{case11}, #{case12}
+			, #{all_round}, #{last_round});
+	</insert>
+	
+	<!-- 지정된 회차별 1등 번호 가져오기 -->
+	<select id="roundResult" resultType="dev.drop.models.invest.dto.PrizeListDTO">
+        SELECT * FROM prize_list WHERE id = #{round};
+    </select>
+    
+
+</mapper>
