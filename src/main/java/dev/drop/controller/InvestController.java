@@ -347,6 +347,7 @@ public class InvestController {
 	public Object DropCheck(String whatDrop, int round, String user_email) {
 		JSONObject jsonData = new JSONObject();
 		int dropChk = 0;
+		System.out.println("user_email = " + user_email);
 		int member_id = investMapper.get_memberId(user_email);
 		if(whatDrop.equals("droptop")) {
 			System.out.println("whatdrop? :: " + whatDrop);

@@ -1,0 +1,13 @@
+/* 카드 3개 정렬 */
+.cardSet3{
+    overflow: hidden;
+    margin-top: 10px;
+}
+.card.card3 {
+    margin-right: 0.5%;
+    float: left;
+    width: 32.5%;
+}
+.card.card3:last-child {
+    margin-right: 0;
+}

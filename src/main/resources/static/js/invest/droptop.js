@@ -14,7 +14,7 @@ $('#dropSaveBtn').on('click', function() {
 		alert("회차를 선택해 주세요.");
 		return false;
 	}else if(numRound != 0) {
-		lastNumSave_chk(whatDrop, numRound, userCheck);
+		lastNumSave_chk(whatDrop, numRound, user_email);
 		var dropCheck = $("#dropCheck").val();
 		if(dropCheck == "block") {
 			alert(numRound + "회차 추첨은 이미 완료되었습니다.");
