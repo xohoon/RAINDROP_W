@@ -8,23 +8,23 @@
 
 	<!-- 회차별 1등번호 저장 -->
 	<insert id="save">
-		INSERT INTO prize_list(num1, num2, num3, num4, num5, num6, num7, sum) 
-		VALUES(#{num1}, #{num2}, #{num3}, #{num4}, #{num5}, #{num6}, #{num7}, #{sum});
+		INSERT INTO prize_list(round, num1, num2, num3, num4, num5, num6, num7, sum)
+		VALUES(${round}, #{num1}, #{num2}, #{num3}, #{num4}, #{num5}, #{num6}, #{num7}, #{sum});
 	</insert>
 	
 	<!-- 전체 회차 저장 전 카운트 -->
 	<select id="count_list" resultType="int">
 		SELECT COUNT(*) FROM prize_list;
 	</select>
-	
-	<!-- 최근회차 저장 되었는지 확인 -->
-	<select id="search_last" resultType="int">
-		SELECT id FROM prize_list ORDER BY id DESC LIMIT 1;
+
+	<!-- 마지막 회차 저장 위한 round값 -->
+	<select id="prizeLastRound" resultType="integer">
+		SELECT max(round) FROM prize_list;
 	</select>
 	
 	<!-- i번째 회차 합계 -->
 	<select id="getSum" resultType="int">
-		SELECT sum FROM prize_list  WHERE id = #{i};
+		SELECT sum FROM prize_list  WHERE round = #{round};
 	</select>
 	
 	<!-- 50단위로 확률 계산 -->
@@ -49,8 +49,12 @@
 	
 	<!-- 지정된 회차별 1등 번호 가져오기 -->
 	<select id="roundResult" resultType="dev.drop.models.invest.dto.PrizeListDTO">
-        SELECT * FROM prize_list WHERE id = #{round};
+        SELECT * FROM prize_list WHERE round = #{round};
     </select>
-    
+
+	 <!-- 저장된 회차 전부 get -->
+	<select id="getRoundList" resultType="int">
+		SELECT round FROM prize_list ORDER BY round DESC;
+	</select>
 
 </mapper>

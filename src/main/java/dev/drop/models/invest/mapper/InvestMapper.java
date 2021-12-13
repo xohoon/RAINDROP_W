@@ -8,7 +8,6 @@ import dev.drop.models.invest.dto.SaveResultDTO;
 
 @Mapper
 public interface InvestMapper {
-	
 	// ***** RAINDROP  ***** //
 	// 회차별 총 게임수
 	int rain_roundTotal(@Param(value="round") int round, @Param(value="member_id") int member_id);

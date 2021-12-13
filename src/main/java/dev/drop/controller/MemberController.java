@@ -139,7 +139,7 @@ public class MemberController {
 		returnData = random;
 		jsonData.put("check", returnData);
 		System.out.println("::: mail test success :::");
-		
+
 		return jsonData;
 	}
 

@@ -5,10 +5,13 @@ import org.apache.ibatis.annotations.Param;
 
 import dev.drop.models.invest.dto.PrizeListDTO;
 
+import java.util.List;
+
 @Mapper
 public interface CaseMapper {
 
-	void save(@Param(value="num1") int num1,
+	void save(@Param(value="round") int round,
+			@Param(value="num1") int num1,
 			@Param(value="num2") int num2,
 			@Param(value="num3") int num3,
 			@Param(value="num4") int num4,
@@ -21,7 +24,7 @@ public interface CaseMapper {
 	int count_list();
 	
 	// 최근회사 확인
-	int search_last();
+	Integer prizeLastRound();
 	
 	int getSum(@Param(value="i") int i);
 	
@@ -58,5 +61,6 @@ public interface CaseMapper {
 			@Param(value="all_round") int all_round);
 	
 	PrizeListDTO roundResult(@Param(value="round") int round);
-	
+
+	List<Integer> getRoundList();
 }

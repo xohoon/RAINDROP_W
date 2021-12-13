@@ -6,10 +6,6 @@
 
 <mapper namespace="dev.drop.models.invest.mapper.InvestMapper">
 
-	<select id="xohoon" resultType="int">
-		select count(*) from member where email = #{email};
-	</select>
-
 	<!-- ***** RAINDROP  ***** -->
 	<!-- RAINDROP 추첨번호 저장 -->
     <insert id="rain_list_saving">
@@ -53,8 +49,7 @@
     	SELECT * FROM raindrop_result WHERE round = #{round} AND member_id = #{member_id}
     </select>
 	<!-- ***** RAINDROP  ***** -->
-	<!-- ***** RAINDROP  ***** -->
-	<!-- ***** DROPTOP  ***** -->
+
 	<!-- ***** DROPTOP  ***** -->
 	<!-- DROPTOP 추첨번호 저장 -->
     <insert id="top_list_saving">
@@ -98,20 +93,12 @@
     	SELECT * FROM droptop_result WHERE round = #{round} AND member_id = #{member_id}
     </select>
 	<!-- ***** DROPTOP  ***** -->
-	
-	
-	
+
 	<!-- ***** COMMON  ***** -->
 	<!-- 회원 ID 가져오기 -->
 	<select id="get_memberId" resultType="int">
 		SELECT id FROM member WHERE email = #{user_email};
 	</select>
-	
-	<!-- 마지막 회차 저장 위한 id값 -->
-    <select id="LastNum" resultType="int">
-    	SELECT max(id) FROM prize_list;
-    </select>
-    
 	<!-- ***** COMMON  ***** -->
 	
 	

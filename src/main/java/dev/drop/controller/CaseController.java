@@ -1,5 +1,6 @@
 package dev.drop.controller;
 
+import dev.drop.utils.Round;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.jsoup.Jsoup;
@@ -28,7 +29,6 @@ public class CaseController {
 			produces="application/json; charset=utf-8")
 	public Object save() {
 		JSONObject jsonData = new JSONObject();
-		JSONArray jsonArray = new JSONArray();
 		System.out.println("::data save last::");
 		
 		/*
@@ -37,138 +37,66 @@ public class CaseController {
 		 * 
 		*/
 		
-		// 최근 회차 가지고오는 코드
-		String last_url = "https://dhlottery.co.kr/gameResult.do?method=byWin";
-		Document last_doc = null;
-		try {
-			last_doc = Jsoup.connect(last_url).get();
-		}catch(Exception e) {
-			e.printStackTrace();
+		// 최근 회차
+		int last_round = Round.lastRound();
+		// 저장된 최근 회차
+		Integer search_round = caseMapper.prizeLastRound();
+		if (search_round == null) {
+			search_round = 0;
 		}
-		Elements last1 = last_doc.select("div.win_result");
-		Elements last_1 = last1.get(0).select("h4");
-		String last_result = last_1.text();
-		int last_num = Integer.parseInt(last_result.substring(0, 3));
-		// 최근 회차 가지고오는 코드
-		
-		int last = investMapper.LastNum()+1;
-		String url = "https://www.dhlottery.co.kr/gameResult.do?method=byWin&drwNo=" + last;
+		// 최신 회차와 저장된 회차 차이만큼 실행
+		int lastRoundGap = last_round - search_round;
+
+		String url = null;
 		Document doc = null;
-		String result = "";
-		int search_num = caseMapper.search_last();
-		if(search_num != last_num) {
-			try {
-				doc = Jsoup.connect(url).get();
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
-			Elements test = doc.select("span.ball_645");
-			Elements test01 = test.get(0).select("span");
-			Elements test02 = test.get(1).select("span");
-			Elements test03 = test.get(2).select("span");
-			Elements test04 = test.get(3).select("span");
-			Elements test05 = test.get(4).select("span");
-			Elements test06 = test.get(5).select("span");
-			Elements test07 = test.get(6).select("span");
-			int num1 = Integer.parseInt(test01.text());
-			int num2 = Integer.parseInt(test02.text());
-			int num3 = Integer.parseInt(test03.text());
-			int num4 = Integer.parseInt(test04.text());
-			int num5 = Integer.parseInt(test05.text());
-			int num6 = Integer.parseInt(test06.text());
-			int num7 = Integer.parseInt(test07.text());
-			int sum = num1+num2+num3+num4+num5+num6;
-			
-			caseMapper.save(num1, num2, num3, num4, num5, num6, num7, sum);
-			
-			System.out.println(last+"회차 앙 성공띄!");
-			result = "성공";
-			jsonData.put("last", last);
-			jsonData.put("result", result);
-			jsonArray.add(jsonData);
+		String result_message = null;
+
+		if(lastRoundGap == 0) {
+			result_message = "모든회차 저장완료";
 		}else {
-			result = "최신회차가 저장되어있습니다";
-			jsonData.put("result", result);
-			jsonArray.add(jsonData);
-			
-		}
-		
-		return jsonArray;
-	}
-	
-	@ResponseBody
-	@GetMapping(
-			value="save_all",
-			produces="application/json; charset=utf-8")
-	public Object save_all() {
-		JSONObject jsonData = new JSONObject();
-		JSONArray jsonArray = new JSONArray();
-		System.out.println("::data save all::");
-		
-		/*
-		 * 
-		 * 1회차부터 저장
-		 * 
-		 */
-		
-		// 최근 회차 가지고오는 코드
-		String last_url = "https://dhlottery.co.kr/gameResult.do?method=byWin";
-		Document last_doc = null;
-		try {
-			last_doc = Jsoup.connect(last_url).get();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		Elements last = last_doc.select("div.win_result");
-		Elements last_1 = last.get(0).select("h4");
-		String last_result = last_1.text();
-		int last_num = Integer.parseInt(last_result.substring(0, 3));
-		// 최근 회차 가지고오는 코드
-		
-		int list_count = caseMapper.count_list();
-		String result_message = "";
-		if(list_count > 0) {
-			result_message = "최근회차를 저장해주세요";
-		}else {
-			for(int i = 1; i<=last_num; i++) {
-				String url = "https://www.dhlottery.co.kr/gameResult.do?method=byWin&drwNo=" + i;
-				Document doc = null;
-				
-				try {
-					doc = Jsoup.connect(url).get();
-				}catch(Exception e) {
-					e.printStackTrace();
+			for (int i = 0; i < lastRoundGap; i++) {
+				// 저장된 최근 회차가 최신회차보다 작으면 실행
+				url = "https://www.dhlottery.co.kr/gameResult.do?method=byWin&drwNo=" + (search_round+1);
+				if(search_round < last_round) {
+					try {
+						doc = Jsoup.connect(url).get();
+					}catch(Exception e) {
+						e.printStackTrace();
+					}
+					Elements test = doc.select("span.ball_645");
+					Elements test01 = test.get(0).select("span");
+					Elements test02 = test.get(1).select("span");
+					Elements test03 = test.get(2).select("span");
+					Elements test04 = test.get(3).select("span");
+					Elements test05 = test.get(4).select("span");
+					Elements test06 = test.get(5).select("span");
+					Elements test07 = test.get(6).select("span");
+					int num1 = Integer.parseInt(test01.text());
+					int num2 = Integer.parseInt(test02.text());
+					int num3 = Integer.parseInt(test03.text());
+					int num4 = Integer.parseInt(test04.text());
+					int num5 = Integer.parseInt(test05.text());
+					int num6 = Integer.parseInt(test06.text());
+					int num7 = Integer.parseInt(test07.text());
+					int sum = num1+num2+num3+num4+num5+num6;
+					int round = search_round+1;
+					caseMapper.save(round, num1, num2, num3, num4, num5, num6, num7, sum);
+					search_round = caseMapper.prizeLastRound();
+					System.out.println(round + "회차 앙 성공띄!");
+					result_message = "성공";
+					jsonData.put("result", result_message);
+				}else if(search_round == last_round || search_round > last_round) {
+					result_message = "최신회차까지 저장이 완료되었습니다.";
+					jsonData.put("result", result_message);
+					break;
 				}
-				Elements test = doc.select("span.ball_645");
-				Elements test01 = test.get(0).select("span");
-				Elements test02 = test.get(1).select("span");
-				Elements test03 = test.get(2).select("span");
-				Elements test04 = test.get(3).select("span");
-				Elements test05 = test.get(4).select("span");
-				Elements test06 = test.get(5).select("span");
-				Elements test07 = test.get(6).select("span");
-				int num1 = Integer.parseInt(test01.text());
-				int num2 = Integer.parseInt(test02.text());
-				int num3 = Integer.parseInt(test03.text());
-				int num4 = Integer.parseInt(test04.text());
-				int num5 = Integer.parseInt(test05.text());
-				int num6 = Integer.parseInt(test06.text());
-				int num7 = Integer.parseInt(test07.text());
-				int sum = num1+num2+num3+num4+num5+num6;
-				
-				caseMapper.save(num1, num2, num3, num4, num5, num6, num7, sum);
-				
-				System.out.println(i+"회차 앙 성공띄!");
+
 			}
-			result_message = "success";
 		}
-		
-		jsonData.put("result", result_message);
-		jsonArray.add(jsonData);
-		
-		return jsonArray;
+
+		return jsonData;
 	}
-	
+
 	@GetMapping(
 			value="caseSum",
 			produces="application/json; charset=utf-8")
@@ -300,4 +228,81 @@ public class CaseController {
 		
 		return "caseSum success";
 	}
+
+
+/*
+
+
+	@ResponseBody
+	@GetMapping(
+			value="save_all",
+			produces="application/json; charset=utf-8")
+	public Object save_all() {
+		JSONObject jsonData = new JSONObject();
+		System.out.println("::data save all::");
+
+		*/
+/*
+		 *
+		 * 1회차부터 전체 저장
+		 *
+		 *//*
+
+
+		// 최근 회차 가지고오는 코드
+		int last_round = Round.lastRound();
+		// 저장된 최근 회차
+		int search_round = caseMapper.prizeLastRound();
+		int lastRoundGap = last_round - search_round;
+
+		int list_count = caseMapper.count_list();
+		String result_message = "";
+
+		if(lastRoundGap == 0) {
+			result_message = "모든회차 저장완료";
+		}else {
+			if(list_count > 0) {
+				result_message = "최근회차를 저장해주세요";
+			}else {
+				for(int i = 1; i <= last_round; i++) {
+					String url = "https://www.dhlottery.co.kr/gameResult.do?method=byWin&drwNo=" + i;
+					Document doc = null;
+
+					try {
+						doc = Jsoup.connect(url).get();
+					}catch(Exception e) {
+						e.printStackTrace();
+					}
+					Elements test = doc.select("span.ball_645");
+					Elements test01 = test.get(0).select("span");
+					Elements test02 = test.get(1).select("span");
+					Elements test03 = test.get(2).select("span");
+					Elements test04 = test.get(3).select("span");
+					Elements test05 = test.get(4).select("span");
+					Elements test06 = test.get(5).select("span");
+					Elements test07 = test.get(6).select("span");
+					int num1 = Integer.parseInt(test01.text());
+					int num2 = Integer.parseInt(test02.text());
+					int num3 = Integer.parseInt(test03.text());
+					int num4 = Integer.parseInt(test04.text());
+					int num5 = Integer.parseInt(test05.text());
+					int num6 = Integer.parseInt(test06.text());
+					int num7 = Integer.parseInt(test07.text());
+					int sum = num1+num2+num3+num4+num5+num6;
+					int round = i;
+					caseMapper.save(round, num1, num2, num3, num4, num5, num6, num7, sum);
+
+					System.out.println(i+"회차 앙 성공띄!");
+				}
+				result_message = "success";
+			}
+		}
+
+		jsonData.put("result", result_message);
+
+		return jsonData;
+	}
+
+*/
+
 }

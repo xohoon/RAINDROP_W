@@ -6,10 +6,6 @@
  
 <mapper namespace="dev.drop.models.member.mapper.MemberMapper">
 
-	<select id="conntest11" parameterType="String" resultType="int">
-		SELECT count(*) FROM member WHERE email = #{email};
-	</select>
-
 	<select id="mailCheck" parameterType="String" resultType="int">
     	SELECT count(*) FROM member WHERE email = #{email};
     </select>

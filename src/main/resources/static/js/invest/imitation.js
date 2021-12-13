@@ -10,12 +10,7 @@ var numRound = 0;
 var numCount = 0;
 
 $('#numBtn').on('click', function() {
-	var userCheck = $("#userCheck").text();
-	if(!userCheck || userCheck == "" || userCheck.length < 5) {
-		alert("로그인이 만료되었습니다. 로그인 페이지로 이동합니다.");
-		location.href="/member/signin";
-		return false;
-	}
+	userCheck();
 	numRound = $('#numRound').val();
 	numCount = $('#numCount').val();
 	if(numCount >= 150) {
@@ -59,15 +54,8 @@ function numView(data) {
 	html = '';
 }
 
-
-
 $('#rankBtn').on('click', function() {
-	var userCheck = $("#userCheck").text();
-	if(!userCheck || userCheck == "" || userCheck.length < 5) {
-		alert("로그인이 만료되었습니다. 로그인 페이지로 이동합니다.");
-		location.href="/member/signin";
-		return false;
-	}
+	userCheck();
 	rankRound = $('#rankRound').val();
 	if(!rankRound) {
 		alert('회차를 입력해주세요.');
@@ -111,12 +99,7 @@ function rankView(data) {
 
 // 마지막 회차 추가
 $('#last_save').on('click', function() {
-	var userCheck = $("#userCheck").text();
-	if(!userCheck || userCheck == "" || userCheck.length < 5) {
-		alert("로그인이 만료되었습니다. 로그인 페이지로 이동합니다.");
-		location.href="/member/signin";
-		return false;
-	}
+	userCheck();
 	$.ajax({
 		type : 'GET',
 		url : '/case/save_last',
@@ -137,6 +120,7 @@ $('#last_save').on('click', function() {
 });
 
 function last_view(data) {
+	/*
 	$.each(data, function(idx, val) {
 		var last = val.last;
 		html += '<div>';
@@ -146,18 +130,16 @@ function last_view(data) {
 	  	html += '<h3>' + val.result +'</h3>';
 	  	html += '</div>';
 	});
+	*/
+	html = '<div>' + data.result + '</div>';
 	$('#ajaxReturn3').html(html);
 	html = '';
 }
 
+/*
 // 전체 회차 추가
 $('#all_save').on('click', function() {
-	var userCheck = $("#userCheck").text();
-	if(!userCheck || userCheck == "" || userCheck.length < 5) {
-		alert("로그인이 만료되었습니다. 로그인 페이지로 이동합니다.");
-		location.href="/member/signin";
-		return false;
-	}
+	userCheck();
 	$.ajax({
 		type : 'GET',
 		url : '/case/save_all',
@@ -178,11 +160,15 @@ $('#all_save').on('click', function() {
 });
 
 function all_view(data) {
+	/!*
 	$.each(data, function(idx, val) {
 		html += '<div>';
 	  	html += '<h3>' + val.result +'</h3>';
 	  	html += '</div>';
 	});
+	*!/
+	html = '<div>' + data.result + '</div>';
 	$('#ajaxReturn4').html(html);
 	html = '';
 }
+*/

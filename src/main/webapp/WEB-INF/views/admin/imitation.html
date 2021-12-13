@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
-
+<link href="/static/css/invest/invest_common.css" rel="stylesheet" type="text/css">
 <head>
 	<meta charset="UTF-8">
 	<title>RINDROP</title>
 	<!-- link inculde -->
 	<th:block th:include="fragments/header"></th:block>
-	<th:block th:include="fragments/invest_common"></th:block>
+
 	<!-- link inculde -->
 	<script src="/static/js/invest/imitation.js" type="text/javascript" defer></script>
 </head>
@@ -14,7 +14,7 @@
 <body>
 		<div class="cardSet4">
 			<div class="card border-secondary mb-3 card4">
-				<div class="card-header">타이틀1</div>
+				<div class="card-header">원하는 회차 원하는 개수 추출</div>
 				<div class="card-body text-dark">
 					<span> >> 기능설명 blablabla</span>
 					<div class="set_3">
@@ -26,7 +26,7 @@
 				</div>
 			</div>
 			<div class="card border-secondary mb-3 card4">
-				<div class="card-header">타이틀1</div>
+				<div class="card-header">원하는 회차 당첨 확인</div>
 				<div class="card-body text-dark">
 					<span> >> 기능설명 blablabla</span>
 					<div class="set_2">
@@ -37,23 +37,13 @@
 				</div>
 			</div>
 			<div class="card border-secondary mb-3 card4">
-				<div class="card-header">타이틀1</div>
+				<div class="card-header">저장된 회차 이후 결과 추가</div>
 				<div class="card-body text-dark">
 					<span> >> 기능설명 blablabla</span>
 					<div>
 						<input type="button" id="last_save" class="btn btn-info" value="최근회차">
 					</div>
 					<div class="returnSuccess" id="ajaxReturn3">결과</div>
-				</div>
-			</div>
-			<div class="card border-secondary mb-3 card4">
-				<div class="card-header">타이틀1</div>
-				<div class="card-body text-dark">
-					<span> >> 기능설명 blablabla</span>
-					<div>
-						<input type="button" id="all_save" class="btn btn-primary" value="전체 추가">
-					</div>
-					<div class="returnSuccess" id="ajaxReturn4">결과</div>
 				</div>
 			</div>
 			<div class="wrap-loading display-none">

@@ -1,5 +1,6 @@
 package dev.drop.controller;
 
+import dev.drop.utils.Round;
 import org.json.simple.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -18,9 +19,11 @@ import dev.drop.models.invest.dto.PrizeListDTO;
 import dev.drop.models.invest.mapper.InvestMapper;
 import dev.drop.utils.Revenue;
 
+import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.json.simple.JSONArray;
 
@@ -37,50 +40,26 @@ public class InvestController {
 	// raindrop 접근
 	@GetMapping(value="/raindrop")
 	public String Raindrop(Model model) {
-
 		// 최근 회차 가지고오는 코드
-		String last_url = "https://dhlottery.co.kr/gameResult.do?method=byWin";
-		Document last_doc = null;
-		try {
-			last_doc = Jsoup.connect(last_url).get();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		Elements last1 = last_doc.select("div.win_result");
-		Elements last_1 = last1.get(0).select("h4");
-		String last_result = last_1.text();
-		int last_num = Integer.parseInt(last_result.substring(0, 3));
-		// 최근 회차 가지고오는 코드
+		int last_num = Round.lastRound();
 		model.addAttribute("comming_round", last_num+1);
 		
 		return "invest/raindrop";
 	}
 	// ***** RAINDROP  ***** //
-	// ***** RAINDROP  ***** //
-	// ***** RAINDROP  ***** //
-	// ***** DROPTOP  ***** //
-	// ***** DROPTOP  ***** //
+
 	// ***** DROPTOP  ***** //
 	// droptop 접근
 	@GetMapping(
 			value="/droptop",
 			produces="application/json; charset=utf-8")
 	public String Dropdop(Model model) {
-		
 		// 최근 회차 가지고오는 코드
-		String last_url = "https://dhlottery.co.kr/gameResult.do?method=byWin";
-		Document last_doc = null;
-		try {
-			last_doc = Jsoup.connect(last_url).get();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		Elements last1 = last_doc.select("div.win_result");
-		Elements last_1 = last1.get(0).select("h4");
-		String last_result = last_1.text();
-		int last_num = Integer.parseInt(last_result.substring(0, 3));
-		// 최근 회차 가지고오는 코드
+		int last_num = Round.lastRound();
+		List<Integer> roundList = new ArrayList<>();
+		roundList = caseMapper.getRoundList();
 		model.addAttribute("comming_round", last_num+1);
+		model.addAttribute("roundList", roundList);
 		
 		return "invest/droptop";
 	}
@@ -141,7 +120,8 @@ public class InvestController {
 			
 			// 저장된 정보
 			ArrayList<String> saveList = new ArrayList<String>();
-			int last = investMapper.LastNum();
+			// 최근 회차
+			int last = Round.lastRound();
 			for(int i = 1; i <= last; i++) {
 				saveDTO = caseMapper.roundResult(i);
 				saveList.add(Integer.toString(saveDTO.getNum1()));
@@ -368,16 +348,11 @@ public class InvestController {
 		JSONObject jsonData = new JSONObject();
 		int dropChk = 0;
 		int member_id = investMapper.get_memberId(user_email);
-		System.out.println("MEMBER NUM :: "+member_id+whatDrop);
-		
 		if(whatDrop.equals("droptop")) {
-			System.out.println("whatdrop? :: "+whatDrop);
+			System.out.println("whatdrop? :: " + whatDrop);
 			dropChk = investMapper.top_Check(round, member_id);
-		}else if(whatDrop.equals("raindrop")) {
-			System.out.println("whatdrop? :: "+whatDrop);
-			dropChk = investMapper.rain_Check(round, member_id);
 		}
-		System.out.println("controller :: " + dropChk);
+		System.out.println(round + "회차 count :: " + dropChk);
 		if(dropChk == 0) {
 			jsonData.put("chk", "pass");
 		}else if(dropChk > 0){
@@ -393,18 +368,8 @@ public class InvestController {
 			produces="application/json; charset=utf-8")
 	public Object GetRound(Model model) {
 		// 최근 회차 가지고오는 코드
-		String last_url = "https://dhlottery.co.kr/gameResult.do?method=byWin";
-		Document last_doc = null;
-		try {
-			last_doc = Jsoup.connect(last_url).get();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		Elements last1 = last_doc.select("div.win_result");
-		Elements last_1 = last1.get(0).select("h4");
-		String last_result = last_1.text();
-		int last_num = Integer.parseInt(last_result.substring(0, 3));
-		// 최근 회차 가지고오는 코드
+		int last_num = Round.lastRound();
+
 		JSONObject jsonData = new JSONObject();
 		jsonData.put("getRound", last_num);
 		return jsonData;

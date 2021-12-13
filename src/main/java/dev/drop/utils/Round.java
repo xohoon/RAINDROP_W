@@ -4,7 +4,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-public class NewRound {
+public class Round {
 	public static int newRound() {
 		// 회차 자동가져오기
 		String url = "https://www.dhlottery.co.kr/gameResult.do?method=byWin&wiselog=C_A_1_1";

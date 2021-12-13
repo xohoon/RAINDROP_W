@@ -73,7 +73,7 @@ public class AdminController {
 		PrizeListDTO saveDTO = new PrizeListDTO();
 		ArrayList<String> ranList = new ArrayList<>();
 		// round는 일시적으로 원하는 만큼 받고 나중에 자동으로 전환
-//			int round = NewRound.newRound();
+//			int round = Round.newRound();
 		int round = numRound;
 		int round_id = adminMapper.testIdGet(round);
 		int count = 0;
@@ -186,7 +186,7 @@ public class AdminController {
 		PrizeListDTO saveDTO = new PrizeListDTO();
 		ArrayList<String> testGame = new ArrayList<>();
 		ArrayList<String> saveList = new ArrayList<>();
-//			int round = NewRound.newRound();
+//			int round = Round.newRound();
 		int round = rankRound;
 		int total = adminMapper.gameTotal(round);
 		System.out.println("::" + total);
