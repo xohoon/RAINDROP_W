@@ -24,8 +24,10 @@ function lastNumSave_chk(whatDrop, round, user_email) {
 		success : function(result, data) {
 			if(result.chk == "pass") {
 				console.log("check::"+result.chk);
+				dropSave();
 			}else if(result.chk == "block") {
-				alert(round+"회차 추첨은 이미 완료되었습니다.");
+				console.log("check::"+result.chk);
+				alert(round + "회차 모의 투자는 이미 완료되었습니다.");
 				return false;
 			}
 		},
@@ -35,9 +37,37 @@ function lastNumSave_chk(whatDrop, round, user_email) {
 	});
 }
 
+// 모의투자 저장 ajax
+function dropSave() {
+	var user_email = $("#userCheck").text(); // 회원
+	var whatDrop = $("#whatDrop").val(); // 페이지 상태 체크
+	var numCount = $('#numCount').val(); // 받을 번호 개수
+	var numRound = $('#numRound').val(); // 회차
+	$.ajax({
+		type: 'GET',
+		url: '/invest/list_saving',
+		dataType: 'JSON',
+		data: {
+			numCount: numCount,
+			numRound: numRound,
+			user_email: user_email,
+			whatDrop: whatDrop
+		},
+		success: view,
+		beforeSend: function () {
+			$('.wrap-loading').removeClass('display-none');
+		},
+		complete: function () {
+			$('.wrap-loading').addClass('display-none');
+		},
+		error: function (result) {
+			console.log('ERROR');
+		}
+	});
+}
+
 // 결과
 function view(data) {
-
 	$.each(data, function(idx, val) {
 		if(val.luck == 0) {
 			html = '<div>해당 회차는 모의투표가 이미 진행되었습니다</div>';
