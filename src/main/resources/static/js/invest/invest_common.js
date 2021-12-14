@@ -1,17 +1,12 @@
 $(function(){
 	console.log("invest_common jsFile");
-	var whatDrop = $("#whatDrop").val();
-	var round = $("#numRound").val();
-	var user_email = $("#userCheck").text();
-//	lastRound();
 });
-
-var numCount = 0;
-var html = '';
-var rankRound = 0;
 
 // 최근 추첨 여부 확인
 function lastNumSave_chk(whatDrop, round, user_email) {
+	var whatDrop = $("#whatDrop").val();
+	var round = $("#numRound").val();
+	var user_email = $("#userCheck").text();
 	$.ajax({
 		type : 'GET',
 		url : '/invest/dropCheck',
@@ -68,6 +63,7 @@ function dropSave() {
 
 // 결과
 function view(data) {
+	var html = '';
 	$.each(data, function(idx, val) {
 		if(val.luck == 0) {
 			html = '<div>해당 회차는 모의투표가 이미 진행되었습니다</div>';
@@ -87,7 +83,7 @@ function view(data) {
 $('#rankBtn').on('click', function() {
 	var user_email = $("#userCheck").text();
 	var whatDrop = $("#whatDrop").val();
-	rankRound = $('#rankRound').val();
+	var rankRound = $('#rankRound').val();
 	// 로그인 상태 체크
 	userCheck();
 	if(!rankRound) {
@@ -120,6 +116,7 @@ $('#rankBtn').on('click', function() {
 
 // 랭크 뷰
 function rankView(data) {
+	var html = '';
 	$.each(data, function(idx, val) {
 		if(val.gameResult == "true") {
 			html += '<br /><div>';
@@ -136,7 +133,6 @@ function rankView(data) {
 		}
 	});
 	$('#returnRank').html(html);
-	html = '';
 }
 
 

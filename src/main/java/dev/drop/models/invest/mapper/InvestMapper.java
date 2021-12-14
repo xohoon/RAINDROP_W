@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Param;
 import dev.drop.models.invest.dto.SaveListDTO;
 import dev.drop.models.invest.dto.SaveResultDTO;
 
+import java.util.List;
+
 @Mapper
 public interface InvestMapper {
 	// ***** RAINDROP  ***** //
@@ -55,8 +57,9 @@ public interface InvestMapper {
 	// 결과값 가져오기
 	SaveResultDTO rain_getResult(@Param(value="round") int round, @Param(value="member_id") int member_id);
 	// ***** RAINDROP  ***** //
-	// ***** RAINDROP  ***** //
-	// ***** DROPTOP  ***** //
+
+
+
 	// ***** DROPTOP  ***** //
 	// 회차별 총 게임수
 	int top_roundTotal(@Param(value="round") int round, @Param(value="member_id") int member_id);
@@ -103,8 +106,17 @@ public interface InvestMapper {
 	
 	// 결과값 가져오기
 	SaveResultDTO top_getResult(@Param(value="round") int round, @Param(value="member_id") int member_id);
+
+	// 모의투자 회차 가져오기
+	List<Integer> getMyList(@Param(value="member_id") int member_id);
+
+	// 확인한 값 1로 변경
+	void confirmCheck(@Param(value = "member_id") int member_id, @Param(value="round") int round);
 	// ***** DROPTOP  ***** //
-	
+
+
+
+
 	// ***** COMMON  ***** //
 	// 마지막 회차 저장 위한 id값
 	int LastNum();

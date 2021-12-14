@@ -20,6 +20,7 @@ import dev.drop.models.invest.mapper.InvestMapper;
 import dev.drop.utils.Revenue;
 
 import java.lang.reflect.Array;
+import java.security.Principal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,13 +54,17 @@ public class InvestController {
 	@GetMapping(
 			value="/droptop",
 			produces="application/json; charset=utf-8")
-	public String Dropdop(Model model) {
+	public String Dropdop(Model model, Principal principal) {
 		// 최근 회차 가지고오는 코드
 		int last_num = Round.lastRound();
 		List<Integer> roundList = new ArrayList<>();
 		roundList = caseMapper.getRoundList();
+		List<Integer> myList = new ArrayList<>();
+		int member_id = investMapper.get_memberId(principal.getName());
+		myList = investMapper.getMyList(member_id);
 		model.addAttribute("comming_round", last_num+1);
 		model.addAttribute("roundList", roundList);
+		model.addAttribute("myList", myList);
 		
 		return "invest/droptop";
 	}
@@ -317,6 +322,7 @@ public class InvestController {
 				investMapper.rain_saveRanking(member_id, rank01, rank02, rank03, rank04, rank05, round, total, revenue_total, after_tax);
 			}else if(whatDrop.equals("droptop")) {
 				investMapper.top_saveRanking(member_id, rank01, rank02, rank03, rank04, rank05, round, total, revenue_total, after_tax);
+				investMapper.confirmCheck(member_id, round);
 			}
 			jsonData.put("gameResult", "true");
 			jsonData.put("round", round);
