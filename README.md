@@ -2,17 +2,16 @@
 
 RAINDROP WEB VERSION
 
-> MacOS(m1)
-> Java8
-> IntelliJ
-> SpringBoot(spring security, JPA, MyBatis, ajax, jQuery, lombok, Thymeleaf)
-> MySQL(workbench)
-> git(github)
+- MacOS(m1)
+- Java8
+- IntelliJ
+- SpringBoot(spring security, JPA, MyBatis, ajax, jQuery, lombok, Thymeleaf)
+- MySQL(workbench)
+- git(github)
 
 raindrop web version code refactorying ..
-*************************** plan ***************************************
 
-*** WEB ***
+*************************** plan ***************************************
 
 *** MEMBER ***
 
@@ -31,6 +30,7 @@ MYPAGE - (회원정보 관리)
   - 흠;
 
 RAINDROP - (실제투자)
+  - 여태 받은 회차 리스트 보여주고 회차 선택시 상세 번호 및 결과 조회 페이지로 이동
   - 다가오는 회차만 받을 수 있음(최대 10회) N
   - 발표 후 바로 확인 가능 ( 등수 당첨금 회차 등 ) N
   - 모의투자로 적립된 포인트로 사용 ( 없으면 캐시충전 ) N
@@ -42,11 +42,13 @@ RAINDROP - (실제투자)
   - 
 
 DROPTOP - (모의투자)
+  - 한 페이지에서 회차별 추출 후 페이지 이동, 회차별 결과 확인 후 페이지 이동, 아래에서 회차별 결과 view -> 각 회차별 결과는 페이지 이동해서 상세히 view
   - 모든 회차 선택 후 모의 투자(회차당 50만원치) Y
   - 추첨받은 회차별 결과 조회 Y
   - 지난 번호 및 등수, 당첨금 확인 페이지 추가 N
   - 모의 투자 돌린 회차 -> 클릭시 번호 -> 클릭시 당첨 결과
 
+*** 기존 실시간 반영 -> 페이지 이동 및 새로고침으로 변경(한 페이지에서 기능이 많아져서 데이터의 복작함)
 
 *** ADMIN ***
 
