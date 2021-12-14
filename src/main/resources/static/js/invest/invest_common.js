@@ -12,7 +12,6 @@ var rankRound = 0;
 
 // 최근 추첨 여부 확인
 function lastNumSave_chk(whatDrop, round, user_email) {
-	console.log("TEST::"+whatDrop+"::"+round);
 	$.ajax({
 		type : 'GET',
 		url : '/invest/dropCheck',
@@ -25,16 +24,9 @@ function lastNumSave_chk(whatDrop, round, user_email) {
 		success : function(result, data) {
 			if(result.chk == "pass") {
 				console.log("check::"+result.chk);
-				$("#dropCheck").val("pass");
 			}else if(result.chk == "block") {
-				console.log("check::"+result.chk);
-				$("#dropCheck").val("block");
-			}else if(result.chk == "rain") {
-				console.log("check::"+result.chk);
-				$("#dropCheck").val("rain");
-			}else {
-				console.log("check::"+result.chk);
-				$("#dropCheck").val("error");
+				alert(round+"회차 추첨은 이미 완료되었습니다.");
+				return false;
 			}
 		},
 		error : function(data) {
@@ -45,11 +37,16 @@ function lastNumSave_chk(whatDrop, round, user_email) {
 
 // 결과
 function view(data) {
+
 	$.each(data, function(idx, val) {
-		html += '<br /><div>';
-	  	html += '<h4>' + val.member +'회원님</h4>';
-	  	html += '<h4>' + val.luck + '조합 성공</h4>';
-	  	html += '</div>';
+		if(val.luck == 0) {
+			html = '<div>해당 회차는 모의투표가 이미 진행되었습니다</div>';
+		}else {
+			html += '<br /><div>';
+			html += '<h4>' + val.member +'회원님</h4>';
+			html += '<h4>' + val.luck + '조합 성공</h4>';
+			html += '</div>';
+		}
 	});
 	$('#returnList').html(html);
 	html = '';

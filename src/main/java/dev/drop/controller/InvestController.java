@@ -84,8 +84,18 @@ public class InvestController {
 		JSONArray jsonArray = new JSONArray();
 		PrizeListDTO saveDTO = new PrizeListDTO();
 		ArrayList<String> ranList = new ArrayList<>();
-		
+
+		// 이미 회차 모의 투자를 진행한 경우
 		int member_id = investMapper.get_memberId(user_email);
+		int droptop_check = investMapper.top_Check(numRound, member_id);
+		if(droptop_check > 0) {
+			jsonData.put("member", member_id);
+			jsonData.put("luck", 0);
+			jsonArray.add(jsonData);
+			System.out.println("제대로 나갔지? = " + droptop_check);
+			return jsonArray;
+		}
+
 		int round = numRound;
 		int round_id = 0;
 		if(whatDrop.equals("raindrop")) {
@@ -95,7 +105,7 @@ public class InvestController {
 		}
 		int success = 0;
 		
-		for(int l = 1; l<=9999; l++) {
+		for(int l = 1; l <= 999; l++) {
 			System.out.println(l+"번째 for문:::");
 			// 랜덤값 생성
 			int[] numList = new int[6];
@@ -345,18 +355,16 @@ public class InvestController {
 	@ResponseBody
 	@GetMapping(value="/dropCheck")
 	public Object DropCheck(String whatDrop, int round, String user_email) {
+		System.out.println("CHECK = " + whatDrop + " :: " + round + " :: " + user_email);
 		JSONObject jsonData = new JSONObject();
-		int dropChk = 0;
-		System.out.println("user_email = " + user_email);
+		int investCheck = 0;
 		int member_id = investMapper.get_memberId(user_email);
 		if(whatDrop.equals("droptop")) {
-			System.out.println("whatdrop? :: " + whatDrop);
-			dropChk = investMapper.top_Check(round, member_id);
+			investCheck = investMapper.top_Check(round, member_id);
 		}
-		System.out.println(round + "회차 count :: " + dropChk);
-		if(dropChk == 0) {
+		if(investCheck == 0) {
 			jsonData.put("chk", "pass");
-		}else if(dropChk > 0){
+		}else if(investCheck > 0){
 			jsonData.put("chk", "block");
 		}
 		return jsonData;

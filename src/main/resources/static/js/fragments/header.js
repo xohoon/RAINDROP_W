@@ -2,6 +2,8 @@ $(function(){
 	var email = $('#userCheck').text();
 	if(email || email.length > 5) {
 		userAjax(email);
+	}else {
+		userCheck();
 	}
 });
 
@@ -25,10 +27,16 @@ function userAjax(email) {
 }
 function userCheck() {
 	var userCheck = $("#userCheck").text();
+	var path = window.location.pathname;
 	if(!userCheck || userCheck == "" || userCheck.length < 5) {
-		alert("로그인이 만료되었습니다. 로그인 페이지로 이동합니다.");
-		location.href="/member/signin";
-		return false;
+		console.log("PATH::" + path);
+		if(path == "/main" || path == "/member/signin" || path == "/member/signup") {
+			return false;
+		}else {
+			location.href="/member/signin";
+			alert("로그인이 만료되었습니다. 로그인 페이지로 이동합니다.");
+			return false;
+		}
 	}
 }
 

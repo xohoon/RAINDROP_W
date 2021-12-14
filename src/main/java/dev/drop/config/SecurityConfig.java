@@ -36,7 +36,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter { // Security s
 				// 페이지 권한 설정
 				.antMatchers("test", "url").permitAll() // 누구나 접근 허용
 				.antMatchers("/admin/**").hasRole("ADMIN") // ADMIN만 접근
-				.antMatchers("/member/myinfo").hasRole("MEMBER") // MEMBER, ADMIN 접근
+				.antMatchers("/member/info", "/member/modify").hasRole("MEMBER") // MEMBER, ADMIN 접근
+				.antMatchers("/invest/**").hasRole("MEMBER") // MEMBER, ADMIN 접근
 				.antMatchers("/**")
 				.permitAll()
 				

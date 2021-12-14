@@ -15,34 +15,28 @@ $('#dropSaveBtn').on('click', function() {
 		return false;
 	}else if(numRound != 0) {
 		lastNumSave_chk(whatDrop, numRound, user_email);
-		var dropCheck = $("#dropCheck").val();
-		if(dropCheck == "block") {
-			alert(numRound + "회차 추첨은 이미 완료되었습니다.");
-			return false;
-		}else if(dropCheck == "error") {
-			alert("왜 에러냐bb");
-			return false;
-		}
+		return false;
+	}else {
+		$.ajax({
+			type: 'GET',
+			url: '/invest/list_saving',
+			dataType: 'JSON',
+			data: {
+				numCount: numCount,
+				numRound: numRound,
+				user_email: user_email,
+				whatDrop: whatDrop
+			},
+			success: view,
+			beforeSend: function () {
+				$('.wrap-loading').removeClass('display-none');
+			},
+			complete: function () {
+				$('.wrap-loading').addClass('display-none');
+			},
+			error: function (result) {
+				console.log('ERROR');
+			}
+		});
 	}
-	$.ajax({
-		type: 'GET',
-		url: '/invest/list_saving',
-		dataType: 'JSON',
-		data: {
-			numCount: numCount,
-			numRound: numRound,
-			user_email: user_email,
-			whatDrop: whatDrop
-		},
-		success: view,
-		beforeSend: function () {
-			$('.wrap-loading').removeClass('display-none');
-		},
-		complete: function () {
-			$('.wrap-loading').addClass('display-none');
-		},
-		error: function (result) {
-			console.log('ERROR');
-		}
-	});
 });
