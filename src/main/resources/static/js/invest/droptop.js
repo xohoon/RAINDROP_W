@@ -15,3 +15,11 @@ $('#dropSaveBtn').on('click', function() {
 		lastNumSave_chk(whatDrop, numRound);
 	}
 });
+
+var myModal = document.getElementById('dropDetailModal')
+var round = "";
+myModal.addEventListener('show.bs.modal', function (event) {
+	round = $(event.relatedTarget).data('round');
+	console.log("MODAL?::"+round);
+
+});
