@@ -36,7 +36,7 @@ function dropSave() {
 	var numCount = $('#numCount').val(); // 받을 번호 개수
 	var numRound = $('#numRound').val(); // 회차
 	$.ajax({
-		type: 'GET',
+		type: 'POST',
 		url: '/invest/list_saving',
 		dataType: 'JSON',
 		data: {
@@ -68,7 +68,7 @@ $('#rankBtn').on('click', function() {
 		return false;
 	}else {
 		$.ajax({
-			type : 'GET',
+			type : 'POST',
 			url : '/invest/myRank',
 			dataType : 'JSON',
 			data : {

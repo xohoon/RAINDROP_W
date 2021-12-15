@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -70,7 +71,7 @@ public class InvestController {
 	// ***** COMMON  ***** //
 	// 번호 저장 공통
 	@ResponseBody
-	@GetMapping(
+	@PostMapping(
 			value="/list_saving",
 			produces="application/json; charset=utf-8")
 	public Object Main(int numCount, int numRound, String whatDrop, Principal principal) {
@@ -206,7 +207,7 @@ public class InvestController {
 	
 	// 회차별 등수 및 당첨금액 확인
 	@ResponseBody
-	@GetMapping(
+	@PostMapping(
 			value="/myRank",
 			produces="application/json; charset=utf-8")
 	public Object myRank(int rankRound, String whatDrop, Principal principal) {
@@ -383,6 +384,17 @@ public class InvestController {
 		JSONObject jsonData = new JSONObject();
 		jsonData.put("getRound", last_num);
 		return jsonData;
+	}
+
+	@ResponseBody
+	@GetMapping(
+			value="/modalData",
+			produces="application/json; charset=utf-8")
+	public List<SaveListDTO> modalData(int round, Principal principal) {
+		int member_id = investMapper.get_memberId(principal.getName());
+		List<SaveListDTO> dropDetailList = investMapper.dropDetailList(member_id, round);
+
+		return dropDetailList;
 	}
 	
 	// ***** COMMON  ***** //

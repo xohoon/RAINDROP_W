@@ -109,6 +109,11 @@
 	<select id="getResultList" resultType="dev.drop.models.invest.dto.SaveResultDTO">
 		SELECT * FROM droptop_result WHERE member_id = #{member_id} ORDER BY round DESC
 	</select>
+
+	<!-- 회차별 추첨 번호 리스트 -->
+	<select id="dropDetailList" resultType="dev.drop.models.invest.dto.SaveListDTO">
+		SELECT * FROM droptop_list WHERE member_id = #{member_id} AND round = #{round}
+	</select>
 	<!-- ***** DROPTOP  ***** -->
 
 

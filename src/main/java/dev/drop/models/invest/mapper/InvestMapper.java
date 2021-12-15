@@ -115,6 +115,8 @@ public interface InvestMapper {
 
 	// 저장된 결과값 리스트
 	List<SaveResultDTO> getResultList(@Param(value = "member_id") int member_id);
+
+	List<SaveListDTO> dropDetailList(@Param(value = "member_id") int member_id, @Param(value = "round") int round);
 	// ***** DROPTOP  ***** //
 
 

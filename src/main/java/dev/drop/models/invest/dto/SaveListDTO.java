@@ -15,7 +15,8 @@ public class SaveListDTO {
 	private int num4;
 	private int num5;
 	private int num6;
-	private int ranking;
+//	private int ranking;
 	private int sum;
+	private String in_date;
 
 }
