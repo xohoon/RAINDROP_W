@@ -27,7 +27,7 @@ $('#rainSaveBtn').on('click', function() {
 		return false;
 	}else {
 		$.ajax({
-			type : 'POST',
+			type : 'GET',
 			url : '/invest/list_saving',
 			dataType : 'JSON',
 			data : {

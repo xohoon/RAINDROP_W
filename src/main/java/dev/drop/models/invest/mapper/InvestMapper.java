@@ -116,7 +116,16 @@ public interface InvestMapper {
 	// 저장된 결과값 리스트
 	List<SaveResultDTO> getResultList(@Param(value = "member_id") int member_id);
 
+	// 회차 상세 리스트
 	List<SaveListDTO> dropDetailList(@Param(value = "member_id") int member_id, @Param(value = "round") int round);
+
+	// 포인트 충전
+	void setPoint(@Param(value = "plusPoint") int plusPoint, @Param(value = "member_id") int member_id);
+
+	// 환전 업데이트
+	void setExchange(@Param(value = "plusPoint") int plusPoint,
+					 @Param(value = "member_id") int member_id,
+					 @Param(value = "round") int round);
 	// ***** DROPTOP  ***** //
 
 

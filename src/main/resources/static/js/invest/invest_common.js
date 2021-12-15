@@ -36,13 +36,13 @@ function dropSave() {
 	var numCount = $('#numCount').val(); // 받을 번호 개수
 	var numRound = $('#numRound').val(); // 회차
 	$.ajax({
-		type: 'POST',
+		type: 'GET',
 		url: '/invest/list_saving',
 		dataType: 'JSON',
 		data: {
-			numCount: numCount,
-			numRound: numRound,
-			whatDrop: whatDrop
+			numCount : numCount,
+			numRound : numRound,
+			whatDrop : whatDrop
 		},
 		success: moveDroptop,
 		beforeSend: function () {
@@ -68,7 +68,7 @@ $('#rankBtn').on('click', function() {
 		return false;
 	}else {
 		$.ajax({
-			type : 'POST',
+			type : 'GET',
 			url : '/invest/myRank',
 			dataType : 'JSON',
 			data : {

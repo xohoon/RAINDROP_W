@@ -12,81 +12,85 @@
 
 <body>
 <!--	<div class="container common">-->
-		<div class="cardSet2">
-			<div class="card border-secondary mb-3 card2">
-				<div class="card-header">모의투자 번호 추출</div>
-				<div class="card-body text-dark">
-<!--					<input type="hidden" id="dropCheck" value="not" />-->
-					<input type="hidden" id="whatDrop" value="droptop" />
-					<input type="hidden" id="numCount" value="10" />
-					<div class="set_2">
-						<select id="numRound" class="form-select form-select-sm selectBox" aria-label=".form-select-sm example">
-							<option selected value=0>회차선택</option>
-							<option th:each="roundList : ${roundList}"
-								th:value="${roundList}"
-								th:utext="${roundList}"></option>
-						</select>
-						<span class="input_2">50회 추출</span>
-						<input type="button" class="btn btn-warning input_2" id="dropSaveBtn" value="내놔봐">
-					</div>
-					<!--
-					<div class="returnSuccess" id="returnList">결과과 노출됩니다.</div>
-					-->
+	<div class="cardSet2">
+		<div class="card border-secondary mb-3 card2">
+			<div class="card-header">모의투자 번호 추출</div>
+			<div class="card-body text-dark">
+				<input type="hidden" id="whatDrop" value="droptop" />
+				<input type="hidden" id="numCount" value="10" />
+				<div class="set_2">
+					<select id="numRound" class="form-select form-select-sm selectBox" aria-label=".form-select-sm example">
+						<option selected value=0>회차선택</option>
+						<option th:each="roundList : ${roundList}"
+							th:value="${roundList}"
+							th:utext="${roundList}"></option>
+					</select>
+					<span class="input_2">50회 추출</span>
+					<input type="button" class="btn btn-warning input_2" id="dropSaveBtn" value="내놔봐">
 				</div>
-			</div>
-			<div class="card border-secondary mb-3 card2">
-				<div class="card-header">모의투자 결과 확인</div>
-				<div class="card-body text-dark">
-					<div class="set_3">
-						<select id="rankRound" class="form-select form-select-sm selectBox" aria-label=".form-select-sm example">
-							<option selected value=0>회차선택</option>
-							<option th:each="myList : ${myList}"
-									th:value="${myList}"
-									th:utext="${myList}"></option>
-						</select>
-						<input type="button" class="btn btn-success input_3" id="rankBtn" value="당첨 결과 확인">
-					</div>
-					<!--
-					<div class="returnSuccess" id="returnRank">결과과 노출됩니다.</div>
-					-->
-				</div>
+				<!--
+				<div class="returnSuccess" id="returnList">결과과 노출됩니다.</div>
+				-->
 			</div>
 		</div>
-		<table class="table table-hover">
-			<thead>
-				<tr>
-					<th scope="col">#</th>
-					<th scope="col">회차</th>
-					<th scope="col">게임 수</th>
-					<th scope="col">당첨금</th>
-					<th scope="col">결과 날짜</th>
-					<th scope="col">상세 보기</th>
-					<th scope="col">코인 정산</th>
-				</tr>
-			</thead>
-			<tbody>
-				<th:block th:each="list, num:${resultList}">
-					<tr>
-						<th scope="row"><span th:text="${num.count}"></span></th>
-						<td><span th:text="${list.round}"></span>회</td>
-						<td><span th:text="${list.game_total}"></span></td>
-						<td><span th:text="${list.revenue_total}"></span>원</td>
-						<td><span th:text="${list.in_date}"></span></td>
-						<td>
-							<button type="button" class="btn btn-success" th:value="${list.round}"
-									data-bs-toggle="modal" data-bs-target="#dropDetailModal"
-									th:data-round="${list.round}"
-							>상세 보기</button>
-						</td>
-						<td><button>정산</button></td>
-					</tr>
-				</th:block>
-			</tbody>
-		</table>
-		<div class="wrap-loading display-none">
-			<div><img src="/static/images/e1.gif"></div>
+		<div class="card border-secondary mb-3 card2">
+			<div class="card-header">모의투자 결과 확인</div>
+			<div class="card-body text-dark">
+				<div class="set_3">
+					<select id="rankRound" class="form-select form-select-sm selectBox" aria-label=".form-select-sm example">
+						<option selected value=0>회차선택</option>
+						<option th:each="myList : ${myList}"
+								th:value="${myList}"
+								th:utext="${myList}"></option>
+					</select>
+					<input type="button" class="btn btn-success input_3" id="rankBtn" value="당첨 결과 확인">
+				</div>
+				<!--
+				<div class="returnSuccess" id="returnRank">결과과 노출됩니다.</div>
+				-->
+			</div>
 		</div>
 	</div>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">회차</th>
+				<th scope="col">게임 수</th>
+				<th scope="col">당첨금</th>
+				<th scope="col">결과 날짜</th>
+				<th scope="col">상세 보기</th>
+				<th scope="col">포인트 충전</th>
+			</tr>
+		</thead>
+		<tbody>
+			<th:block th:each="list, num:${resultList}">
+				<tr>
+					<th scope="row"><span th:text="${num.count}"></span></th>
+					<td><span th:text="${list.round}"></span>회</td>
+					<td><span th:text="${list.game_total}"></span></td>
+					<td><span th:text="${list.revenue_total}"></span>원</td>
+					<td><span th:text="${list.in_date}"></span></td>
+					<td>
+						<button type="button" class="btn btn-success"
+							data-bs-toggle="modal" data-bs-target="#dropDetailModal"
+							th:data-round="${list.round}">상세 보기</button>
+					</td>
+					<td>
+						<button type="button" class="btn btn-dark"
+							th:if="${list.exchange_status} == 1">정산완료</button>
+						<button type="button" class="btn btn-success"
+							th:if="${list.exchange_status} == 0"
+							th:onclick="'javascript:exchangeAjax('+${list.round}+', '+${list.revenue_total}+');'">정산</button>
+					</td>
+				</tr>
+			</th:block>
+		</tbody>
+	</table>
+	<div class="wrap-loading display-none">
+		<div><img src="/static/images/e1.gif"></div>
+	</div>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="dropDetailModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

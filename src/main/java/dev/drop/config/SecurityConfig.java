@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import dev.drop.models.member.service.MemberService;
@@ -26,12 +27,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter { // Security s
 		return new BCryptPasswordEncoder();
 	}
 
-	public void configure(WebSecurity web) throws Exception { // 21 line override
+	public void configure(WebSecurity web) throws Exception{ // 21 line override
 		// static 디렉터리의 하위 파일 목록은 인증 무시 ( = 항상통과 )
 		web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/lib/**");
 	}
 
+	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 		http.authorizeRequests()
 				// 페이지 권한 설정
 				.antMatchers("test", "url").permitAll() // 누구나 접근 허용

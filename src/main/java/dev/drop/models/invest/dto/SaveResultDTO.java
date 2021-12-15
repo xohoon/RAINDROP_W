@@ -18,5 +18,8 @@ public class SaveResultDTO {
 	private Double revenue_total;
 	private Double revenue_after_tax;
 	private String in_date;
+	private int exchange_point;
+	private int exchange_status;
+	private String exchange_date;
 	
 }

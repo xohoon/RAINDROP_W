@@ -25,30 +25,44 @@ myModal.addEventListener('show.bs.modal', function (event) {
 	dropModalAjax(round);
 });
 
+function exchangeAjax(data, point) {
+	if(point == 0) {
+		alert("금액이 부족합니다.");
+		return false;
+	}else {
+		$.ajax({
+			type: 'GET',
+			url: '/invest/exchangePoint',
+			dataType: 'JSON',
+			data: {
+				round : data,
+				point : point
+			},
+			success: function(result, data) {
+				if(result.chk == "success") {
+					moveDroptop()
+				}else if(result.chk == "fail") {
+					console.log("FAIL");
+					return false;
+				}
+			},
+			error: function (result) {
+				console.log('ERROR');
+			}
+		});
+	}
+}
+
 // data send and result
-function dropModalAjax(round) {
+function dropModalAjax(data) {
 	$.ajax({
 		type: 'GET',
 		url: '/invest/modalData',
 		dataType: 'JSON',
 		data: {
-			round: round
+			round : data
 		},
 		success:modalResult,
-
-		/*
-		function(data) {
-			$(data).each(function() {
-				console.log(this.num1);
-			});
-		},
-		beforeSend: function () {
-			$('.wrap-loading').removeClass('display-none');
-		},
-		complete: function () {
-			$('.wrap-loading').addClass('display-none');
-		},
-		*/
 		error: function (result) {
 			console.log('ERROR');
 		}

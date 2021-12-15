@@ -5,10 +5,7 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import dev.drop.models.cases.mapper.CaseMapper;
 import dev.drop.models.invest.dto.SaveListDTO;
@@ -71,7 +68,7 @@ public class InvestController {
 	// ***** COMMON  ***** //
 	// 번호 저장 공통
 	@ResponseBody
-	@PostMapping(
+	@GetMapping(
 			value="/list_saving",
 			produces="application/json; charset=utf-8")
 	public Object Main(int numCount, int numRound, String whatDrop, Principal principal) {
@@ -207,7 +204,7 @@ public class InvestController {
 	
 	// 회차별 등수 및 당첨금액 확인
 	@ResponseBody
-	@PostMapping(
+	@GetMapping(
 			value="/myRank",
 			produces="application/json; charset=utf-8")
 	public Object myRank(int rankRound, String whatDrop, Principal principal) {
@@ -395,6 +392,28 @@ public class InvestController {
 		List<SaveListDTO> dropDetailList = investMapper.dropDetailList(member_id, round);
 
 		return dropDetailList;
+	}
+
+	@ResponseBody
+	@GetMapping(
+			value="/exchangePoint",
+			produces="application/json; charset=utf-8")
+	public Object exchangePoint(@RequestParam int round, @RequestParam int point, Principal principal) {
+		System.out.println("round = " + round);
+		JSONObject jsonData = new JSONObject();
+		int member_id = investMapper.get_memberId(principal.getName());
+		int plusPoint = (int)(point * 0.01);
+		try {
+			// 당첨금 1% 포인트 충전
+			investMapper.setPoint(plusPoint, member_id);
+			// 포인트 충전 후 status update
+			investMapper.setExchange(plusPoint, member_id, round);
+			jsonData.put("chk", "success");
+		}catch (Exception e){
+			jsonData.put("chk", "fail");
+			e.printStackTrace();
+		}
+		return jsonData;
 	}
 	
 	// ***** COMMON  ***** //
