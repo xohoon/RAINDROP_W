@@ -2,9 +2,6 @@ package dev.drop.controller;
 
 import dev.drop.utils.Round;
 import org.json.simple.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +16,6 @@ import dev.drop.models.invest.dto.PrizeListDTO;
 import dev.drop.models.invest.mapper.InvestMapper;
 import dev.drop.utils.Revenue;
 
-import java.lang.reflect.Array;
 import java.security.Principal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -56,16 +52,16 @@ public class InvestController {
 			produces="application/json; charset=utf-8")
 	public String Dropdop(Model model, Principal principal) {
 		// 최근 회차 가지고오는 코드
-		int last_num = Round.lastRound();
-		List<Integer> roundList = new ArrayList<>();
-		roundList = caseMapper.getRoundList();
-		List<Integer> myList = new ArrayList<>();
 		int member_id = investMapper.get_memberId(principal.getName());
-		myList = investMapper.getMyList(member_id);
+		int last_num = Round.lastRound();
+		List<Integer> roundList = caseMapper.getRoundList();
+		List<Integer> myList = investMapper.getMyList(member_id);
+		List<SaveResultDTO> resultList = investMapper.getResultList(member_id);
 		model.addAttribute("comming_round", last_num+1);
 		model.addAttribute("roundList", roundList);
 		model.addAttribute("myList", myList);
-		
+		model.addAttribute("resultList", resultList);
+
 		return "invest/droptop";
 	}
 	
@@ -77,7 +73,7 @@ public class InvestController {
 	@GetMapping(
 			value="/list_saving",
 			produces="application/json; charset=utf-8")
-	public Object Main(int numCount, int numRound, String user_email, String whatDrop) {
+	public Object Main(int numCount, int numRound, String whatDrop, Principal principal) {
 		
 		/*
 		 * 
@@ -91,7 +87,7 @@ public class InvestController {
 		ArrayList<String> ranList = new ArrayList<>();
 
 		// 이미 회차 모의 투자를 진행한 경우
-		int member_id = investMapper.get_memberId(user_email);
+		int member_id = investMapper.get_memberId(principal.getName());
 		int droptop_check = investMapper.top_Check(numRound, member_id);
 		if(droptop_check > 0) {
 			jsonData.put("member", member_id);
@@ -213,7 +209,7 @@ public class InvestController {
 	@GetMapping(
 			value="/myRank",
 			produces="application/json; charset=utf-8")
-	public Object myRank(int rankRound, String user_email, String whatDrop) {
+	public Object myRank(int rankRound, String whatDrop, Principal principal) {
 		JSONObject jsonData = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
 		SaveListDTO imiDTO = new SaveListDTO();
@@ -223,7 +219,7 @@ public class InvestController {
 		DecimalFormat formater = new DecimalFormat("###,###");
 		SaveResultDTO resultDTO = new SaveResultDTO();
 		
-		int member_id = investMapper.get_memberId(user_email);
+		int member_id = investMapper.get_memberId(principal.getName());
 		int round = rankRound;
 		int total = 0;
 		int result = 0;
@@ -360,11 +356,10 @@ public class InvestController {
 	// 최근 추첨 여부 확인
 	@ResponseBody
 	@GetMapping(value="/dropCheck")
-	public Object DropCheck(String whatDrop, int round, String user_email) {
-		System.out.println("CHECK = " + whatDrop + " :: " + round + " :: " + user_email);
+	public Object DropCheck(String whatDrop, int round, Principal principal) {
 		JSONObject jsonData = new JSONObject();
 		int investCheck = 0;
-		int member_id = investMapper.get_memberId(user_email);
+		int member_id = investMapper.get_memberId(principal.getName());
 		if(whatDrop.equals("droptop")) {
 			investCheck = investMapper.top_Check(round, member_id);
 		}

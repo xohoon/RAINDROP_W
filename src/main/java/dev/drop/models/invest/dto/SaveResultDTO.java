@@ -18,6 +18,5 @@ public class SaveResultDTO {
 	private Double revenue_total;
 	private Double revenue_after_tax;
 	private String in_date;
-	private String up_date;
 	
 }

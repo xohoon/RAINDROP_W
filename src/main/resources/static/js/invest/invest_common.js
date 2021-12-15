@@ -3,18 +3,16 @@ $(function(){
 });
 
 // 최근 추첨 여부 확인
-function lastNumSave_chk(whatDrop, round, user_email) {
+function lastNumSave_chk(whatDrop, round) {
 	var whatDrop = $("#whatDrop").val();
 	var round = $("#numRound").val();
-	var user_email = $("#userCheck").text();
 	$.ajax({
 		type : 'GET',
 		url : '/invest/dropCheck',
 		dataType : "JSON",
 		data : {
 			whatDrop : whatDrop,
-			round : round,
-			user_email : user_email
+			round : round
 		},
 		success : function(result, data) {
 			if(result.chk == "pass") {
@@ -34,7 +32,6 @@ function lastNumSave_chk(whatDrop, round, user_email) {
 
 // 모의투자 저장 ajax
 function dropSave() {
-	var user_email = $("#userCheck").text(); // 회원
 	var whatDrop = $("#whatDrop").val(); // 페이지 상태 체크
 	var numCount = $('#numCount').val(); // 받을 번호 개수
 	var numRound = $('#numRound').val(); // 회차
@@ -45,10 +42,9 @@ function dropSave() {
 		data: {
 			numCount: numCount,
 			numRound: numRound,
-			user_email: user_email,
 			whatDrop: whatDrop
 		},
-		success: view,
+		success: moveDroptop,
 		beforeSend: function () {
 			$('.wrap-loading').removeClass('display-none');
 		},
@@ -61,7 +57,44 @@ function dropSave() {
 	});
 }
 
-// 결과
+// 랭크 저장
+$('#rankBtn').on('click', function() {
+	var whatDrop = $("#whatDrop").val();
+	var rankRound = $('#rankRound').val();
+	// 로그인 상태 체크
+	userCheck();
+	if(!rankRound) {
+		alert('회차를 입력해주세요');
+		return false;
+	}else {
+		$.ajax({
+			type : 'GET',
+			url : '/invest/myRank',
+			dataType : 'JSON',
+			data : {
+				rankRound : rankRound,
+				whatDrop : whatDrop
+			},
+			success : moveDroptop
+			,
+			beforeSend:function() {
+				$('.wrap-loading').removeClass('display-none');
+			},
+			complete:function() {
+				$('.wrap-loading').addClass('display-none');
+			},
+			error : function(result) {
+				console.log('ERROR');
+			}
+		});
+	}
+});
+
+function moveDroptop() {
+	location.href="/invest/droptop";
+}
+
+// 번호 추출 결과 뷰
 function view(data) {
 	var html = '';
 	$.each(data, function(idx, val) {
@@ -79,42 +112,7 @@ function view(data) {
 	$("#saveBtn").attr('disabled', 'true');
 }
 
-// 랭크 저장
-$('#rankBtn').on('click', function() {
-	var user_email = $("#userCheck").text();
-	var whatDrop = $("#whatDrop").val();
-	var rankRound = $('#rankRound').val();
-	// 로그인 상태 체크
-	userCheck();
-	if(!rankRound) {
-		alert('회차를 입력해주세요');
-		return false;
-	}else {
-		$.ajax({
-			type : 'GET',
-			url : '/invest/myRank',
-			dataType : 'JSON',
-			data : {
-				rankRound : rankRound,
-				user_email : user_email,
-				whatDrop : whatDrop
-				},
-			success : rankView
-			,
-			beforeSend:function() {
-				$('.wrap-loading').removeClass('display-none');
-			},
-			complete:function() {
-				$('.wrap-loading').addClass('display-none');
-			},
-			error : function(result) {
-				console.log('ERROR');
-			}
-		});
-	}
-});
-
-// 랭크 뷰
+// 당첨 확인 뷰
 function rankView(data) {
 	var html = '';
 	$.each(data, function(idx, val) {
@@ -134,9 +132,6 @@ function rankView(data) {
 	});
 	$('#returnRank').html(html);
 }
-
-
-
 
 //최신회차 가져오기
 /*

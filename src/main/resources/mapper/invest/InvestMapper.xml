@@ -9,8 +9,8 @@
 	<!-- ***** RAINDROP  ***** -->
 	<!-- RAINDROP 추첨번호 저장 -->
     <insert id="rain_list_saving">
-		INSERT INTO raindrop_list(member_id, num1, num2, num3, num4, num5, num6, in_date, round, sum, round_id) 
-		VALUES(#{member_id}, #{saving1}, #{saving2}, #{saving3}, #{saving4}, #{saving5}, #{saving6}, now(), #{round}, #{ranSum}, #{round_id});
+		INSERT INTO raindrop_list(member_id, num1, num2, num3, num4, num5, num6, in_date, round, sum, round_id, in_date)
+		VALUES(#{member_id}, #{saving1}, #{saving2}, #{saving3}, #{saving4}, #{saving5}, #{saving6}, now(), #{round}, #{ranSum}, #{round_id}, now());
 	</insert>
 	
     <!-- 중복 추첨 체크 -->
@@ -23,12 +23,12 @@
 		SELECT count(round_id) FROM raindrop_list WHERE round = #{round} AND member_id = #{member_id};
 	</select>
 	
-	<!-- 모의추첨 번호가져오기 -->
+	<!-- 번호가져오기 -->
 	<select id="rain_roundData" resultType="dev.drop.models.invest.dto.SaveListDTO">
         SELECT * FROM raindrop_list WHERE round_id = #{i} AND round = #{round} AND member_id = #{member_id};
     </select>
 
-	<!-- 모의로또 등수 저장 -->
+	<!-- 등수 저장 -->
 	<insert id="rain_saveRanking">
 		INSERT INTO raindrop_result(member_id, round, rank01, rank02, rank03, rank04, rank05, game_total, revenue_total, revenue_after_tax, in_date) 
 		VALUES(#{member_id}, #{round}, #{rank01}, #{rank02}, #{rank03}, #{rank04}, #{rank05}, #{total}, #{revenue_total}, #{after_tax}, now());
@@ -55,7 +55,7 @@
 	<!-- ***** DROPTOP  ***** -->
 	<!-- DROPTOP 추첨번호 저장 -->
     <insert id="top_list_saving">
-		INSERT INTO droptop_list(member_id, num1, num2, num3, num4, num5, num6, in_date, round, sum, round_id) 
+		INSERT INTO droptop_list(member_id, num1, num2, num3, num4, num5, num6, in_date, round, sum, round_id)
 		VALUES(#{member_id}, #{saving1}, #{saving2}, #{saving3}, #{saving4}, #{saving5}, #{saving6}, now(), #{round}, #{ranSum}, #{round_id});
 	</insert>
     
@@ -102,8 +102,13 @@
 
 	<!-- 확인한거 1로 변경 -->
 	<update id="confirmCheck">
-		UPDATE droptop_list SET result_confirm = 1 WHERE round = ${round} AND member_id = ${member_id};
+		UPDATE droptop_list SET result_confirm = 1, confirm_date = now() WHERE round = ${round} AND member_id = ${member_id};
 	</update>
+
+	<!-- 저장된 결과값 리스트 select -->
+	<select id="getResultList" resultType="dev.drop.models.invest.dto.SaveResultDTO">
+		SELECT * FROM droptop_result WHERE member_id = #{member_id} ORDER BY round DESC
+	</select>
 	<!-- ***** DROPTOP  ***** -->
 
 

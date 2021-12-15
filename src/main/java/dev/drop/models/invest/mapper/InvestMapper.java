@@ -112,6 +112,9 @@ public interface InvestMapper {
 
 	// 확인한 값 1로 변경
 	void confirmCheck(@Param(value = "member_id") int member_id, @Param(value="round") int round);
+
+	// 저장된 결과값 리스트
+	List<SaveResultDTO> getResultList(@Param(value = "member_id") int member_id);
 	// ***** DROPTOP  ***** //
 
 

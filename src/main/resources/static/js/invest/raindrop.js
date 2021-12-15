@@ -4,7 +4,6 @@ $(function(){
 
 // RAINDROP 저장
 $('#rainSaveBtn').on('click', function() {
-	var user_email = $("#userCheck").text(); // 회원
 	var CoinCheck = $("#CoinCheck").val(); // 코인개수
 	var whatDrop = $("#whatDrop").val(); // 페이지 상태 체크
 	var numCount = $('#numCount').val(); // 받을 번호 개수
@@ -34,7 +33,6 @@ $('#rainSaveBtn').on('click', function() {
 			data : {
 				numCount : numCount,
 				numRound : numRound,
-				user_email : user_email,
 				whatDrop : whatDrop
 			},
 			success : view,
