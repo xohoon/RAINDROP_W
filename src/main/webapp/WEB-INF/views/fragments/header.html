@@ -24,7 +24,7 @@
 			<div class="collapse navbar-collapse justify-content-end" id="navbarText">
 				<ul class="navbar-nav mb-2 mb-lg-0">
 					<li class="nav-item" sec:authorize="hasRole('ROLE_MEMBER')"><a
-						class="nav-link" aria-current="page" href="/member/info">마이페이지</a>
+						class="nav-link" aria-current="page" href="/member/info">MY PAGE</a>
 					</li>
 					<li class="nav-item" sec:authorize="hasRole('ROLE_MEMBER')">
 						<a class="nav-link" href="/invest/raindrop">RAINDROP</a>
@@ -34,27 +34,27 @@
 					</li>
 
 					<li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
-						<a class="nav-link" aria-current="page" href="/admin/index">관리자 페이지</a>
+						<a class="nav-link" aria-current="page" href="/admin/index">ADMIN PAGE</a>
 					</li>
 					<li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
-						<a class="nav-link" aria-current="page" href="/admin/imitation">데이터 관리</a>
+						<a class="nav-link" aria-current="page" href="/admin/imitation">DATA</a>
 					</li>
 					<li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
-						<a class="nav-link" aria-current="page" href="/admin/member_list">회원관리</a>
+						<a class="nav-link" aria-current="page" href="/admin/member_list">MEMBER</a>
 					</li>
 	
 					<li class="nav-item" sec:authorize="isAuthenticated()">
-						<a class="nav-link" href="/member/logout">로그아웃</a>
+						<a class="nav-link" href="/member/logout">SIGN OUT</a>
 					</li>
 	
 					<li class="nav-item" sec:authorize="isAnonymous()">
-						<a class="nav-link" aria-current="page" href="/member/signin">로그인</a>
+						<a class="nav-link" aria-current="page" href="/member/signin">SIGN IN</a>
 					</li>
 					<li class="nav-item" sec:authorize="isAnonymous()">
-						<a class="nav-link" href="/member/signup">회원가입</a>
+						<a class="nav-link" href="/member/signup">SIGN UP</a>
 					</li>
 					<li class="nav-item" sec:authorize="isAuthenticated()">
-						<a class="nav-link"><span sec:authentication="name" id="userCheck"></span>님 환영</a>
+						<a class="nav-link"><span sec:authentication="name" id="userCheck"></span></a>
 					</li>
 				</ul>
 			</div>

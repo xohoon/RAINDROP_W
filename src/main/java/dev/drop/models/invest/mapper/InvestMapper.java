@@ -56,6 +56,12 @@ public interface InvestMapper {
 	
 	// 결과값 가져오기
 	SaveResultDTO rain_getResult(@Param(value="round") int round, @Param(value="member_id") int member_id);
+
+	// 코인 차감
+	void useCoin(@Param(value="member_id") int member_id, @Param(value = "numCount") int numCount);
+
+	// 코인 내역
+	void history_outCoin(@Param(value="member_id") int member_id, @Param(value = "numCount") int numCount);
 	// ***** RAINDROP  ***** //
 
 
@@ -126,6 +132,9 @@ public interface InvestMapper {
 	void setExchange(@Param(value = "plusPoint") int plusPoint,
 					 @Param(value = "member_id") int member_id,
 					 @Param(value = "round") int round);
+
+	// 포인트 내역
+	void setHistory(@Param(value = "plusPoint") int plusPoint, @Param(value = "member_id") int member_id);
 	// ***** DROPTOP  ***** //
 
 

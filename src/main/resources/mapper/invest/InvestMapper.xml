@@ -9,8 +9,8 @@
 	<!-- ***** RAINDROP  ***** -->
 	<!-- RAINDROP 추첨번호 저장 -->
     <insert id="rain_list_saving">
-		INSERT INTO raindrop_list(member_id, num1, num2, num3, num4, num5, num6, in_date, round, sum, round_id, in_date)
-		VALUES(#{member_id}, #{saving1}, #{saving2}, #{saving3}, #{saving4}, #{saving5}, #{saving6}, now(), #{round}, #{ranSum}, #{round_id}, now());
+		INSERT INTO raindrop_list(member_id, num1, num2, num3, num4, num5, num6, in_date, round, sum, round_id)
+		VALUES(#{member_id}, #{saving1}, #{saving2}, #{saving3}, #{saving4}, #{saving5}, #{saving6}, now(), #{round}, #{ranSum}, #{round_id});
 	</insert>
 	
     <!-- 중복 추첨 체크 -->
@@ -48,6 +48,17 @@
     <select id="rain_getResult" resultType="dev.drop.models.invest.dto.SaveResultDTO">
     	SELECT * FROM raindrop_result WHERE round = #{round} AND member_id = #{member_id}
     </select>
+
+	<!-- 코인 차감 -->
+	<update id="useCoin">
+		UPDATE member SET coin = coin - #{numCount} WHERE id = #{member_id}
+	</update>
+
+	<!-- 코인 내역 -->
+	<insert id="history_outCoin">
+		INSERT INTO coin_history(member_id, out_coin, in_date)
+		VALUES(#{member_id}, #{numCount}, now())
+	</insert>
 	<!-- ***** RAINDROP  ***** -->
 
 
@@ -97,12 +108,12 @@
 
 	<!-- 모의투자 회차 가져오기 -->
 	<select id="getMyList" resultType="Integer">
-		SELECT DISTINCT round FROM droptop_list WHERE member_id = ${member_id} AND result_confirm = 0;
+		SELECT DISTINCT round FROM droptop_list WHERE member_id = ${member_id} AND confirm_result = 0;
 	</select>
 
 	<!-- 확인한거 1로 변경 -->
 	<update id="confirmCheck">
-		UPDATE droptop_list SET result_confirm = 1, confirm_date = now() WHERE round = ${round} AND member_id = ${member_id};
+		UPDATE droptop_list SET confirm_result = 1, confirm_date = now() WHERE round = ${round} AND member_id = ${member_id};
 	</update>
 
 	<!-- 저장된 결과값 리스트 select -->
@@ -126,6 +137,12 @@
 		SET exchange_point = ${plusPoint}, exchange_status = 1, exchange_date = now(), up_member = ${member_id}
 		WHERE member_id = #{member_id} AND round = #{round}
 	</update>
+
+	<!-- 포인트 내역 -->
+	<insert id="setHistory">
+		INSERT INTO coin_history(member_id, in_point, in_date)
+		VALUES(#{member_id}, #{plusPoint}, now())
+	</insert>
 	<!-- ***** DROPTOP  ***** -->
 
 

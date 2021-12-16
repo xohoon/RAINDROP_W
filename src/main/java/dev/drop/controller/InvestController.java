@@ -87,11 +87,18 @@ public class InvestController {
 		// 이미 회차 모의 투자를 진행한 경우
 		int member_id = investMapper.get_memberId(principal.getName());
 		int droptop_check = investMapper.top_Check(numRound, member_id);
-		if(droptop_check > 0) {
+		int raindrop_check = investMapper.rain_Check(numRound, member_id);
+		if(whatDrop == "droptop" && droptop_check > 0) {
 			jsonData.put("member", member_id);
 			jsonData.put("luck", 0);
 			jsonArray.add(jsonData);
-			System.out.println("제대로 나갔지? = " + droptop_check);
+			System.out.println("droptop = " + droptop_check);
+			return jsonArray;
+		} else if (whatDrop == "raindrop" && raindrop_check > 0) {
+			jsonData.put("member", member_id);
+			jsonData.put("luck", 0);
+			jsonArray.add(jsonData);
+			System.out.println("raindrop? = " + raindrop_check);
 			return jsonArray;
 		}
 
@@ -189,6 +196,12 @@ public class InvestController {
 			ranList = new ArrayList<>();
 			
 			if(success == numCount) {
+				System.out.println("WHAT?? = " + member_id + numCount);
+				// 코인 차감
+				investMapper.useCoin(member_id, numCount);
+				// 내역 추가
+				investMapper.history_outCoin(member_id, numCount);
+
 				System.out.println("번호 "+success+"개 추출완료");
 				break;
 			}
@@ -314,6 +327,7 @@ public class InvestController {
 			// 저장
 			if(whatDrop.equals("raindrop")) {
 				investMapper.rain_saveRanking(member_id, rank01, rank02, rank03, rank04, rank05, round, total, revenue_total, after_tax);
+
 			}else if(whatDrop.equals("droptop")) {
 				investMapper.top_saveRanking(member_id, rank01, rank02, rank03, rank04, rank05, round, total, revenue_total, after_tax);
 				investMapper.confirmCheck(member_id, round);
@@ -360,6 +374,8 @@ public class InvestController {
 		int member_id = investMapper.get_memberId(principal.getName());
 		if(whatDrop.equals("droptop")) {
 			investCheck = investMapper.top_Check(round, member_id);
+		}else if(whatDrop.equals("raindrop")) {
+			investCheck = investMapper.rain_Check(round, member_id);
 		}
 		if(investCheck == 0) {
 			jsonData.put("chk", "pass");
@@ -408,6 +424,7 @@ public class InvestController {
 			investMapper.setPoint(plusPoint, member_id);
 			// 포인트 충전 후 status update
 			investMapper.setExchange(plusPoint, member_id, round);
+			investMapper.setHistory(plusPoint, member_id);
 			jsonData.put("chk", "success");
 		}catch (Exception e){
 			jsonData.put("chk", "fail");

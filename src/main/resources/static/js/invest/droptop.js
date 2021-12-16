@@ -22,6 +22,7 @@ var round = "";
 myModal.addEventListener('show.bs.modal', function (event) {
 	round = $(event.relatedTarget).data('round');
 	console.log("MODAL?::"+round);
+	userCheck();
 	dropModalAjax(round);
 });
 
@@ -40,9 +41,10 @@ function exchangeAjax(data, point) {
 			},
 			success: function(result, data) {
 				if(result.chk == "success") {
-					moveDroptop()
+					alert("정산이 완료되었습니다.");
+					moveDroptop();
 				}else if(result.chk == "fail") {
-					console.log("FAIL");
+					alert("정산에 문제가 생겼습니다. 잠시 후 시도해주세요.");
 					return false;
 				}
 			},

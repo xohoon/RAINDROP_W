@@ -11,7 +11,7 @@
 </head>
 
 <body>
-<!--	<div class="container common">-->
+<div class="container common">
 	<div class="cardSet2">
 		<div class="card border-secondary mb-3 card2">
 			<div class="card-header">모의투자 번호 추출</div>
@@ -19,14 +19,13 @@
 				<input type="hidden" id="whatDrop" value="droptop" />
 				<input type="hidden" id="numCount" value="10" />
 				<div class="set_2">
-					<select id="numRound" class="form-select form-select-sm selectBox" aria-label=".form-select-sm example">
+					<select id="numRound" class="form-select selectBox input_2" aria-label="Default select">
 						<option selected value=0>회차선택</option>
 						<option th:each="roundList : ${roundList}"
 							th:value="${roundList}"
 							th:utext="${roundList}"></option>
 					</select>
-					<span class="input_2">50회 추출</span>
-					<input type="button" class="btn btn-warning input_2" id="dropSaveBtn" value="내놔봐">
+					<input type="button" class="btn btn-warning input_2" id="dropSaveBtn" value="50회 추출">
 				</div>
 				<!--
 				<div class="returnSuccess" id="returnList">결과과 노출됩니다.</div>
@@ -37,13 +36,13 @@
 			<div class="card-header">모의투자 결과 확인</div>
 			<div class="card-body text-dark">
 				<div class="set_3">
-					<select id="rankRound" class="form-select form-select-sm selectBox" aria-label=".form-select-sm example">
+					<select id="rankRound" class="form-select selectBox input_2" aria-label="Default select">
 						<option selected value=0>회차선택</option>
 						<option th:each="myList : ${myList}"
 								th:value="${myList}"
 								th:utext="${myList}"></option>
 					</select>
-					<input type="button" class="btn btn-success input_3" id="rankBtn" value="당첨 결과 확인">
+					<input type="button" class="btn btn-success input_2" id="rankBtn" value="당첨 결과 확인">
 				</div>
 				<!--
 				<div class="returnSuccess" id="returnRank">결과과 노출됩니다.</div>
@@ -78,10 +77,12 @@
 					</td>
 					<td>
 						<button type="button" class="btn btn-dark"
-							th:if="${list.exchange_status} == 1">정산완료</button>
+							th:if="${list.revenue_total != 0} and ${list.exchange_status} == 1">정산완료</button>
+						<button type="button" class="btn btn-dark"
+								th:if="${list.revenue_total == 0} and ${list.exchange_status} == 0">정산불가</button>
 						<button type="button" class="btn btn-success"
-							th:if="${list.exchange_status} == 0"
-							th:onclick="'javascript:exchangeAjax('+${list.round}+', '+${list.revenue_total}+');'">정산</button>
+							th:if="${list.revenue_total != 0} and ${list.exchange_status} == 0"
+							th:onclick="'javascript:exchangeAjax('+${list.round}+', '+${list.revenue_total}+');'">정산하기</button>
 					</td>
 				</tr>
 			</th:block>
@@ -93,6 +94,7 @@
 </div>
 
 <!-- Modal -->
+
 <div class="modal fade" id="dropDetailModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -105,11 +107,11 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Understood</button>
 			</div>
 		</div>
 	</div>
 </div>
+
 </body>
 <th:block th:include="fragments/footer"></th:block>
 </html>

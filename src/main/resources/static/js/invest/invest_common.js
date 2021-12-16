@@ -4,8 +4,6 @@ $(function(){
 
 // 최근 추첨 여부 확인
 function lastNumSave_chk(whatDrop, round) {
-	var whatDrop = $("#whatDrop").val();
-	var round = $("#numRound").val();
 	$.ajax({
 		type : 'GET',
 		url : '/invest/dropCheck',
@@ -17,7 +15,7 @@ function lastNumSave_chk(whatDrop, round) {
 		success : function(result, data) {
 			if(result.chk == "pass") {
 				console.log("check::"+result.chk);
-				dropSave();
+				dropSave(whatDrop);
 			}else if(result.chk == "block") {
 				console.log("check::"+result.chk);
 				alert(round + "회차 모의 투자는 이미 완료되었습니다.");
@@ -31,8 +29,7 @@ function lastNumSave_chk(whatDrop, round) {
 }
 
 // 모의투자 저장 ajax
-function dropSave() {
-	var whatDrop = $("#whatDrop").val(); // 페이지 상태 체크
+function dropSave(whatDrop) {
 	var numCount = $('#numCount').val(); // 받을 번호 개수
 	var numRound = $('#numRound').val(); // 회차
 	$.ajax({
@@ -44,7 +41,13 @@ function dropSave() {
 			numRound : numRound,
 			whatDrop : whatDrop
 		},
-		success: moveDroptop,
+		success: function() {
+			if(whatDrop == "raindrop") {
+				// moveRaindrop();
+			}else if(whatDrop == "droptop") {
+				moveDroptop();
+			}
+		},
 		beforeSend: function () {
 			$('.wrap-loading').removeClass('display-none');
 		},
@@ -92,6 +95,10 @@ $('#rankBtn').on('click', function() {
 
 function moveDroptop() {
 	location.href="/invest/droptop";
+}
+
+function moveRaindrop() {
+	location.href="/invest/raindrop";
 }
 
 // 번호 추출 결과 뷰

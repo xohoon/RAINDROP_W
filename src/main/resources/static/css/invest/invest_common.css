@@ -6,14 +6,14 @@
 	margin-top: 10px;
 }
 .selectBox {
-	margin-top: 10px;
+	/*margin-top: 10px;*/
 	width: 30%;
 }
 
 /* input 2개 정렬 */
 .set_2 {
 	overflow: hidden;
-	margin-top: 10px;
+	/*margin-top: 10px;*/
 }
 .input_2 {
 	margin-right: 1%;
@@ -27,7 +27,7 @@
 /* input 3개 정렬 */
 .set_3 {
 	overflow: hidden;
-	margin-top: 10px;
+	/*margin-top: 10px;*/
 }
 .input_3 {
 	margin-right: 0.5%;
@@ -41,7 +41,7 @@
 /* input 4개 정렬 */
 .set_4 {
 	overflow: hidden;
-	margin-top: 10px;
+	/*margin-top: 10px;*/
 }
 .input_4 {
 	margin-right: 1%;
@@ -55,6 +55,7 @@
 /* 카드 2개 정렬 */
 .cardSet2{
 	overflow: hidden;
+	/*margin-top: 10px;*/
 }
 .card.card2 {
 	margin-right: 1%;

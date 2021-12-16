@@ -12,35 +12,30 @@
 </head>
 
 <body>
+	<div class="container common">
 		<div class="cardSet2">
 			<div class="card border-secondary mb-3 card2">
-				<div class="card-header">타이틀1</div>
+				<div class="card-header">이번주 예상번호 받기</div>
 				<div class="card-body text-dark">
-					<span th:text="${comming_round}"></span><span>회</span>
-					<select class="form-select form-select-sm selectBox" aria-label=".form-select-sm example">
-						<option selected>방식선택</option>
-						<option value="1">방싟1</option>
-						<option value="2">바식2</option>
-						<option value="3">방식3</option>
-					</select>
-					<span> >> 방식에 따른 확률 및 다양한 정보 contents</span>
 					<input type="hidden" id="whatDrop" value="raindrop" />
-					<input type="hidden" id="numRound" th:value="${comming_round}" />
+<!--					<input type="hidden" id="numRound" th:value="${comming_round}" />-->
+					<input type="hidden" id="numRound" value="990" />
 					<div class="set_2">
-						<input type="text" class="form-control input_2" id="numCount" placeholder="갯수 입력">
-						<input type="button" class="btn btn-warning input_2" id="rainSaveBtn" value="옆에꺼보기">
+						<input type="text" class="form-control input_3" th:value="${comming_round}+'회'" readonly/>
+						<input type="text" class="form-control input_3" id="numCount" placeholder="갯수 입력">
+						<input type="button" class="btn btn-warning input_3" id="rainSaveBtn" value="번호 받기">
 					</div>
-					<div class="returnSuccess" id="returnList">결과</div>
+<!--					<div class="returnSuccess" id="returnList">결과</div>-->
 				</div>
 			</div>
 			<div class="card border-secondary mb-3 card2">
-				<div class="card-header">타이틀1</div>
+				<div class="card-header">당첨 확인</div>
 				<div class="card-body text-dark">
 					<div class="set_3">
-						<input type="text" class="form-control input_3" id="rankRound" placeholder="다가오는거 픽스">
-						<input type="button" class="btn btn-success input_3" id="rankBtn" value="저번주확인">
+						<input type="text" class="form-control input_2" id="rankRound" placeholder="다가오는거 픽스">
+						<input type="button" class="btn btn-success input_2" id="rankBtn" value="당첨 결과 확인">
 					</div>
-					<div class="returnSuccess" id="returnRank">결과</div>
+<!--					<div class="returnSuccess" id="returnRank">결과</div>-->
 				</div>
 			</div>
 		</div>
