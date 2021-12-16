@@ -19,7 +19,7 @@
 				<div class="card-body text-dark">
 					<input type="hidden" id="whatDrop" value="raindrop" />
 <!--					<input type="hidden" id="numRound" th:value="${comming_round}" />-->
-					<input type="hidden" id="numRound" value="991" />
+					<input type="hidden" id="numRound" value="988" />
 					<div class="set_2">
 						<input type="text" class="form-control input_3" id="lastRound" th:value="${comming_round}+'회'" readonly/>
 						<input type="text" class="form-control input_3" id="numCount" placeholder="갯수 입력">
@@ -65,7 +65,7 @@
 					<td><span th:text="${rainList.in_date}"></span></td>
 					<td>
 						<button type="button" class="btn btn-success"
-								data-bs-toggle="modal" data-bs-target="#rainDetailModal"
+								data-bs-toggle="modal" data-bs-target="#detailModal"
 								th:data-round="${rainList.round}">상세 보기</button>
 					</td>
 				</tr>
@@ -74,22 +74,6 @@
 		</table>
 		<div class="wrap-loading display-none">
 		    <div><img src="/static/images/e1.gif"></div>
-		</div>
-	</div>
-	<div class="modal fade" id="rainDetailModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="staticBackdropLabel">추첨 상세 페이지</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<div id="modalBodyView"></div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-				</div>
-			</div>
 		</div>
 	</div>
 </body>

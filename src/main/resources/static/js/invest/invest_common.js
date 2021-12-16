@@ -102,6 +102,61 @@ $('#rankBtn').on('click', function() {
 	}
 });
 
+// MODAL CODE
+var myModal = document.getElementById('detailModal')
+var round = "";
+myModal.addEventListener('show.bs.modal', function (event) {
+	var whatDrop = $("#whatDrop").val();
+		round = $(event.relatedTarget).data('round');
+	console.log("MODAL?::"+round);
+	userCheck();
+	modalAjax(round, whatDrop);
+});
+
+// data send and result
+function modalAjax(data, whatDrop) {
+	$.ajax({
+		type: 'GET',
+		url: '/invest/modalData',
+		dataType: 'JSON',
+		data: {
+			round : data,
+			whatDrop : whatDrop
+		},
+		success : modalResult,
+		error: function (result) {
+			console.log('ERROR');
+		}
+	});
+}
+
+// modal result html
+function modalResult(data) {
+	console.log("111");
+	var html = '';
+	html = '<table class="table table-bordered">' +
+		'<thead>' +
+		'    <tr>' +
+		'      <th scope="col">#</th>' +
+		'      <th scope="col">회차</th>' +
+		'      <th scope="col">추첨 번호</th>' +
+		'      <th scope="col">추첨 날짜</th>' +
+		'    </tr>' +
+		'  </thead>' +
+		' <tbody>';
+	$.each(data, function(idx, val) {
+		html +=
+			'    <tr>' +
+			'      <th scope="row">'+val.round_id+'</th>' +
+			'      <td>'+val.round+'</td>' +
+			'      <td>'+val.num1+', '+val.num2+', '+val.num3+', '+val.num4+', '+val.num5+', '+val.num6+'</td>' +
+			'      <td>'+val.in_date+'</td>' +
+			'    </tr>';
+	});
+	html += '</tbody></table>';
+	$('#modalBodyView').html(html);
+}
+
 function moveDroptop() {
 	location.href="/invest/droptop";
 }
@@ -110,6 +165,11 @@ function moveRaindrop() {
 	location.href="/invest/raindrop";
 }
 
+
+
+/*
+* 폐기 코드
+* */
 // 번호 추출 결과 뷰
 function view(data) {
 	var html = '';

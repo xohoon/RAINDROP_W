@@ -72,7 +72,7 @@
 					<td><span th:text="${dropList.in_date}"></span></td>
 					<td>
 						<button type="button" class="btn btn-success"
-							data-bs-toggle="modal" data-bs-target="#dropDetailModal"
+							data-bs-toggle="modal" data-bs-target="#detailModal"
 							th:data-round="${dropList.round}">상세 보기</button>
 					</td>s
 					<td>
@@ -90,25 +90,6 @@
 	</table>
 	<div class="wrap-loading display-none">
 		<div><img src="/static/images/e1.gif"></div>
-	</div>
-</div>
-
-<!-- Modal -->
-
-<div class="modal fade" id="dropDetailModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="staticBackdropLabel">추첨 상세 페이지</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				<div id="modalBodyView"></div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-			</div>
-		</div>
 	</div>
 </div>
 

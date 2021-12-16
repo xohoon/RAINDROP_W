@@ -410,11 +410,16 @@ public class InvestController {
 	@GetMapping(
 			value="/modalData",
 			produces="application/json; charset=utf-8")
-	public List<SaveListDTO> modalData(int round, Principal principal) {
+	public List<SaveListDTO> modalData(int round, String whatDrop, Principal principal) {
 		int member_id = investMapper.get_memberId(principal.getName());
-		List<SaveListDTO> dropDetailList = investMapper.dropDetailList(member_id, round);
+		List<SaveListDTO> detailList = new ArrayList<>();
+		if(whatDrop.equals("raindrop")) {
+			detailList = investMapper.rainDetailList(member_id, round);
+		}else if(whatDrop.equals("droptop")) {
+			detailList = investMapper.dropDetailList(member_id, round);
+		}
 
-		return dropDetailList;
+		return detailList;
 	}
 
 	@ResponseBody

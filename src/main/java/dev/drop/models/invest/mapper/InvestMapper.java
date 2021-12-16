@@ -72,6 +72,9 @@ public interface InvestMapper {
 
 	// 컨펌하기
 	void rain_confirm(@Param(value = "member_id") int member_id, @Param(value = "round") int round);
+
+	// 추첨 상세 리스트
+	List<SaveListDTO> rainDetailList(@Param(value = "member_id") int member_id, @Param(value = "round") int round);
 	// ***** RAINDROP  ***** //
 
 

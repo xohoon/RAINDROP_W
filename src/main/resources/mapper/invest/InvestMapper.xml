@@ -74,6 +74,11 @@
 	<update id="rain_confirm">
 		UPDATE raindrop_list SET confirm_result = 1 WHERE member_id = #{member_id} AND round = #{round}
 	</update>
+
+	<!-- 상세 리스트 -->
+	<select id="rainDetailList" resultType="dev.drop.models.invest.dto.SaveListDTO">
+		SELECT * FROM raindrop_list WHERE member_id = #{member_id} AND round = #{round}
+	</select>
 	<!-- ***** RAINDROP  ***** -->
 
 
@@ -123,7 +128,7 @@
 
 	<!-- 모의투자 회차 가져오기 -->
 	<select id="getMyList" resultType="Integer">
-		SELECT DISTINCT round FROM droptop_list WHERE member_id = ${member_id} AND confirm_result = 0; ORDER BY round DESC
+		SELECT DISTINCT round FROM droptop_list WHERE member_id = ${member_id} AND confirm_result = 0 ORDER BY round DESC
 	</select>
 
 	<!-- 확인한거 1로 변경 -->
