@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import dev.drop.models.admin.mapper.AdminMapper;
 import dev.drop.models.cases.mapper.CaseMapper;
 import dev.drop.models.invest.dto.SaveListDTO;
-import dev.drop.models.invest.dto.PrizeListDTO;
-import dev.drop.models.invest.mapper.InvestMapper;
+import dev.drop.models.invest.dto.BoujeeListDTO;
 import dev.drop.models.member.dto.MemberDTO;
 import dev.drop.models.member.mapper.MemberMapper;
 import dev.drop.utils.Revenue;
@@ -30,8 +29,6 @@ public class AdminController {
 
 	@Autowired
 	private MemberMapper memberMapper;
-	@Autowired
-	private InvestMapper investMapper;
 	@Autowired
 	private AdminMapper adminMapper;
 	@Autowired
@@ -47,7 +44,7 @@ public class AdminController {
 	@GetMapping(value="/member_list")
 	public String List(Model model) {
 		ArrayList<MemberDTO> member = new ArrayList<>();
-		member.addAll(memberMapper.member_list());
+		member.addAll(memberMapper.getUserList());
 		model.addAttribute("list", member);
 
 		return "/admin/member_list";
@@ -70,7 +67,7 @@ public class AdminController {
 		JSONObject jsonData = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
 		System.out.println(":: TEST DATA SCRIPT ::");
-		PrizeListDTO saveDTO = new PrizeListDTO();
+		BoujeeListDTO saveDTO = new BoujeeListDTO();
 		ArrayList<String> ranList = new ArrayList<>();
 		// round는 일시적으로 원하는 만큼 받고 나중에 자동으로 전환
 //			int round = Round.newRound();
@@ -110,9 +107,9 @@ public class AdminController {
 			
 			// 저장된 정보
 			ArrayList<String> saveList = new ArrayList<String>();
-			int last = investMapper.LastNum();
+			int last = caseMapper.boujeeLastRound();
 			for(int i = 1; i <= last; i++) {
-				saveDTO = caseMapper.roundResult(i);
+				saveDTO = caseMapper.boujeeRoundResult(i);
 				saveList.add(Integer.toString(saveDTO.getNum1()));
 				saveList.add(Integer.toString(saveDTO.getNum2()));
 				saveList.add(Integer.toString(saveDTO.getNum3()));
@@ -183,7 +180,7 @@ public class AdminController {
 		JSONObject jsonData = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
 		SaveListDTO imiDTO = new SaveListDTO();
-		PrizeListDTO saveDTO = new PrizeListDTO();
+		BoujeeListDTO saveDTO = new BoujeeListDTO();
 		ArrayList<String> testGame = new ArrayList<>();
 		ArrayList<String> saveList = new ArrayList<>();
 //			int round = Round.newRound();
@@ -213,7 +210,7 @@ public class AdminController {
 			testGame.add(Integer.toString(imiDTO.getNum5()));
 			testGame.add(Integer.toString(imiDTO.getNum6()));
 			
-			saveDTO = caseMapper.roundResult(round);
+			saveDTO = caseMapper.boujeeRoundResult(round);
 			saveList.add(Integer.toString(saveDTO.getNum1()));
 			saveList.add(Integer.toString(saveDTO.getNum2()));
 			saveList.add(Integer.toString(saveDTO.getNum3()));

@@ -17,5 +17,5 @@ public interface MemberMapper {
 			@Param(value="password") String password, 
 			@Param(value="phone") int phone);
 	
-	List<MemberDTO> member_list();
+	List<MemberDTO> getUserList();
 }

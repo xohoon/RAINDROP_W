@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dev.drop.models.invest.mapper.InvestRainMapper">
+    <!-- RAINDROP 추첨번호 저장 -->
+    <insert id="rainListSave">
+        INSERT INTO raindrop_list(member_id, num1, num2, num3, num4, num5, num6, in_date, round, sum, round_id)
+        VALUES(#{member_id}, #{saving1}, #{saving2}, #{saving3}, #{saving4}, #{saving5}, #{saving6}, now(), #{round}, #{ranSum}, #{round_id});
+    </insert>
+
+    <!-- 회차 중복 추첨 체크 -->
+    <select id="rainRoundCheck" resultType="int">
+        SELECT COUNT(*) FROM raindrop_list WHERE round = #{round} AND member_id = #{member_id};
+    </select>
+
+    <!-- 회차별 총 게임수 -->
+    <select id="rainRoundCount" resultType="int">
+        SELECT count(round_id) FROM raindrop_list WHERE round = #{round} AND member_id = #{member_id};
+    </select>
+
+    <!-- 번호가져오기 -->
+    <select id="rainRoundData" resultType="dev.drop.models.invest.dto.SaveListDTO">
+        SELECT * FROM raindrop_list WHERE round_id = #{i} AND round = #{round} AND member_id = #{member_id};
+    </select>
+
+    <!-- 등수 저장 -->
+    <insert id="rainRankSave">
+        INSERT INTO raindrop_result(member_id, round, rank01, rank02, rank03, rank04, rank05, game_total, revenue_total, revenue_after_tax, in_date)
+        VALUES(#{member_id}, #{round}, #{rank01}, #{rank02}, #{rank03}, #{rank04}, #{rank05}, #{total}, #{revenue_total}, #{after_tax}, now());
+    </insert>
+
+    <!-- 저장된 회차 round_id 갯수 가져오기 -->
+    <select id="rainRoundIdCount" resultType="int">
+        SELECT count(round_id) FROM raindrop_list WHERE round = #{round} AND member_id = #{member_id};
+    </select>
+
+    <!-- 결과 저장 확인 -->
+    <select id="rainResultCount" resultType="int">
+        SELECT count(round) FROM raindrop_result WHERE round = #{round} AND member_id = #{member_id}
+    </select>
+
+    <!-- 결과값 가져오기 -->
+    <select id="rainGetResult" resultType="dev.drop.models.invest.dto.SaveResultDTO">
+        SELECT * FROM raindrop_result WHERE round = #{round} AND member_id = #{member_id}
+    </select>
+
+    <!-- 결과값 리스트 -->
+    <select id="rainResultList" resultType="dev.drop.models.invest.dto.SaveResultDTO">
+        SELECT * FROM raindrop_result WHERE member_id = #{member_id} ORDER BY round DESC
+    </select>
+
+    <!-- 결과 확인 전 리스트 -->
+    <select id="rainBeforeConfirmList" resultType="Integer">
+        SELECT DISTINCT round FROM raindrop_list WHERE member_id = ${member_id} AND confirm_result = 0 ORDER BY round DESC
+    </select>
+
+    <!-- 컨펌 -->
+    <update id="rainConfirm">
+        UPDATE raindrop_list SET confirm_result = 1 WHERE member_id = #{member_id} AND round = #{round}
+    </update>
+
+    <!-- 상세 리스트 -->
+    <select id="rainDetailList" resultType="dev.drop.models.invest.dto.SaveListDTO">
+        SELECT * FROM raindrop_list WHERE member_id = #{member_id} AND round = #{round}
+    </select>
+</mapper>

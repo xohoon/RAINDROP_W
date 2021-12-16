@@ -5,28 +5,37 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 <mapper namespace="dev.drop.models.cases.mapper.CaseMapper">
-
 	<!-- 회차별 1등번호 저장 -->
-	<insert id="save">
-		INSERT INTO prize_list(round, num1, num2, num3, num4, num5, num6, num7, sum)
+	<insert id="setBoujeeResult">
+		INSERT INTO boujee_list(round, num1, num2, num3, num4, num5, num6, num7, sum)
 		VALUES(${round}, #{num1}, #{num2}, #{num3}, #{num4}, #{num5}, #{num6}, #{num7}, #{sum});
 	</insert>
 	
 	<!-- 전체 회차 저장 전 카운트 -->
-	<select id="count_list" resultType="int">
-		SELECT COUNT(*) FROM prize_list;
+	<select id="boujeeCount" resultType="int">
+		SELECT COUNT(*) FROM boujee_list;
 	</select>
 
 	<!-- 마지막 회차 저장 위한 round값 -->
-	<select id="prizeLastRound" resultType="integer">
-		SELECT max(round) FROM prize_list;
+	<select id="boujeeLastRound" resultType="integer">
+		SELECT max(round) FROM boujee_list;
 	</select>
 	
 	<!-- i번째 회차 합계 -->
 	<select id="getSum" resultType="int">
-		SELECT sum FROM prize_list  WHERE round = #{round};
+		SELECT sum FROM boujee_list  WHERE round = #{round};
 	</select>
-	
+
+	<!-- 지정된 회차별 1등 번호 가져오기 -->
+	<select id="boujeeRoundResult" resultType="dev.drop.models.invest.dto.BoujeeListDTO">
+		SELECT * FROM boujee_list WHERE round = #{round};
+	</select>
+
+	<!-- 저장된 회차 전부 get -->
+	<select id="getRoundList" resultType="int">
+		SELECT round FROM boujee_list ORDER BY round DESC;
+	</select>
+
 	<!-- 50단위로 확률 계산 -->
 	<insert id="caseSum50">
 		INSERT INTO case_sum50(case100, case150, case200, case255, all_round, last_round)
@@ -46,15 +55,5 @@
 		VALUES(#{case01}, #{case02}, #{case03}, #{case04}, #{case05}, #{case06}, #{case07}, #{case08}, #{case09}, #{case10}, #{case11}, #{case12}
 			, #{all_round}, #{last_round});
 	</insert>
-	
-	<!-- 지정된 회차별 1등 번호 가져오기 -->
-	<select id="roundResult" resultType="dev.drop.models.invest.dto.PrizeListDTO">
-        SELECT * FROM prize_list WHERE round = #{round};
-    </select>
-
-	 <!-- 저장된 회차 전부 get -->
-	<select id="getRoundList" resultType="int">
-		SELECT round FROM prize_list ORDER BY round DESC;
-	</select>
 
 </mapper>

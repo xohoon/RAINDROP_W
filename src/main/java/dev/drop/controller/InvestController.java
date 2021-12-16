@@ -1,5 +1,7 @@
 package dev.drop.controller;
 
+import dev.drop.models.invest.mapper.InvestDropMapper;
+import dev.drop.models.invest.mapper.InvestRainMapper;
 import dev.drop.utils.Round;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import dev.drop.models.cases.mapper.CaseMapper;
 import dev.drop.models.invest.dto.SaveListDTO;
 import dev.drop.models.invest.dto.SaveResultDTO;
-import dev.drop.models.invest.dto.PrizeListDTO;
+import dev.drop.models.invest.dto.BoujeeListDTO;
 import dev.drop.models.invest.mapper.InvestMapper;
 import dev.drop.utils.Revenue;
 
@@ -30,6 +32,10 @@ public class InvestController {
 	private InvestMapper investMapper;
 	@Autowired
 	private CaseMapper caseMapper;
+	@Autowired
+	private InvestRainMapper rainMapper;
+	@Autowired
+	private InvestDropMapper dropMapper;
 	
 	// ***** RAINDROP  ***** //
 	// raindrop 접근
@@ -38,10 +44,10 @@ public class InvestController {
 			produces="application/json; charset=utf-8")
 	public String Raindrop(Model model, Principal principal) {
 		// 최근 회차 가지고오는 코드
-		int member_id = investMapper.get_memberId(principal.getName());
+		int member_id = investMapper.getMemberId(principal.getName());
 		int last_num = Round.lastRound();
-		List<Integer> rainBeforeConfirm = investMapper.rain_beforeConfirmList(member_id);
-		List<SaveResultDTO> rainResultList = investMapper.rain_resultList(member_id);
+		List<Integer> rainBeforeConfirm = rainMapper.rainBeforeConfirmList(member_id);
+		List<SaveResultDTO> rainResultList = rainMapper.rainResultList(member_id);
 		model.addAttribute("comming_round", last_num+1);
 		model.addAttribute("rainBeforeConfirm", rainBeforeConfirm);
 		model.addAttribute("rainResultList", rainResultList);
@@ -57,11 +63,11 @@ public class InvestController {
 			produces="application/json; charset=utf-8")
 	public String Dropdop(Model model, Principal principal) {
 		// 최근 회차 가지고오는 코드
-		int member_id = investMapper.get_memberId(principal.getName());
+		int member_id = investMapper.getMemberId(principal.getName());
 		int last_num = Round.lastRound();
 		List<Integer> roundList = caseMapper.getRoundList();
-		List<Integer> dropConfirmList = investMapper.getMyList(member_id);
-		List<SaveResultDTO> dropResultList = investMapper.getResultList(member_id);
+		List<Integer> dropConfirmList = dropMapper.dropBeforeConfirmList(member_id);
+		List<SaveResultDTO> dropResultList = dropMapper.dropResultList(member_id);
 		model.addAttribute("comming_round", last_num+1);
 		model.addAttribute("roundList", roundList);
 		model.addAttribute("dropConfirmList", dropConfirmList);
@@ -88,33 +94,33 @@ public class InvestController {
 		
 		JSONObject jsonData = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
-		PrizeListDTO saveDTO = new PrizeListDTO();
+		BoujeeListDTO saveDTO = new BoujeeListDTO();
 		ArrayList<String> ranList = new ArrayList<>();
 
 		// 이미 회차 모의 투자를 진행한 경우
-		int member_id = investMapper.get_memberId(principal.getName());
-		int droptop_check = investMapper.top_Check(numRound, member_id);
-		int raindrop_check = investMapper.rain_Check(numRound, member_id);
-		if(whatDrop == "droptop" && droptop_check > 0) {
+		int member_id = investMapper.getMemberId(principal.getName());
+		int dropRoundCheck = dropMapper.dropRoundCheck(numRound, member_id);
+		int rainRoundCheck = rainMapper.rainRoundCheck(numRound, member_id);
+		if (whatDrop.equals("raindrop") && rainRoundCheck > 0) {
 			jsonData.put("member", member_id);
 			jsonData.put("luck", 0);
 			jsonArray.add(jsonData);
-			System.out.println("droptop = " + droptop_check);
+			System.out.println("raindrop? = " + rainRoundCheck);
 			return jsonArray;
-		} else if (whatDrop == "raindrop" && raindrop_check > 0) {
+		} else if(whatDrop.equals("droptop") && dropRoundCheck > 0) {
 			jsonData.put("member", member_id);
 			jsonData.put("luck", 0);
 			jsonArray.add(jsonData);
-			System.out.println("raindrop? = " + raindrop_check);
+			System.out.println("droptop = " + dropRoundCheck);
 			return jsonArray;
 		}
 
-		int round = numRound;
+			int round = numRound;
 		int round_id = 0;
 		if(whatDrop.equals("raindrop")) {
-			round_id = investMapper.rain_roundIdGet(round, member_id);
+			round_id = rainMapper.rainRoundIdCount(round, member_id);
 		}else if(whatDrop.equals("droptop")) {
-			round_id = investMapper.top_roundIdGet(round, member_id);
+			round_id = dropMapper.dropRoundIdCount(round, member_id);
 		}
 		int success = 0;
 		
@@ -144,9 +150,9 @@ public class InvestController {
 			// 저장된 정보
 			ArrayList<String> saveList = new ArrayList<String>();
 			// 최근 회차
-			int last = Round.lastRound();
+			int last = caseMapper.boujeeLastRound();
 			for(int i = 1; i <= last; i++) {
-				saveDTO = caseMapper.roundResult(i);
+				saveDTO = caseMapper.boujeeRoundResult(i);
 				saveList.add(Integer.toString(saveDTO.getNum1()));
 				saveList.add(Integer.toString(saveDTO.getNum2()));
 				saveList.add(Integer.toString(saveDTO.getNum3()));
@@ -193,9 +199,9 @@ public class InvestController {
 				round_id++;
 				System.out.println("저장되는 번호 :: "+saving1+"^"+saving2+"^"+saving3+"^"+saving4+"^"+saving5+"^"+saving6+"^");
 				if(whatDrop.equals("droptop")) {
-					investMapper.top_list_saving(member_id, saving1, saving2, saving3, saving4, saving5, saving6, round, ranSum, round_id);
+					dropMapper.dropListSave(member_id, saving1, saving2, saving3, saving4, saving5, saving6, round, ranSum, round_id);
 				}else if(whatDrop.equals("raindrop")) {
-					investMapper.rain_list_saving(member_id, saving1, saving2, saving3, saving4, saving5, saving6, round, ranSum, round_id);
+					rainMapper.rainListSave(member_id, saving1, saving2, saving3, saving4, saving5, saving6, round, ranSum, round_id);
 				}
 				success++;
 				ranList = new ArrayList<>();
@@ -231,23 +237,23 @@ public class InvestController {
 		JSONObject jsonData = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
 		SaveListDTO imiDTO = new SaveListDTO();
-		PrizeListDTO saveDTO = new PrizeListDTO();
+		BoujeeListDTO saveDTO = new BoujeeListDTO();
 		ArrayList<Integer> testGame = new ArrayList<>();
 		ArrayList<Integer> saveList = new ArrayList<>();
 		DecimalFormat formater = new DecimalFormat("###,###");
 		SaveResultDTO resultDTO = new SaveResultDTO();
 		
-		int member_id = investMapper.get_memberId(principal.getName());
+		int member_id = investMapper.getMemberId(principal.getName());
 		int round = rankRound;
 		int total = 0;
 		int result = 0;
 		// 결과값 확인 및 갯수 확인
 		if(whatDrop.equals("raindrop")) {
-			result = investMapper.rain_resultCheck(member_id, round);
-			total = investMapper.rain_roundTotal(round, member_id);
+			result = rainMapper.rainResultCount(member_id, round);
+			total = rainMapper.rainRoundCount(round, member_id);
 		}else if(whatDrop.equals("droptop")) {
-			result = investMapper.top_resultCheck(member_id, round);
-			total = investMapper.top_roundTotal(round, member_id);
+			result = dropMapper.dropResultCount(member_id, round);
+			total = dropMapper.dropRoundCount(round, member_id);
 		}
 		int rankCount = 0;
 		int rank01 = 0;
@@ -266,9 +272,9 @@ public class InvestController {
 			System.out.println("ROUND : "+rankRound);
 			for(int i = 1; i <= total; i++) {
 				if(whatDrop.equals("raindrop")) {
-					imiDTO = investMapper.rain_roundData(i, round, member_id);
+					imiDTO = rainMapper.rainRoundData(i, round, member_id);
 				}else if(whatDrop.equals("droptop")) {
-					imiDTO = investMapper.top_roundData(i, round, member_id);
+					imiDTO = dropMapper.dropRoundData(i, round, member_id);
 				}
 				testGame.add(imiDTO.getNum1());
 				testGame.add(imiDTO.getNum2());
@@ -277,7 +283,7 @@ public class InvestController {
 				testGame.add(imiDTO.getNum5());
 				testGame.add(imiDTO.getNum6());
 				
-				saveDTO = caseMapper.roundResult(round);
+				saveDTO = caseMapper.boujeeRoundResult(round);
 				saveList.add(saveDTO.getNum1());
 				saveList.add(saveDTO.getNum2());
 				saveList.add(saveDTO.getNum3());
@@ -333,11 +339,11 @@ public class InvestController {
 			double after_tax = revenue_total*0.7;
 			// 저장
 			if(whatDrop.equals("raindrop")) {
-				investMapper.rain_saveRanking(member_id, rank01, rank02, rank03, rank04, rank05, round, total, revenue_total, after_tax);
-				investMapper.rain_confirm(member_id, round);
+				rainMapper.rainRankSave(member_id, rank01, rank02, rank03, rank04, rank05, round, total, revenue_total, after_tax);
+				rainMapper.rainConfirm(member_id, round);
 			}else if(whatDrop.equals("droptop")) {
-				investMapper.top_saveRanking(member_id, rank01, rank02, rank03, rank04, rank05, round, total, revenue_total, after_tax);
-				investMapper.confirmCheck(member_id, round);
+				dropMapper.dropRankSave(member_id, rank01, rank02, rank03, rank04, rank05, round, total, revenue_total, after_tax);
+				dropMapper.dropConfirm(member_id, round);
 			}
 			jsonData.put("gameResult", "true");
 			jsonData.put("round", round);
@@ -351,9 +357,9 @@ public class InvestController {
 			//result = 0 end
 		}else if(result >= 1){ // 회차 저장 있을때
 			if(whatDrop.equals("raindrop")) {
-				resultDTO = investMapper.rain_getResult(round, member_id);
+				resultDTO = rainMapper.rainGetResult(round, member_id);
 			}else if(whatDrop.equals("droptop")) {
-				resultDTO = investMapper.top_getResult(round, member_id);
+				resultDTO = dropMapper.dropGetResult(round, member_id);
 			}
 			jsonData.put("gameResult", "true");
 			jsonData.put("round", resultDTO.getRound());
@@ -378,11 +384,11 @@ public class InvestController {
 	public Object DropCheck(String whatDrop, int round, Principal principal) {
 		JSONObject jsonData = new JSONObject();
 		int investCheck = 0;
-		int member_id = investMapper.get_memberId(principal.getName());
+		int member_id = investMapper.getMemberId(principal.getName());
 		if(whatDrop.equals("droptop")) {
-			investCheck = investMapper.top_Check(round, member_id);
+			investCheck = dropMapper.dropRoundCheck(round, member_id);
 		}else if(whatDrop.equals("raindrop")) {
-			investCheck = investMapper.rain_Check(round, member_id);
+			investCheck = rainMapper.rainRoundCheck(round, member_id);
 		}
 		if(investCheck == 0) {
 			jsonData.put("chk", "pass");
@@ -411,12 +417,12 @@ public class InvestController {
 			value="/modalData",
 			produces="application/json; charset=utf-8")
 	public List<SaveListDTO> modalData(int round, String whatDrop, Principal principal) {
-		int member_id = investMapper.get_memberId(principal.getName());
+		int member_id = investMapper.getMemberId(principal.getName());
 		List<SaveListDTO> detailList = new ArrayList<>();
 		if(whatDrop.equals("raindrop")) {
-			detailList = investMapper.rainDetailList(member_id, round);
+			detailList = rainMapper.rainDetailList(member_id, round);
 		}else if(whatDrop.equals("droptop")) {
-			detailList = investMapper.dropDetailList(member_id, round);
+			detailList = dropMapper.dropDetailList(member_id, round);
 		}
 
 		return detailList;
@@ -429,13 +435,13 @@ public class InvestController {
 	public Object exchangePoint(@RequestParam int round, @RequestParam int point, Principal principal) {
 		System.out.println("round = " + round);
 		JSONObject jsonData = new JSONObject();
-		int member_id = investMapper.get_memberId(principal.getName());
+		int member_id = investMapper.getMemberId(principal.getName());
 		int plusPoint = (int)(point * 0.01);
 		try {
 			// 당첨금 1% 포인트 충전
 			investMapper.setPoint(plusPoint, member_id);
 			// 포인트 충전 후 status update
-			investMapper.setExchange(plusPoint, member_id, round);
+			dropMapper.dropExchangePoint(plusPoint, member_id, round);
 			investMapper.setHistory(plusPoint, member_id);
 			jsonData.put("chk", "success");
 		}catch (Exception e){

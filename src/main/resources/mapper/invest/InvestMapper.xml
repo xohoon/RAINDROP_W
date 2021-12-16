@@ -1,161 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" ?>
- 
+
 <!DOCTYPE mapper
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="dev.drop.models.invest.mapper.InvestMapper">
-
-	<!-- ***** RAINDROP  ***** -->
-	<!-- RAINDROP 추첨번호 저장 -->
-    <insert id="rain_list_saving">
-		INSERT INTO raindrop_list(member_id, num1, num2, num3, num4, num5, num6, in_date, round, sum, round_id)
-		VALUES(#{member_id}, #{saving1}, #{saving2}, #{saving3}, #{saving4}, #{saving5}, #{saving6}, now(), #{round}, #{ranSum}, #{round_id});
-	</insert>
-	
-    <!-- 중복 추첨 체크 -->
-	<select id="rain_Check" resultType="int">
-		SELECT COUNT(*) FROM raindrop_list WHERE round = #{round} AND member_id = #{member_id};
+	<!-- ***** COMMON  ***** -->
+	<!-- 회원 ID 가져오기 -->
+	<select id="getMemberId" resultType="int">
+		SELECT id FROM member WHERE email = #{userEmail};
 	</select>
-	
-	<!-- 회차별 총 게임수 -->
-	<select id="rain_roundTotal" resultType="int">
-		SELECT count(round_id) FROM raindrop_list WHERE round = #{round} AND member_id = #{member_id};
-	</select>
-	
-	<!-- 번호가져오기 -->
-	<select id="rain_roundData" resultType="dev.drop.models.invest.dto.SaveListDTO">
-        SELECT * FROM raindrop_list WHERE round_id = #{i} AND round = #{round} AND member_id = #{member_id};
-    </select>
-
-	<!-- 등수 저장 -->
-	<insert id="rain_saveRanking">
-		INSERT INTO raindrop_result(member_id, round, rank01, rank02, rank03, rank04, rank05, game_total, revenue_total, revenue_after_tax, in_date) 
-		VALUES(#{member_id}, #{round}, #{rank01}, #{rank02}, #{rank03}, #{rank04}, #{rank05}, #{total}, #{revenue_total}, #{after_tax}, now());
-	</insert>
-	
-	<!-- 저장된 회차 round_id 갯수 가져오기 -->
-    <select id="rain_roundIdGet" resultType="int">
-    	SELECT count(*) FROM raindrop_list WHERE round = #{round} AND member_id = #{member_id};
-    </select>
-    
-    <!-- 결과 저장 확인 -->
-    <select id="rain_resultCheck" resultType="int">
-    	SELECT count(*) FROM raindrop_result WHERE round = #{round} AND member_id = #{member_id}
-    </select>
-    
-    <!-- 결과값 가져오기 -->
-    <select id="rain_getResult" resultType="dev.drop.models.invest.dto.SaveResultDTO">
-    	SELECT * FROM raindrop_result WHERE round = #{round} AND member_id = #{member_id}
-    </select>
 
 	<!-- 코인 차감 -->
 	<update id="useCoin">
 		UPDATE member SET coin = coin - #{numCount} WHERE id = #{member_id}
 	</update>
 
-	<!-- 코인 내역 -->
-	<insert id="history_outCoin">
-		INSERT INTO coin_history(member_id, out_coin, in_date)
-		VALUES(#{member_id}, #{numCount}, now())
-	</insert>
-
-	<!-- 결과값 리스트 -->
-	<select id="rain_resultList" resultType="dev.drop.models.invest.dto.SaveResultDTO">
-		SELECT * FROM raindrop_result WHERE member_id = #{member_id} ORDER BY round DESC
-	</select>
-
-	<!-- 결과 확인 전 리스트 -->
-	<select id="rain_beforeConfirmList" resultType="Integer">
-		SELECT DISTINCT round FROM raindrop_list WHERE member_id = ${member_id} AND confirm_result = 0 ORDER BY round DESC
-	</select>
-
-	<!-- 컨펌 -->
-	<update id="rain_confirm">
-		UPDATE raindrop_list SET confirm_result = 1 WHERE member_id = #{member_id} AND round = #{round}
-	</update>
-
-	<!-- 상세 리스트 -->
-	<select id="rainDetailList" resultType="dev.drop.models.invest.dto.SaveListDTO">
-		SELECT * FROM raindrop_list WHERE member_id = #{member_id} AND round = #{round}
-	</select>
-	<!-- ***** RAINDROP  ***** -->
-
-
-
-	<!-- ***** DROPTOP  ***** -->
-	<!-- DROPTOP 추첨번호 저장 -->
-    <insert id="top_list_saving">
-		INSERT INTO droptop_list(member_id, num1, num2, num3, num4, num5, num6, in_date, round, sum, round_id)
-		VALUES(#{member_id}, #{saving1}, #{saving2}, #{saving3}, #{saving4}, #{saving5}, #{saving6}, now(), #{round}, #{ranSum}, #{round_id});
-	</insert>
-    
-    <!-- 중복 추첨 체크 -->
-	<select id="top_Check" resultType="int">
-		SELECT COUNT(*) FROM droptop_list WHERE round = #{round} AND member_id = #{member_id};
-	</select>
-	
-	<!-- 회차별 총 게임수 -->
-	<select id="top_roundTotal" resultType="int">
-		SELECT count(round_id) FROM droptop_list WHERE round = #{round} AND member_id = #{member_id};
-	</select>
-	
-	<!-- 모의추첨 번호가져오기 -->
-	<select id="top_roundData" resultType="dev.drop.models.invest.dto.SaveListDTO">
-        SELECT * FROM droptop_list WHERE round_id = #{i} AND round = #{round} AND member_id = #{member_id};
-    </select>
-    
-    <!-- 모의로또 등수 저장 -->
-	<insert id="top_saveRanking">
-		INSERT INTO droptop_result(member_id, round, rank01, rank02, rank03, rank04, rank05, game_total, revenue_total, revenue_after_tax, in_date) 
-		VALUES(#{member_id}, #{round}, #{rank01}, #{rank02}, #{rank03}, #{rank04}, #{rank05}, #{total}, #{revenue_total}, #{after_tax}, now());
-	</insert>
-	
-	<!-- 저장된 회차 round_id 갯수 가져오기 -->
-    <select id="top_roundIdGet" resultType="int">
-    	SELECT count(*) FROM droptop_list WHERE round = #{round} AND member_id = #{member_id};
-    </select>
-    
-    <!-- 결과 저장 확인 -->
-    <select id="top_resultCheck" resultType="int">
-    	SELECT count(*) FROM droptop_result WHERE round = #{round} AND member_id = #{member_id}
-    </select>
-    
-    <!-- 결과값 가져오기 -->
-    <select id="top_getResult" resultType="dev.drop.models.invest.dto.SaveResultDTO">
-    	SELECT * FROM droptop_result WHERE round = #{round} AND member_id = #{member_id}
-    </select>
-
-	<!-- 모의투자 회차 가져오기 -->
-	<select id="getMyList" resultType="Integer">
-		SELECT DISTINCT round FROM droptop_list WHERE member_id = ${member_id} AND confirm_result = 0 ORDER BY round DESC
-	</select>
-
-	<!-- 확인한거 1로 변경 -->
-	<update id="confirmCheck">
-		UPDATE droptop_list SET confirm_result = 1, confirm_date = now() WHERE round = ${round} AND member_id = ${member_id};
-	</update>
-
-	<!-- 저장된 결과값 리스트 select -->
-	<select id="getResultList" resultType="dev.drop.models.invest.dto.SaveResultDTO">
-		SELECT * FROM droptop_result WHERE member_id = #{member_id} ORDER BY round DESC
-	</select>
-
-	<!-- 회차별 추첨 번호 리스트 -->
-	<select id="dropDetailList" resultType="dev.drop.models.invest.dto.SaveListDTO">
-		SELECT * FROM droptop_list WHERE member_id = #{member_id} AND round = #{round}
-	</select>
-
 	<!-- 포인트 충전 -->
 	<update id="setPoint">
 		UPDATE member SET point = point + #{plusPoint}, up_date = now() WHERE id = #{member_id}
-	</update>
-
-	<!-- 환전 업데이트 -->
-	<update id="setExchange">
-		UPDATE droptop_result
-		SET exchange_point = ${plusPoint}, exchange_status = 1, exchange_date = now(), up_member = ${member_id}
-		WHERE member_id = #{member_id} AND round = #{round}
 	</update>
 
 	<!-- 포인트 내역 -->
@@ -163,14 +26,11 @@
 		INSERT INTO coin_history(member_id, in_point, in_date)
 		VALUES(#{member_id}, #{plusPoint}, now())
 	</insert>
-	<!-- ***** DROPTOP  ***** -->
 
-
-
-	<!-- ***** COMMON  ***** -->
-	<!-- 회원 ID 가져오기 -->
-	<select id="get_memberId" resultType="int">
-		SELECT id FROM member WHERE email = #{user_email};
-	</select>
+	<!-- 코인 내역 -->
+	<insert id="history_outCoin">
+		INSERT INTO coin_history(member_id, out_coin, in_date)
+		VALUES(#{member_id}, #{numCount}, now())
+	</insert>
 	<!-- ***** COMMON  ***** -->
 </mapper>

@@ -3,14 +3,14 @@ package dev.drop.models.cases.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import dev.drop.models.invest.dto.PrizeListDTO;
+import dev.drop.models.invest.dto.BoujeeListDTO;
 
 import java.util.List;
 
 @Mapper
 public interface CaseMapper {
-
-	void save(@Param(value="round") int round,
+	// 회차별 1등 번호 저장
+	void setBoujeeResult(@Param(value="round") int round,
 			@Param(value="num1") int num1,
 			@Param(value="num2") int num2,
 			@Param(value="num3") int num3,
@@ -20,14 +20,21 @@ public interface CaseMapper {
 			@Param(value="num7") int num7,
 			@Param(value="sum") int sum);
 	
-	// list count
-	int count_list();
+	// 전체 회차 저장 전 카운트
+	int boujeeCount();
 	
-	// 최근회사 확인
-	Integer prizeLastRound();
-	
+	// 마지막 회차 저장 위한 round값
+	Integer boujeeLastRound();
+
+	// i번째 회차 합계
 	int getSum(@Param(value="i") int i);
-	
+
+	// 지정된 회차별 1등 번호 가져오기
+	BoujeeListDTO boujeeRoundResult(@Param(value="round") int round);
+
+	// 저장된 회차 전부 get
+	List<Integer> getRoundList();
+
 	void caseSum50(@Param(value="case01") int case01, 
 			@Param(value="case02") int case02, 
 			@Param(value="case03") int case03, 
@@ -59,8 +66,4 @@ public interface CaseMapper {
 			@Param(value="case12") int case12, 
 			@Param(value="last_round") int last_round, 
 			@Param(value="all_round") int all_round);
-	
-	PrizeListDTO roundResult(@Param(value="round") int round);
-
-	List<Integer> getRoundList();
 }

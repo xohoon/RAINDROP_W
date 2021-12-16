@@ -7,7 +7,7 @@
 <mapper namespace="dev.drop.models.member.mapper.MemberMapper">
 
 	<select id="mailCheck" parameterType="String" resultType="int">
-    	SELECT count(*) FROM member WHERE email = #{email};
+    	SELECT count(id) FROM member WHERE email = #{email};
     </select>
     
     <insert id="signup">
@@ -15,7 +15,7 @@
  		VALUES(#{name}, #{email}, #{password}, now(), #{phone}, #{type});
     </insert>
     
-	<select id="member_list" resultType="dev.drop.models.member.dto.Member">
+	<select id="getUserList" resultType="dev.drop.models.member.dto.Member">
     	SELECT * FROM member;
     </select>
     

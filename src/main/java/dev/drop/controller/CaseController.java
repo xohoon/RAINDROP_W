@@ -40,7 +40,7 @@ public class CaseController {
 		// 최근 회차
 		int last_round = Round.lastRound();
 		// 저장된 최근 회차
-		Integer search_round = caseMapper.prizeLastRound();
+		Integer search_round = caseMapper.boujeeLastRound();
 		if (search_round == null) {
 			search_round = 0;
 		}
@@ -80,8 +80,8 @@ public class CaseController {
 					int num7 = Integer.parseInt(test07.text());
 					int sum = num1+num2+num3+num4+num5+num6;
 					int round = search_round+1;
-					caseMapper.save(round, num1, num2, num3, num4, num5, num6, num7, sum);
-					search_round = caseMapper.prizeLastRound();
+					caseMapper.setBoujeeResult(round, num1, num2, num3, num4, num5, num6, num7, sum);
+					search_round = caseMapper.boujeeLastRound();
 					System.out.println(round + "회차 앙 성공띄!");
 					result_message = "성공";
 					jsonData.put("result", result_message);
@@ -102,7 +102,7 @@ public class CaseController {
 			produces="application/json; charset=utf-8")
 	public String caseSum() {
 		
-		int last_round = investMapper.LastNum();
+		int last_round = Round.lastRound();
 		
 		/*
 		 * 
@@ -252,10 +252,10 @@ public class CaseController {
 		// 최근 회차 가지고오는 코드
 		int last_round = Round.lastRound();
 		// 저장된 최근 회차
-		int search_round = caseMapper.prizeLastRound();
+		int search_round = caseMapper.boujeeLastRound();
 		int lastRoundGap = last_round - search_round;
 
-		int list_count = caseMapper.count_list();
+		int list_count = caseMapper.boujeeCount();
 		String result_message = "";
 
 		if(lastRoundGap == 0) {
