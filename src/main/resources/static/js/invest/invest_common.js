@@ -43,7 +43,7 @@ function dropSave(whatDrop) {
 		},
 		success: function() {
 			if(whatDrop == "raindrop") {
-				// moveRaindrop();
+				moveRaindrop();
 			}else if(whatDrop == "droptop") {
 				moveDroptop();
 			}
@@ -64,10 +64,14 @@ function dropSave(whatDrop) {
 $('#rankBtn').on('click', function() {
 	var whatDrop = $("#whatDrop").val();
 	var rankRound = $('#rankRound').val();
+	var lastRound = $('#lastRound').val();
 	// 로그인 상태 체크
 	userCheck();
 	if(!rankRound) {
 		alert('회차를 입력해주세요');
+		return false;
+	}else if(whatDrop == "raindrop" && parseInt(rankRound) == parseInt(lastRound)) {
+		alert("해당 회차는 결과 발표 전 입니다.");
 		return false;
 	}else {
 		$.ajax({
@@ -78,8 +82,13 @@ $('#rankBtn').on('click', function() {
 				rankRound : rankRound,
 				whatDrop : whatDrop
 			},
-			success : moveDroptop
-			,
+			success : function() {
+				if(whatDrop == "raindrop") {
+					moveRaindrop();
+				}else if(whatDrop == "droptop") {
+					moveDroptop();
+				}
+			},
 			beforeSend:function() {
 				$('.wrap-loading').removeClass('display-none');
 			},

@@ -40,10 +40,12 @@ public class InvestController {
 		// 최근 회차 가지고오는 코드
 		int member_id = investMapper.get_memberId(principal.getName());
 		int last_num = Round.lastRound();
+		List<Integer> rainBeforeConfirm = investMapper.rain_beforeConfirmList(member_id);
 		List<SaveResultDTO> rainResultList = investMapper.rain_resultList(member_id);
 		model.addAttribute("comming_round", last_num+1);
+		model.addAttribute("rainBeforeConfirm", rainBeforeConfirm);
 		model.addAttribute("rainResultList", rainResultList);
-		
+
 		return "invest/raindrop";
 	}
 	// ***** RAINDROP  ***** //
@@ -58,11 +60,11 @@ public class InvestController {
 		int member_id = investMapper.get_memberId(principal.getName());
 		int last_num = Round.lastRound();
 		List<Integer> roundList = caseMapper.getRoundList();
-		List<Integer> myList = investMapper.getMyList(member_id);
+		List<Integer> dropConfirmList = investMapper.getMyList(member_id);
 		List<SaveResultDTO> dropResultList = investMapper.getResultList(member_id);
 		model.addAttribute("comming_round", last_num+1);
 		model.addAttribute("roundList", roundList);
-		model.addAttribute("myList", myList);
+		model.addAttribute("dropConfirmList", dropConfirmList);
 		model.addAttribute("dropResultList", dropResultList);
 
 		return "invest/droptop";
@@ -332,7 +334,7 @@ public class InvestController {
 			// 저장
 			if(whatDrop.equals("raindrop")) {
 				investMapper.rain_saveRanking(member_id, rank01, rank02, rank03, rank04, rank05, round, total, revenue_total, after_tax);
-
+				investMapper.rain_confirm(member_id, round);
 			}else if(whatDrop.equals("droptop")) {
 				investMapper.top_saveRanking(member_id, rank01, rank02, rank03, rank04, rank05, round, total, revenue_total, after_tax);
 				investMapper.confirmCheck(member_id, round);

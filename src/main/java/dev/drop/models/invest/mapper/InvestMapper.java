@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 
 import dev.drop.models.invest.dto.SaveListDTO;
 import dev.drop.models.invest.dto.SaveResultDTO;
+import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 
@@ -65,6 +66,12 @@ public interface InvestMapper {
 
 	// 결과값 리스트
 	List<SaveResultDTO> rain_resultList(@Param(value = "member_id") int member_id);
+
+	// 결과 확인 전 리스트
+	List<Integer> rain_beforeConfirmList(@Param(value = "member_id") int member_id);
+
+	// 컨펌하기
+	void rain_confirm(@Param(value = "member_id") int member_id, @Param(value = "round") int round);
 	// ***** RAINDROP  ***** //
 
 

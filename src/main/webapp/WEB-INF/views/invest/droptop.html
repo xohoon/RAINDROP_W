@@ -38,9 +38,9 @@
 				<div class="set_3">
 					<select id="rankRound" class="form-select selectBox input_2" aria-label="Default select">
 						<option selected value=0>회차선택</option>
-						<option th:each="myList : ${myList}"
-								th:value="${myList}"
-								th:utext="${myList}"></option>
+						<option th:each="dropConfirm : ${dropConfirmList}"
+								th:value="${dropConfirm}"
+								th:utext="${dropConfirm}"></option>
 					</select>
 					<input type="button" class="btn btn-success input_2" id="rankBtn" value="당첨 결과 확인">
 				</div>
