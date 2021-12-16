@@ -33,11 +33,16 @@ public class InvestController {
 	
 	// ***** RAINDROP  ***** //
 	// raindrop 접근
-	@GetMapping(value="/raindrop")
-	public String Raindrop(Model model) {
+	@GetMapping(
+			value="/raindrop",
+			produces="application/json; charset=utf-8")
+	public String Raindrop(Model model, Principal principal) {
 		// 최근 회차 가지고오는 코드
+		int member_id = investMapper.get_memberId(principal.getName());
 		int last_num = Round.lastRound();
+		List<SaveResultDTO> rainResultList = investMapper.rain_resultList(member_id);
 		model.addAttribute("comming_round", last_num+1);
+		model.addAttribute("rainResultList", rainResultList);
 		
 		return "invest/raindrop";
 	}
@@ -54,11 +59,11 @@ public class InvestController {
 		int last_num = Round.lastRound();
 		List<Integer> roundList = caseMapper.getRoundList();
 		List<Integer> myList = investMapper.getMyList(member_id);
-		List<SaveResultDTO> resultList = investMapper.getResultList(member_id);
+		List<SaveResultDTO> dropResultList = investMapper.getResultList(member_id);
 		model.addAttribute("comming_round", last_num+1);
 		model.addAttribute("roundList", roundList);
 		model.addAttribute("myList", myList);
-		model.addAttribute("resultList", resultList);
+		model.addAttribute("dropResultList", dropResultList);
 
 		return "invest/droptop";
 	}

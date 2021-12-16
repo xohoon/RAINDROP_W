@@ -63,26 +63,26 @@
 			</tr>
 		</thead>
 		<tbody>
-			<th:block th:each="list, num:${resultList}">
+			<th:block th:each="dropList, num:${dropResultList}">
 				<tr>
 					<th scope="row"><span th:text="${num.count}"></span></th>
-					<td><span th:text="${list.round}"></span>회</td>
-					<td><span th:text="${list.game_total}"></span></td>
-					<td><span th:text="${list.revenue_total}"></span>원</td>
-					<td><span th:text="${list.in_date}"></span></td>
+					<td><span th:text="${dropList.round}"></span>회</td>
+					<td><span th:text="${dropList.game_total}"></span></td>
+					<td><span th:text="${dropList.revenue_total}"></span>원</td>
+					<td><span th:text="${dropList.in_date}"></span></td>
 					<td>
 						<button type="button" class="btn btn-success"
 							data-bs-toggle="modal" data-bs-target="#dropDetailModal"
-							th:data-round="${list.round}">상세 보기</button>
-					</td>
+							th:data-round="${dropList.round}">상세 보기</button>
+					</td>s
 					<td>
 						<button type="button" class="btn btn-dark"
-							th:if="${list.revenue_total != 0} and ${list.exchange_status} == 1">정산완료</button>
+							th:if="${dropList.revenue_total != 0} and ${dropList.exchange_status} == 1">정산완료</button>
 						<button type="button" class="btn btn-dark"
-								th:if="${list.revenue_total == 0} and ${list.exchange_status} == 0">정산불가</button>
+								th:if="${dropList.revenue_total == 0} and ${dropList.exchange_status} == 0">정산불가</button>
 						<button type="button" class="btn btn-success"
-							th:if="${list.revenue_total != 0} and ${list.exchange_status} == 0"
-							th:onclick="'javascript:exchangeAjax('+${list.round}+', '+${list.revenue_total}+');'">정산하기</button>
+							th:if="${dropList.revenue_total != 0} and ${dropList.exchange_status} == 0"
+							th:onclick="'javascript:exchangeAjax('+${dropList.round}+', '+${dropList.revenue_total}+');'">정산하기</button>
 					</td>
 				</tr>
 			</th:block>

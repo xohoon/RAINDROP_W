@@ -62,6 +62,9 @@ public interface InvestMapper {
 
 	// 코인 내역
 	void history_outCoin(@Param(value="member_id") int member_id, @Param(value = "numCount") int numCount);
+
+	// 결과값 리스트
+	List<SaveResultDTO> rain_resultList(@Param(value = "member_id") int member_id);
 	// ***** RAINDROP  ***** //
 
 

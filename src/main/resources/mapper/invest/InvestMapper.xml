@@ -59,6 +59,11 @@
 		INSERT INTO coin_history(member_id, out_coin, in_date)
 		VALUES(#{member_id}, #{numCount}, now())
 	</insert>
+
+	<!-- 결과값 리스트 -->
+	<select id="rain_resultList" resultType="dev.drop.models.invest.dto.SaveResultDTO">
+		SELECT * FROM raindrop_result WHERE member_id = #{member_id}
+	</select>
 	<!-- ***** RAINDROP  ***** -->
 
 
