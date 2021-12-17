@@ -73,4 +73,9 @@
         SET exchange_point = ${plusPoint}, exchange_status = 1, exchange_date = now(), up_member = ${member_id}
         WHERE member_id = #{member_id} AND round = #{round}
     </update>
+
+    <!-- 회원 round list -->
+    <select id="getRound" resultType="Integer">
+        SELECT DISTINCT(round) FROM droptop_list WHERE member_id = #{member_id}
+    </select>
 </mapper>

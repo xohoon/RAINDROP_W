@@ -33,6 +33,6 @@ $('#rainSaveBtn').on('click', function() {
 		alert("회차를 선택해 주세요.");
 		return false;
 	}else {
-		lastNumSave_chk(whatDrop, numRound);
+		lastNumSave_chk(whatDrop, numRound, numCount);
 	}
 });

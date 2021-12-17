@@ -18,7 +18,7 @@
 			<div class="card-body text-dark">
 				<input type="hidden" id="whatDrop" value="droptop" />
 				<input type="hidden" id="numCount" value="10" />
-				<div class="set_2">
+				<div class="set_2"set_2>
 					<select id="numRound" class="form-select selectBox input_2" aria-label="Default select">
 						<option selected value=0>회차선택</option>
 						<option th:each="roundList : ${roundList}"
@@ -27,9 +27,6 @@
 					</select>
 					<input type="button" class="btn btn-warning input_2" id="dropSaveBtn" value="50회 추출">
 				</div>
-				<!--
-				<div class="returnSuccess" id="returnList">결과과 노출됩니다.</div>
-				-->
 			</div>
 		</div>
 		<div class="card border-secondary mb-3 card2">
@@ -44,9 +41,6 @@
 					</select>
 					<input type="button" class="btn btn-success input_2" id="rankBtn" value="당첨 결과 확인">
 				</div>
-				<!--
-				<div class="returnSuccess" id="returnRank">결과과 노출됩니다.</div>
-				-->
 			</div>
 		</div>
 	</div>

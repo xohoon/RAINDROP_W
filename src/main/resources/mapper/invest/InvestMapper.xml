@@ -5,7 +5,6 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="dev.drop.models.invest.mapper.InvestMapper">
-	<!-- ***** COMMON  ***** -->
 	<!-- 회원 ID 가져오기 -->
 	<select id="getMemberId" resultType="int">
 		SELECT id FROM member WHERE email = #{userEmail};
@@ -21,6 +20,12 @@
 		UPDATE member SET point = point + #{plusPoint}, up_date = now() WHERE id = #{member_id}
 	</update>
 
+	<!-- 포인트 코인으로 환전 -->
+	<update id="setExchangeMember">
+		UPDATE member SET point = point - #{point}, coin = coin + #{coin} WHERE id = #{member_id}
+	</update>
+
+	<!-- COIN HISTORY-->
 	<!-- 포인트 내역 -->
 	<insert id="setHistory">
 		INSERT INTO coin_history(member_id, in_point, in_date)
@@ -28,9 +33,15 @@
 	</insert>
 
 	<!-- 코인 내역 -->
-	<insert id="history_outCoin">
+	<insert id="setOutCoin">
 		INSERT INTO coin_history(member_id, out_coin, in_date)
 		VALUES(#{member_id}, #{numCount}, now())
 	</insert>
-	<!-- ***** COMMON  ***** -->
+
+	<!-- 코인 충전 -->
+	<insert id="setExchangeCoin">
+		INSERT INTO coin_history(member_id, out_point, in_coin)
+		VALUES(#{member_id}, #{point}, #{coin})
+	</insert>
+	<!-- COIN HISTORY-->
 </mapper>

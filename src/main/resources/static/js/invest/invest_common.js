@@ -3,22 +3,22 @@ $(function(){
 });
 
 // 최근 추첨 여부 확인
-function lastNumSave_chk(whatDrop, round) {
+function lastNumSave_chk(whatDrop, numRound, numCount) {
 	$.ajax({
 		type : 'GET',
 		url : '/invest/dropCheck',
 		dataType : "JSON",
 		data : {
 			whatDrop : whatDrop,
-			round : round
+			round : numRound
 		},
 		success : function(result, data) {
 			if(result.chk == "pass") {
 				console.log("check::"+result.chk);
-				dropSave(whatDrop);
+				dropSave(whatDrop, numRound, numCount);
 			}else if(result.chk == "block") {
 				console.log("check::"+result.chk);
-				alert(round + "회차 모의 투자는 이미 완료되었습니다.");
+				alert(numRound + "회차 모의 투자는 이미 완료되었습니다.");
 				return false;
 			}
 		},
@@ -29,9 +29,7 @@ function lastNumSave_chk(whatDrop, round) {
 }
 
 // 모의투자 저장 ajax
-function dropSave(whatDrop) {
-	var numCount = $('#numCount').val(); // 받을 번호 개수
-	var numRound = $('#numRound').val(); // 회차
+function dropSave(whatDrop, numRound, numCount) {
 	$.ajax({
 		type: 'GET',
 		url: '/invest/list_saving',
@@ -102,19 +100,18 @@ $('#rankBtn').on('click', function() {
 	}
 });
 
-// MODAL CODE
-var myModal = document.getElementById('detailModal')
-var round = "";
-myModal.addEventListener('show.bs.modal', function (event) {
+// 상세보기 MODAL CODE
+var detailModal = document.getElementById('detailModal')
+detailModal.addEventListener('show.bs.modal', function (event) {
 	var whatDrop = $("#whatDrop").val();
-		round = $(event.relatedTarget).data('round');
+	var round = $(event.relatedTarget).data('round');
 	console.log("MODAL?::"+round);
 	userCheck();
-	modalAjax(round, whatDrop);
+	detailModalAjax(round, whatDrop);
 });
 
 // data send and result
-function modalAjax(data, whatDrop) {
+function detailModalAjax(data, whatDrop) {
 	$.ajax({
 		type: 'GET',
 		url: '/invest/modalData',
@@ -123,7 +120,7 @@ function modalAjax(data, whatDrop) {
 			round : data,
 			whatDrop : whatDrop
 		},
-		success : modalResult,
+		success : detailResult,
 		error: function (result) {
 			console.log('ERROR');
 		}
@@ -131,7 +128,7 @@ function modalAjax(data, whatDrop) {
 }
 
 // modal result html
-function modalResult(data) {
+function detailResult(data) {
 	console.log("111");
 	var html = '';
 	html = '<table class="table table-bordered">' +
@@ -154,7 +151,81 @@ function modalResult(data) {
 			'    </tr>';
 	});
 	html += '</tbody></table>';
-	$('#modalBodyView').html(html);
+	$('#detailModalView').html(html);
+}
+
+// 환전 MODAL CODE
+var exchangeModal = document.getElementById('exchangePoint')
+exchangeModal.addEventListener('show.bs.modal', function (event) {
+	var point = $("#userPoint").text();
+	console.log("EXCHANGE::" + point);
+	userCheck();
+	exchangeResult(point);
+});
+
+// 환전 모달 view
+function exchangeResult(point) {
+	var possibleCoin = parseInt(point)/1000;
+	possibleCoin = Math.floor(possibleCoin);
+	var html = "";
+	html =
+		'<table class="table table-bordered">' +
+		'	<thead>' +
+		'		<tr>' +
+		'			<th scope="col">현재 포인트</th>' +
+		'			<th scope="col">충전 가능 코인</th>' +
+		'			<th scope="col">코인 입력</th>' +
+		'			<th scope="col">충전</th>' +
+		'		</tr>' +
+		'	</thead>' +
+		'	<tbody>' +
+		'		<tr>' +
+		'			<th scope="row">'+point+'</th>' +
+		'			<td>'+possibleCoin+'</td>' +
+		'			<td><input type="text" id="changeCoin"></td>' +
+		'			<td><button type="button" onclick="chargeCoin('+point+', '+possibleCoin+')">충전</button></td>' +
+		'		</tr>'+
+		'	</tbody>' +
+		'</table>';
+	$('#exchangeModalView').html(html);
+}
+
+// 충전 버튼 클릭시
+function chargeCoin(point, possibleCoin) {
+	var changeCoin = $('#changeCoin').val();
+	if(!changeCoin || parseInt(changeCoin) < 1) {
+		alert("1이상의 숫자를 입력해주세요.");
+		return false;
+	}else if (parseInt(changeCoin) > parseInt(possibleCoin)) {
+		alert("충전 가능한 코인보다 높게 입력하셨습니다.");
+		return false;
+	}else {
+		exchangeAjax(changeCoin);
+	}
+}
+
+// 충전 ajax
+function exchangeAjax(changeCoin) {
+	$.ajax({
+		type: 'GET',
+		url: '/invest/exchangeResult',
+		dataType: 'JSON',
+		data: {
+			coin : changeCoin
+		},
+		success: function(result, data) {
+			if(result.chk == "success") {
+				alert("환전이 완료되었습니다.");
+				location.reload();
+			}else if(result.chk == "fail") {
+				alert("환전에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
+				return false;
+			}
+		},
+		error: function (result) {
+			console.log('ERROR');
+		}
+	});
 }
 
 function moveDroptop() {

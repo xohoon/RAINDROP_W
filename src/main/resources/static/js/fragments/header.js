@@ -16,9 +16,9 @@ function userAjax(email) {
 			email : email
 		},
 		success : function(result, data) {
-			$("#userPoint").text(result.userPoint+"P");
-			$("#userCoin").text(result.userCoin+"Coin");
-			$("#CoinCheck").val(result.userCoin);
+			$("#userPoint").text(result.userPoint);
+			$("#userCoin").text(result.userCoin);
+			$("#coinCheck").val(result.userCoin);
 		},
 		error : function(data) {
 			console.log("ERROR::" + data);

@@ -6,13 +6,14 @@ $(function(){
 $('#dropSaveBtn').on('click', function() {
 	var whatDrop = $("#whatDrop").val(); // 페이지 상태 체크
 	var numRound = $('#numRound').val(); // 회차
+	var numCount = $('#numCount').val(); // 횟수
 	// 로그인 상태 체크
 	userCheck();
 	if(numRound == 0) {
 		alert("회차를 선택해 주세요.");
 		return false;
 	}else if(numRound != 0) {
-		lastNumSave_chk(whatDrop, numRound);
+		lastNumSave_chk(whatDrop, numRound, numCount);
 	}
 });
 

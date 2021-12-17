@@ -72,4 +72,6 @@ public interface InvestDropMapper {
                      @Param(value = "member_id") int member_id,
                      @Param(value = "round") int round);
 
+    // 특정 회원 round list
+    List<Integer> getRound(@Param(value = "member_id") int member_id);
 }

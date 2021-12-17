@@ -25,13 +25,20 @@
 
 <div class="container common">
 	<div class="cardSet3">
-		<input type="hidden" id="CoinCheck" />
+		<input type="hidden" id="coinCheck" />
 		<div class="card border-secondary mb-3 card3">
 			<div class="card-header">MY POINT</div>
 			<div class="card-body text-dark">
-				<p class="card-text">누적 포인트</p>
+				<div class="set_2">
+					<p class="card-text input_2">누적 포인트</p>
+					<button type="button" class="btn btn-success input_2"
+							data-bs-toggle="modal" data-bs-target="#exchangePoint">
+						환전
+					</button>
+				</div>
 				<h5 class="card-title"><span id="userPoint"></span></h5>
 			</div>
+
 		</div>
 		<div class="card border-secondary mb-3 card3">
 			<div class="card-header">MY COIN</div>
@@ -50,7 +57,7 @@
 	</div>
 
 </div>
-<!-- Modal -->
+<!-- 상세 페이지 modal -->
 <div class="modal fade" id="detailModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -59,7 +66,24 @@
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
-				<div id="modalBodyView"></div>
+				<div id="detailModalView"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 포인트 환전 modal -->
+<div class="modal fade" id="exchangePoint" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">코인 충전(1,000P -> 1Coin)</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div id="exchangeModalView"></div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

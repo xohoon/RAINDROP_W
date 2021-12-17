@@ -38,7 +38,6 @@ public class InvestController {
 	private InvestDropMapper dropMapper;
 	
 	// ***** RAINDROP  ***** //
-	// raindrop 접근
 	@GetMapping(
 			value="/raindrop",
 			produces="application/json; charset=utf-8")
@@ -57,7 +56,6 @@ public class InvestController {
 	// ***** RAINDROP  ***** //
 
 	// ***** DROPTOP  ***** //
-	// droptop 접근
 	@GetMapping(
 			value="/droptop",
 			produces="application/json; charset=utf-8")
@@ -66,6 +64,8 @@ public class InvestController {
 		int member_id = investMapper.getMemberId(principal.getName());
 		int last_num = Round.lastRound();
 		List<Integer> roundList = caseMapper.getRoundList();
+		List<Integer> removeList = dropMapper.getRound(member_id);
+		roundList.removeAll(removeList);
 		List<Integer> dropConfirmList = dropMapper.dropBeforeConfirmList(member_id);
 		List<SaveResultDTO> dropResultList = dropMapper.dropResultList(member_id);
 		model.addAttribute("comming_round", last_num+1);
@@ -75,9 +75,12 @@ public class InvestController {
 
 		return "invest/droptop";
 	}
-	
 	// ***** DROPTOP  ***** //
-	
+
+
+
+
+
 	// ***** COMMON  ***** //
 	// 번호 저장 공통
 	@ResponseBody
@@ -209,13 +212,12 @@ public class InvestController {
 			ranList = new ArrayList<>();
 			
 			if(success == numCount) {
-				System.out.println("WHAT?? = " + member_id + numCount);
-				// 코인 차감
-				investMapper.useCoin(member_id, numCount);
-				// 내역 추가
-				investMapper.history_outCoin(member_id, numCount);
-
-				System.out.println("번호 "+success+"개 추출완료");
+				if (whatDrop.equals("raindrop")) {
+					// 코인 차감
+					investMapper.useCoin(member_id, numCount);
+					// 내역 추가
+					investMapper.setOutCoin(member_id, numCount);
+				}
 				break;
 			}
 		// for
@@ -450,6 +452,26 @@ public class InvestController {
 		}
 		return jsonData;
 	}
-	
+
+	// 포인트 환전
+	@ResponseBody
+	@GetMapping(
+			value="/exchangeResult",
+			produces="application/json; charset=utf-8")
+	public Object exchangeResult(@RequestParam int coin, Principal principal) {
+		JSONObject jsonData = new JSONObject();
+		int member_id = investMapper.getMemberId(principal.getName());
+		int point = coin*1000;
+		try{
+			investMapper.setExchangeCoin(member_id, point, coin);
+			investMapper.setExchangeMember(member_id, point, coin);
+			jsonData.put("chk", "success");
+		}catch (Exception e){
+			jsonData.put("chk", "fail");
+			e.printStackTrace();
+		}
+
+		return jsonData;
+	}
 	// ***** COMMON  ***** //
 }
