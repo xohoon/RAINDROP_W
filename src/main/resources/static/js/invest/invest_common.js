@@ -133,7 +133,7 @@ function detailResult(data) {
 	var html = '';
 	html = '<table class="table table-bordered">' +
 		'<thead>' +
-		'    <tr>' +
+		'    <tr class="table-secondary">' +
 		'      <th scope="col">#</th>' +
 		'      <th scope="col">회차</th>' +
 		'      <th scope="col">추첨 번호</th>' +
@@ -147,7 +147,7 @@ function detailResult(data) {
 			'      <th scope="row">'+val.round_id+'</th>' +
 			'      <td>'+val.round+'</td>' +
 			'      <td>'+val.num1+', '+val.num2+', '+val.num3+', '+val.num4+', '+val.num5+', '+val.num6+'</td>' +
-			'      <td>'+val.in_date+'</td>' +
+			'      <td>'+val.in_date.substring(0,10)+'</td>' +
 			'    </tr>';
 	});
 	html += '</tbody></table>';
@@ -182,8 +182,8 @@ function exchangeResult(point) {
 		'		<tr>' +
 		'			<th scope="row">'+point+'</th>' +
 		'			<td>'+possibleCoin+'</td>' +
-		'			<td><input type="text" id="changeCoin"></td>' +
-		'			<td><button type="button" onclick="chargeCoin('+point+', '+possibleCoin+')">충전</button></td>' +
+		'			<td><input class="form-control form-control-sm" type="text" id="changeCoin"></td>' +
+		'			<td><button class="btn btn-success btn-sm" type="button" onclick="chargeCoin('+point+', '+possibleCoin+')">충전</button></td>' +
 		'		</tr>'+
 		'	</tbody>' +
 		'</table>';

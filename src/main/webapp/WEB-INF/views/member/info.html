@@ -27,21 +27,21 @@
 				<tr>
 					<th scope="row">이름</th>
 					<td>
-						<input type="text" class="form-control" id="setName" th:value="${getMember.name}" readonly>
+						<input type="text" class="form-control form-control-sm" id="setName" th:value="${getMember.name}" readonly>
 					</td>
 					<th scope="row">이메일</th>
 					<td>
-						<input type="text" class="form-control" id="setEmail" th:value="${getMember.email}" readonly>
+						<input type="text" class="form-control form-control-sm" id="setEmail" th:value="${getMember.email}" readonly>
 					</td>
 				</tr>
 				<tr>
 					<th scope="row">전화번호</th>
 					<td>
-						<input type="text" class="form-control" id="setPhone" th:value="${getMember.phone}" readonly>
+						<input type="text" class="form-control form-control-sm" id="setPhone" th:value="${getMember.phone}" readonly>
 					</td>
 					<th scope="row">가입일</th>
 					<td>
-						<input type="text" class="form-control" th:value="${#strings.substring(getMember.in_date,0,10)}" readonly>
+						<input type="text" class="form-control form-control-sm" th:value="${#strings.substring(getMember.in_date,0,10)}" readonly>
 					</td>
 				</tr>
 			</tbody>
