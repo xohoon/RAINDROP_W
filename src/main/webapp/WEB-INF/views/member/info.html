@@ -3,17 +3,77 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>RINDROP</title>
+	<title>RAINDROP MY PAGE</title>
 	<!-- link inculde -->
 	<th:block th:include="fragments/header"></th:block>
+	<th:block th:include="fragments/invest_common"></th:block>
 	<!-- link inculde -->
+	<script src="/static/js/member/info.js" type="text/javascript" defer></script>
 </head>
 
 <body>
-	<div class="card">
-		<div class="card-body" style="text-align:center;">
-			<span sec:authentication="name"></span>님 환영
-		</div>
+	<div class="container common">
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col" colspan="4">회원정보
+						<button type="button" class="btn btn-success btn-sm" onclick="modifyFunc()" id="modifyBtn"
+								style="float: right;">수정하기</button>
+					</th>
+					<input type="hidden" id="modifyKey" value="close"/>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th scope="row">이름</th>
+					<td>
+						<input type="text" class="form-control" id="setName" th:value="${getMember.name}" readonly>
+					</td>
+					<th scope="row">이메일</th>
+					<td>
+						<input type="text" class="form-control" id="setEmail" th:value="${getMember.email}" readonly>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">전화번호</th>
+					<td>
+						<input type="text" class="form-control" id="setPhone" th:value="${getMember.phone}" readonly>
+					</td>
+					<th scope="row">가입일</th>
+					<td>
+						<input type="text" class="form-control" th:value="${#strings.substring(getMember.in_date,0,10)}" readonly>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<table class="table">
+			<thead>
+				<tr style="border-bottom: white">
+					<th scope="col" colspan="7">충전내역</th>
+				</tr>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">point +</th>
+					<th scope="col">point -</th>
+					<th scope="col">coin +</th>
+					<th scope="col">coin -</th>
+					<th scope="col">날짜</th>
+				</tr>
+			</thead>
+			<tbody>
+			<th:block th:each="history, num:${historyList}">
+				<tr>
+					<th scope="row" th:text="${num.count}"></th>
+					<td th:text="${history.in_point}"></td>
+					<td th:text="${history.out_point}"></td>
+					<td th:text="${history.in_coin}"></td>
+					<td th:text="${history.out_coin}"></td>
+					<td th:text="${#strings.substring(history.in_date,0,10)}"></td>
+				</tr>
+			</th:block>
+		</tbody>
+		</table>
 	</div>
 </body>
 <th:block th:include="fragments/footer"></th:block>

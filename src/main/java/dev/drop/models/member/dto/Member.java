@@ -8,12 +8,14 @@ import java.util.Date;
 @Getter @Setter
 public class Member {
 	private int id;
-	private String name;
 	private String email;
-	private String password;
-	private String password2;
+	private String name;
 	private int phone;
-	private int type;
-	private Date join_date;
+	private int point;
+	private int coin;
+	private int cash;
+	private String status_1;
+	private String in_date;
+	private String up_date;
 
 }

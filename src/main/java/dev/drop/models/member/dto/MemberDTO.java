@@ -20,6 +20,7 @@ public class MemberDTO {
 	private String phone;
 	private int point;
 	private int coin;
+	private int cash;
 	private String status_1;
 	private String in_date;
 	private String up_date;
@@ -35,7 +36,7 @@ public class MemberDTO {
 
 	@Builder
 	public MemberDTO(Long id, String name, String email, String password, String phone
-			, int point, int coin, String status_1, String in_date, String up_date) {
+			, int point, int coin, int cash, String status_1, String in_date, String up_date) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
@@ -43,6 +44,7 @@ public class MemberDTO {
 		this.phone = phone;
 		this.point = point;
 		this.coin = coin;
+		this.cash = cash;
 		this.status_1 = status_1;
 		this.in_date = in_date;
 		this.up_date = up_date;

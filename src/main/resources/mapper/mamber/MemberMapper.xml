@@ -6,17 +6,35 @@
  
 <mapper namespace="dev.drop.models.member.mapper.MemberMapper">
 
+	<!-- 이메일로 회원 확인 -->
 	<select id="mailCheck" parameterType="String" resultType="int">
     	SELECT count(id) FROM member WHERE email = #{email};
     </select>
-    
+
+	<!-- 회원 가입 -->
     <insert id="signup">
     	INSERT INTO member(name, email, password, join_date, phone, type)
  		VALUES(#{name}, #{email}, #{password}, now(), #{phone}, #{type});
     </insert>
-    
+
+	<!-- 회원 전체 리스트 -->
 	<select id="getUserList" resultType="dev.drop.models.member.dto.Member">
     	SELECT * FROM member;
     </select>
+
+	<!-- 회원 정보 -->
+	<select id="getMemberInfo" resultType="dev.drop.models.member.dto.Member">
+		SELECT * FROM member WHERE id = #{member_id}
+	</select>
+
+	<!-- 회원 정보 수정 -->
+	<update id="setUserInfo">
+		UPDATE member SET name = #{setName}, email = #{setEmail}, phone = #{setPhone} WHERE id = #{member_id}
+	</update>
+
+	<!-- 코인 내역 -->
+	<select id="getHistoryList" resultType="dev.drop.models.member.dto.CoinHistoryDTO">
+		SELECT * FROM coin_history WHERE member_id = #{member_id} ORDER BY id DESC
+	</select>
     
 </mapper>

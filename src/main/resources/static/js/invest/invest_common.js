@@ -65,8 +65,8 @@ $('#rankBtn').on('click', function() {
 	var lastRound = $('#lastRound').val();
 	// 로그인 상태 체크
 	userCheck();
-	if(!rankRound) {
-		alert('회차를 입력해주세요');
+	if(!rankRound || rankRound == 0) {
+		alert('회차를 입력 및 선택해주세요.');
 		return false;
 	}else if(whatDrop == "raindrop" && parseInt(rankRound) == parseInt(lastRound)) {
 		alert("해당 회차는 결과 발표 전 입니다.");
@@ -193,11 +193,14 @@ function exchangeResult(point) {
 // 충전 버튼 클릭시
 function chargeCoin(point, possibleCoin) {
 	var changeCoin = $('#changeCoin').val();
-	if(!changeCoin || parseInt(changeCoin) < 1) {
+	if(isNaN(changeCoin)) {
+		alert("숫자만 입력 가능합니다.");
+		return false;
+	}else if(!changeCoin || parseInt(changeCoin) < 1) {
 		alert("1이상의 숫자를 입력해주세요.");
 		return false;
 	}else if (parseInt(changeCoin) > parseInt(possibleCoin)) {
-		alert("충전 가능한 코인보다 높게 입력하셨습니다.");
+		alert("충전 가능한 코인을 초과하였습니다.");
 		return false;
 	}else {
 		exchangeAjax(changeCoin);

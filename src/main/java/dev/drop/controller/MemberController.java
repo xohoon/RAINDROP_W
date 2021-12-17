@@ -2,10 +2,14 @@ package dev.drop.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import dev.drop.models.invest.mapper.InvestMapper;
+import dev.drop.models.member.dto.CoinHistoryDTO;
+import dev.drop.models.member.dto.Member;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +25,9 @@ import dev.drop.utils.EmailService;
 import dev.drop.utils.RandomString;
 import lombok.AllArgsConstructor;
 
+import java.security.Principal;
+import java.util.List;
+
 @Controller
 @RequestMapping("/member")
 @AllArgsConstructor
@@ -32,6 +39,8 @@ public class MemberController {
 	JavaMailSender emailSender;
 	@Autowired
 	private AdminMapper adminMapper;
+	@Autowired
+	private InvestMapper investMapper;
 	
 	@ModelAttribute(value="contextPath")
 	public String getContextPath(HttpServletRequest request) {
@@ -39,28 +48,35 @@ public class MemberController {
 		return request.getContextPath();
 	}
 	
-	// 회원정보
-	@ResponseBody
-	@GetMapping(
-			value="/user_info",
-			produces="application/json; charset=utf-8")
-	public Object UserInfo(@RequestParam String email) {
-		System.out.println("TEST:::1?");
-		JSONObject jsonData = new JSONObject();
-		MemberDTO memberDTO = new MemberDTO();
-		memberDTO = adminMapper.userInfo(email);
-		
-		jsonData.put("userPoint", memberDTO.getPoint());
-		jsonData.put("userCoin", memberDTO.getCoin());
-		return jsonData;
-	}
-	
 	// 회원 상세정보 페이지
 	@RequestMapping("/info")
-	public String Info() {
+	public String Info(Model model, Principal principal) {
+		int member_id = investMapper.getMemberId(principal.getName());
+		Member getMember = memberMapper.getMemberInfo(member_id);
+		List<CoinHistoryDTO> historyList = memberMapper.getHistoryList(member_id);
+		model.addAttribute("getMember", getMember);
+		model.addAttribute("historyList", historyList);
+
 		return "member/info";
 	}
-	
+
+	@ResponseBody
+	@GetMapping(
+			value="/updateInfo",
+			produces="application/json; charset=utf-8")
+	public Object UpdateInfo(String setName, String setEmail, String setPhone, Principal principal) {
+		int member_id = investMapper.getMemberId(principal.getName());
+		JSONObject jsonData = new JSONObject();
+		try {
+			memberMapper.setUserInfo(setName, setEmail, setPhone, member_id);
+			jsonData.put("chk", "success");
+		}catch (Exception e){
+			jsonData.put("chk", "fail");
+			e.printStackTrace();
+		}
+		return jsonData;
+	}
+
 	@RequestMapping("/login")
 	public String login() {
 		return "member/login";
@@ -140,6 +156,30 @@ public class MemberController {
 		jsonData.put("check", returnData);
 		System.out.println("::: mail test success :::");
 
+		return jsonData;
+	}
+
+
+
+
+
+
+	/*
+	* 체크페이지
+	* */
+	// 회원정보
+	@ResponseBody
+	@GetMapping(
+			value="/user_info",
+			produces="application/json; charset=utf-8")
+	public Object UserInfo(@RequestParam String email) {
+		System.out.println("TEST:::1?");
+		JSONObject jsonData = new JSONObject();
+		MemberDTO memberDTO = new MemberDTO();
+		memberDTO = adminMapper.userInfo(email);
+
+		jsonData.put("userPoint", memberDTO.getPoint());
+		jsonData.put("userCoin", memberDTO.getCoin());
 		return jsonData;
 	}
 

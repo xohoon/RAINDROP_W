@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>RINDROP</title>
+	<title>RAINDROP</title>
 	<!-- link inculde -->
 	<th:block th:include="fragments/header"></th:block>
 	<th:block th:include="fragments/invest_common"></th:block>
@@ -49,7 +49,7 @@
 				<th scope="col">회차</th>
 				<th scope="col">게임 수</th>
 				<th scope="col">당첨금</th>
-				<th scope="col">결과 날짜</th>
+				<th scope="col">확인 날짜</th>
 				<th scope="col">상세 보기</th>
 			</tr>
 			</thead>
@@ -60,9 +60,9 @@
 					<td><span th:text="${rainList.round}"></span>회</td>
 					<td><span th:text="${rainList.game_total}"></span></td>
 					<td><span th:text="${rainList.revenue_total}"></span>원</td>
-					<td><span th:text="${rainList.in_date}"></span></td>
+					<td><span th:text="${#strings.substring(rainList.in_date,0,10)}"></span></td>
 					<td>
-						<button type="button" class="btn btn-success"
+						<button type="button" class="btn btn-success btn-sm"
 								data-bs-toggle="modal" data-bs-target="#detailModal"
 								th:data-round="${rainList.round}">상세 보기</button>
 					</td>

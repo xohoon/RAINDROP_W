@@ -40,8 +40,8 @@
 
 	<!-- 코인 충전 -->
 	<insert id="setExchangeCoin">
-		INSERT INTO coin_history(member_id, out_point, in_coin)
-		VALUES(#{member_id}, #{point}, #{coin})
+		INSERT INTO coin_history(member_id, out_point, in_coin, in_date)
+		VALUES(#{member_id}, #{point}, #{coin}, now())
 	</insert>
 	<!-- COIN HISTORY-->
 </mapper>
