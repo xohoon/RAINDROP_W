@@ -17,6 +17,7 @@ public class SaveListDTO {
 	private int num6;
 //	private int ranking;
 	private int confirm_rank;
+	private long confirm_revenue;
 	private int sum;
 	private String in_date;
 

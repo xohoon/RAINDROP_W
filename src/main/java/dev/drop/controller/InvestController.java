@@ -249,6 +249,7 @@ public class InvestController {
 		int round = rankRound;
 		int roundCount = 0;
 		int result = 0;
+		long getRevenue = 0;
 		String whatList = "";
 
 		if(whatDrop.equals("raindrop")) { // 회차 총 개수와 결과값 저장된거 있나없나 확인
@@ -311,7 +312,8 @@ public class InvestController {
 					rank01++;
 					rankCount = 0;
 					System.out.println("1등"+rank01);
-					investMapper.setRank(whatList, i, round, 1, member_id);
+					getRevenue = Revenue.getRankRevenue(round, 1);
+					investMapper.setRank(whatList, i, round, 1, getRevenue, member_id);
 				}else if(rankCount == 5) {
 					for(int c = 0; c < testGame.size(); c++) {
 						if(testGame.get(c).equals(saveList.get(6))) {
@@ -319,25 +321,29 @@ public class InvestController {
 							rank02++;
 							rankCount = 0;
 							System.out.println("2등"+rank02);
-							investMapper.setRank(whatList, i, round, 2, member_id);
+							getRevenue = Revenue.getRankRevenue(round, 2);
+							investMapper.setRank(whatList, i, round, 2, getRevenue, member_id);
 						}
 					}
 					if(rankCount == 5) {
 						rank03++;
 						rankCount = 0;
 						System.out.println("3등"+rank03);
-						investMapper.setRank(whatList, i, round, 3, member_id);
+						getRevenue = Revenue.getRankRevenue(round, 3);
+						investMapper.setRank(whatList, i, round, 3, getRevenue, member_id);
 					}
 				}else if(rankCount == 4) {
 					rank04++;
 					rankCount = 0;
 					System.out.println("4등"+rank04);
-					investMapper.setRank(whatList, i, round, 4, member_id);
+					getRevenue = Revenue.getRankRevenue(round, 4);
+					investMapper.setRank(whatList, i, round, 4, getRevenue, member_id);
 				}else if(rankCount == 3) {
 					rank05++;
 					rankCount = 0;
 					System.out.println("5등"+rank05);
-					investMapper.setRank(whatList, i, round, 5, member_id);
+					getRevenue = Revenue.getRankRevenue(round, 5);
+					investMapper.setRank(whatList, i, round, 5, getRevenue, member_id);
 				}
 				
 				// List reset

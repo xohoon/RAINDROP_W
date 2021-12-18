@@ -144,6 +144,7 @@ function detailResult(data) {
 		'      <th scope="col">회차</th>' +
 		'      <th scope="col">추첨 번호</th>' +
 		'      <th scope="col">등수</th>' +
+		'      <th scope="col">당첨금</th>' +
 		'      <th scope="col">추첨 날짜</th>' +
 		'    </tr>' +
 		'  </thead>' +
@@ -155,6 +156,7 @@ function detailResult(data) {
 			'      <td>'+val.round+'</td>' +
 			'      <td>'+val.num1+', '+val.num2+', '+val.num3+', '+val.num4+', '+val.num5+', '+val.num6+'</td>' +
 			'      <td>'+val.confirm_rank+'</td>' +
+			'      <td>'+numberCommas(val.confirm_revenue)+'원</td>' +
 			'      <td>'+val.in_date.substring(0,10)+'</td>' +
 			'    </tr>';
 	});

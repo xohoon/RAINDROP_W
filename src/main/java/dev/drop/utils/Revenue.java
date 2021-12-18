@@ -47,4 +47,37 @@ public class Revenue {
 
 		return revenue_total;
 	}
+
+	public static long getRankRevenue(int round, int rank) {
+		long getRevenue = 0;
+		String url = "https://www.dhlottery.co.kr/gameResult.do?method=byWin&drwNo="+round;
+		Document doc = null;
+		try {
+			doc = Jsoup.connect(url).get();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		Elements element = doc.select("td.tar");
+		Elements elementSelect = null;
+		if(rank == 1) {
+			elementSelect = element.get(1).select("td");
+		}else if(rank == 2) {
+			elementSelect = element.get(3).select("td");
+		}else if(rank == 3) {
+			elementSelect = element.get(5).select("td");
+		}else if(rank == 4) {
+			elementSelect = element.get(7).select("td");
+		}else if(rank == 5) {
+			elementSelect = element.get(9).select("td");
+		}
+
+		String elementResult = elementSelect.text();
+
+		elementResult = elementResult.substring(0, elementResult.length()-1);
+		elementResult = elementResult.replaceAll("\\,", "");
+
+		getRevenue = Long.parseLong(elementResult);
+
+		return getRevenue;
+	}
 }

@@ -47,7 +47,7 @@
 
 	<!-- 등수 저장 -->
 	<update id="setRank">
-		UPDATE ${whatList} SET confirm_rank = #{rank} WHERE round = #{round} AND round_id = #{i} AND member_id = #{member_id}
+		UPDATE ${whatList} SET confirm_rank = #{rank}, confirm_revenue = #{getRevenue} WHERE round = #{round} AND round_id = #{i} AND member_id = #{member_id}
 	</update>
 
 	<!-- 당첨금 적립 -->

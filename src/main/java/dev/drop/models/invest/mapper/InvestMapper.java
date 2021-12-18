@@ -47,6 +47,7 @@ public interface InvestMapper {
 				 @Param(value = "i") int round_id,
 				 @Param(value = "round") int round,
 				 @Param(value = "rank") int rank,
+				 @Param(value = "getRevenue") long getRevenue,
 				 @Param(value = "member_id") int member_id
 	);
 
