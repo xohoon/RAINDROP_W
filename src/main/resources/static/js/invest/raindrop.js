@@ -4,7 +4,7 @@ $(function(){
 
 // RAINDROP 저장
 $('#rainSaveBtn').on('click', function() {
-	var coinCheck = $("#CoinCheck").val(); // 코인개수
+	var coinCheck = $("#coinCheck").val(); // 코인개수
 	var whatDrop = $("#whatDrop").val(); // 페이지 상태 체크
 	var numCount = $('#numCount').val(); // 받을 번호 개수
 	var numRound = $('#numRound').val(); // 회차
@@ -22,7 +22,6 @@ $('#rainSaveBtn').on('click', function() {
 			return false;
 		}
 	}else if(parseInt(numCount) > parseInt(coinCheck)) {
-		console.log("???" + numCount + "??" + coinCheck);
 		alert("코인이 부족합니다."+coinCheck+"개 이하로 입력해주세요.");
 		return false;
 	}else if(parseInt(numCount) > 10) {

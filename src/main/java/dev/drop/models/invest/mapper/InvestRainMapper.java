@@ -43,7 +43,7 @@ public interface InvestRainMapper {
             @Param(value="rank05") int rank05,
             @Param(value="round") int round,
             @Param(value="total") int total,
-            @Param(value="revenue_total") double revenue_total,
+            @Param(value="revenue_total") long revenue_total,
             @Param(value="after_tax") double after_tax);
 
     // 저장된 회차 round_id 갯수 가져오기

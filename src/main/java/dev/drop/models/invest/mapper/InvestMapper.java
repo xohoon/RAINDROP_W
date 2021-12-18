@@ -49,4 +49,7 @@ public interface InvestMapper {
 				 @Param(value = "rank") int rank,
 				 @Param(value = "member_id") int member_id
 	);
+
+	// 당첨금 적립
+	void setCash(@Param(value = "member_id") int member_id, @Param(value = "revenue_total") long revenue_total);
 }

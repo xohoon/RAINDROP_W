@@ -42,9 +42,9 @@ public class Revenue {
 		int money03 = Integer.parseInt(text03);
 		int money04 = Integer.parseInt(text04);
 		int money05 = Integer.parseInt(text05);
-		
+
 		revenue_total = (money01*rank01)+(money02*rank02)+(money03*rank03)+(money04*rank04)+(money05*rank05);
-		
+
 		return revenue_total;
 	}
 }

@@ -18,9 +18,9 @@ public class MemberDTO {
 	private String email;
 	private String password;
 	private String phone;
-	private int point;
+	private long point;
 	private int coin;
-	private int cash;
+	private long cash;
 	private String status_1;
 	private String in_date;
 	private String up_date;
@@ -30,13 +30,13 @@ public class MemberDTO {
 	public MemberEntity toEntity() {
 		return MemberEntity.builder()
 				.id(id).name(name).email(email).password(password).phone(phone)
-				.point(point).coin(coin).status_1(status_1).in_date(in_date).up_date(up_date)
+				.point(point).coin(coin).cash(cash).status_1(status_1).in_date(in_date).up_date(up_date)
 				.build();
 	}
 
 	@Builder
 	public MemberDTO(Long id, String name, String email, String password, String phone
-			, int point, int coin, int cash, String status_1, String in_date, String up_date) {
+			, long point, int coin, long cash, String status_1, String in_date, String up_date) {
 		this.id = id;
 		this.name = name;
 		this.email = email;

@@ -11,9 +11,9 @@ public class Member {
 	private String email;
 	private String name;
 	private int phone;
-	private int point;
+	private long point;
 	private int coin;
-	private int cash;
+	private long cash;
 	private String status_1;
 	private String in_date;
 	private String up_date;

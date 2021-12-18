@@ -173,13 +173,13 @@ public class MemberController {
 			value="/user_info",
 			produces="application/json; charset=utf-8")
 	public Object UserInfo(@RequestParam String email) {
-		System.out.println("TEST:::1?");
+		System.out.println(":::HEAD:::");
 		JSONObject jsonData = new JSONObject();
-		MemberDTO memberDTO = new MemberDTO();
-		memberDTO = adminMapper.userInfo(email);
+		MemberDTO memberDTO = adminMapper.userInfo(email);
 
 		jsonData.put("userPoint", memberDTO.getPoint());
 		jsonData.put("userCoin", memberDTO.getCoin());
+		jsonData.put("userCash", memberDTO.getCash());
 		return jsonData;
 	}
 

@@ -1,5 +1,11 @@
 $(function(){
 	console.log("invest_common jsFile");
+	var email = $('#userCheck').text();
+	if(email || email.length > 5) {
+		userAjax(email);
+	}else {
+		userCheck(); // head.js
+	}
 });
 
 // 최근 추첨 여부 확인

@@ -44,8 +44,14 @@
 		VALUES(#{member_id}, #{point}, #{coin}, now())
 	</insert>
 	<!-- COIN HISTORY-->
-	
+
+	<!-- 등수 저장 -->
 	<update id="setRank">
 		UPDATE ${whatList} SET confirm_rank = #{rank} WHERE round = #{round} AND round_id = #{i} AND member_id = #{member_id}
+	</update>
+
+	<!-- 당첨금 적립 -->
+	<update id="setCash">
+		UPDATE member SET cash = cash + #{revenue_total} WHERE id = #{member_id}
 	</update>
 </mapper>

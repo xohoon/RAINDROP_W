@@ -1,12 +1,3 @@
-$(function(){
-	var email = $('#userCheck').text();
-	if(email || email.length > 5) {
-		userAjax(email);
-	}else {
-		userCheck();
-	}
-});
-
 function userAjax(email) {
 	$.ajax({
 		type : 'GET',
@@ -16,8 +7,11 @@ function userAjax(email) {
 			email : email
 		},
 		success : function(result, data) {
-			$("#userPoint").text(result.userPoint);
+			var userCash = numberCommas(result.userCash);
+			var userPoint = numberCommas(result.userPoint);
 			$("#userCoin").text(result.userCoin);
+			$("#userPoint").text(userPoint);
+			$("#userCash").text(userCash);
 			$("#coinCheck").val(result.userCoin);
 		},
 		error : function(data) {
@@ -38,4 +32,9 @@ function userCheck() {
 			return false;
 		}
 	}
+}
+
+// 숫자 콤마
+function numberCommas(x) {
+	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
