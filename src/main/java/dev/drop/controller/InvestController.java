@@ -347,7 +347,9 @@ public class InvestController {
 			}
 			// 회차별 등수 당첨금액 계산
 			long revenue_total = Revenue.total(round, rank01, rank02, rank03, rank04, rank05);
+			revenue_total = Math.round(revenue_total);
 			double after_tax = revenue_total*0.7;
+			after_tax = Math.round(after_tax);
 			// 저장
 			if(whatDrop.equals("raindrop")) {
 				rainMapper.rainRankSave(member_id, rank01, rank02, rank03, rank04, rank05, round, roundCount, revenue_total, after_tax);
