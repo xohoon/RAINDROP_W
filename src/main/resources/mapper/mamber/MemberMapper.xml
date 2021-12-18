@@ -36,5 +36,19 @@
 	<select id="getHistoryList" resultType="dev.drop.models.member.dto.CoinHistoryDTO">
 		SELECT * FROM coin_history WHERE member_id = #{member_id} ORDER BY id DESC
 	</select>
-    
+
+	<!-- 메인페이지 회원 내역 -->
+	<select id="getRainList" resultType="dev.drop.models.member.dto.MainDTO">
+		SELECT m.name, m.cash as getPoint, sum(r.rank_count) as getCount
+		FROM member m LEFT JOIN raindrop_result r ON m.id = r.member_id
+		GROUP BY m.id ORDER BY cash desc LIMIT 5;
+
+	</select>
+
+	<!-- 메인페이지 회원 내역 -->
+	<select id="getDropList" resultType="dev.drop.models.member.dto.MainDTO">
+		SELECT m.name, (m.coin*1000)+m.point as getPoint, sum(d.rank_count) as getCount
+		FROM member m LEFT JOIN droptop_result d ON m.id = d.member_id
+		GROUP BY m.id ORDER BY getPoint desc LIMIT 5;
+	</select>
 </mapper>

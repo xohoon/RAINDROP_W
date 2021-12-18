@@ -38,86 +38,52 @@
 	<div class="container">
 		<div class="main_list">
 			<div class="main_list_1 float-start">
-				<span>TEST CONTENTS 111 > 상세보기</span>
 				<table class="table">
 					<thead>
+						<tr style="border-bottom: white">
+							<th scope="col" colspan="4">모의투자 당첨내역</th>
+						</tr>
 						<tr>
 							<th scope="col">#</th>
-							<th scope="col">First</th>
-							<th scope="col">Last</th>
-							<th scope="col">Handle</th>
+							<th scope="col">회원이름</th>
+							<th scope="col">누적 당첨 횟수</th>
+							<th scope="col">누적 당첨 금액</th>
 						</tr>
 					</thead>
 					<tbody>
+					<th:block th:each="dropList, num:${mainDropList}">
 						<tr>
-							<th scope="row">1</th>
-							<td>Mark</td>
-							<td>Otto</td>
-							<td>@mdo</td>
+							<th scope="row"><span th:text="${num.count}"></span></th>
+							<td><span th:text="${#strings.substring(dropList.name,0,1)}+'**님'"></span></td>
+							<td><span th:text="${dropList.getCount}+'회'"></span></td>
+							<td><span th:text="${dropList.getPoint}+'원'"></span></td>
 						</tr>
-						<tr>
-							<th scope="row">2</th>
-							<td>Jacob</td>
-							<td>Thornton</td>
-							<td>@fat</td>
-						</tr>
-						<tr>
-							<th scope="row">3</th>
-							<td colspan="2">Larry the Bird</td>
-							<td>@twitter</td>
-						</tr>
-						<tr>
-							<th scope="row">4</th>
-							<td colspan="2">Larry the Bird</td>
-							<td>@twitter</td>
-						</tr>
-						<tr>
-							<th scope="row">5</th>
-							<td colspan="2">Larry the Bird</td>
-							<td>@twitter</td>
-						</tr>
+					</th:block>
 					</tbody>
 				</table>
 			</div>
 			<div class="main_list_2 float-end">
-				<span>TEST CONTENTS 222 > 상세보기</span>
 				<table class="table">
 					<thead>
-						<tr>
-							<th scope="col">#</th>
-							<th scope="col">First</th>
-							<th scope="col">Last</th>
-							<th scope="col">Handle</th>
-						</tr>
+					<tr style="border-bottom: white">
+						<th scope="col" colspan="4">당첨내역</th>
+					</tr>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">회원이름</th>
+						<th scope="col">누적 당첨 횟수</th>
+						<th scope="col">누적 당첨 금액</th>
+					</tr>
 					</thead>
 					<tbody>
+					<th:block th:each="rainList, num:${mainRainList}">
 						<tr>
-							<th scope="row">1</th>
-							<td>Mark</td>
-							<td>Otto</td>
-							<td>@mdo</td>
+							<th scope="row"><span th:text="${num.count}"></span></th>
+							<td><span th:text="${#strings.substring(rainList.name,0,1)+'**님'}"></span></td>
+							<td><span th:text="${rainList.getCount}+'회'"></span></td>
+							<td><span th:text="${rainList.getPoint}+'원'"></span></td>
 						</tr>
-						<tr>
-							<th scope="row">2</th>
-							<td>Jacob</td>
-							<td>Thornton</td>
-							<td>@fat</td>
-						</tr>
-						<tr>
-							<th scope="row">3</th>
-							<td colspan="2">Larry the Bird</td>
-							<td>@twitter</td>
-						</tr>
-						<tr>
-							<th scope="row">4</th>
-							<td colspan="2">Larry the Bird</td>
-							<td>@twitter</td>
-						</tr>
-						<tr>
-							<th scope="row">5</th>
-							<td colspan="2">Larry the Bird</td>
-							<td>@twitter</td>
-						</tr>
+					</th:block>
 					</tbody>
 				</table>
 			</div>

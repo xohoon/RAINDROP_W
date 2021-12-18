@@ -3,6 +3,7 @@ package dev.drop.models.member.mapper;
 import java.util.List;
 
 import dev.drop.models.member.dto.CoinHistoryDTO;
+import dev.drop.models.member.dto.MainDTO;
 import dev.drop.models.member.dto.Member;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -37,4 +38,10 @@ public interface MemberMapper {
 
 	// 코인 내역
 	List<CoinHistoryDTO> getHistoryList(@Param(value = "member_id") int member_id);
+
+	// 메인페이지 회원 내역
+	List<MainDTO> getRainList();
+
+	// 메인페이지 회원 내역
+	List<MainDTO> getDropList();
 }
