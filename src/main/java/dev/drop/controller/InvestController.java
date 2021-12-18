@@ -247,15 +247,18 @@ public class InvestController {
 		
 		int member_id = investMapper.getMemberId(principal.getName());
 		int round = rankRound;
-		int total = 0;
+		int roundCount = 0;
 		int result = 0;
-		// 결과값 확인 및 갯수 확인
-		if(whatDrop.equals("raindrop")) {
+		String whatList = "";
+
+		if(whatDrop.equals("raindrop")) { // 회차 총 개수와 결과값 저장된거 있나없나 확인
 			result = rainMapper.rainResultCount(member_id, round);
-			total = rainMapper.rainRoundCount(round, member_id);
+			roundCount = rainMapper.rainRoundCount(round, member_id);
+			whatList = "raindrop_list";
 		}else if(whatDrop.equals("droptop")) {
 			result = dropMapper.dropResultCount(member_id, round);
-			total = dropMapper.dropRoundCount(round, member_id);
+			roundCount = dropMapper.dropRoundCount(round, member_id);
+			whatList = "droptop_list";
 		}
 		int rankCount = 0;
 		int rank01 = 0;
@@ -264,27 +267,28 @@ public class InvestController {
 		int rank04 = 0;
 		int rank05 = 0;
 		
-		if(total < 1) { // 회차 게임 없을때
+		if(roundCount < 1) { // 회차 게임 없을때
 			jsonData.put("gameResult", "false");
 			jsonData.put("round", round);
 		}else if(result == 0) { // 회차 저장 없을때
 			System.out.println("RESULT TEST2::"+result);
 			System.out.println("회원아이디 : "+member_id);
-			System.out.println("총 : "+total);
+			System.out.println("총 : "+roundCount);
 			System.out.println("ROUND : "+rankRound);
-			for(int i = 1; i <= total; i++) {
+			for(int i = 1; i <= roundCount; i++) { // 모든회차 확인
 				if(whatDrop.equals("raindrop")) {
 					imiDTO = rainMapper.rainRoundData(i, round, member_id);
 				}else if(whatDrop.equals("droptop")) {
 					imiDTO = dropMapper.dropRoundData(i, round, member_id);
 				}
+				// 저장된 번호 가져오기
 				testGame.add(imiDTO.getNum1());
 				testGame.add(imiDTO.getNum2());
 				testGame.add(imiDTO.getNum3());
 				testGame.add(imiDTO.getNum4());
 				testGame.add(imiDTO.getNum5());
 				testGame.add(imiDTO.getNum6());
-				
+				// 당첨번호 가져오기
 				saveDTO = caseMapper.boujeeRoundResult(round);
 				saveList.add(saveDTO.getNum1());
 				saveList.add(saveDTO.getNum2());
@@ -307,6 +311,7 @@ public class InvestController {
 					rank01++;
 					rankCount = 0;
 					System.out.println("1등"+rank01);
+					investMapper.setRank(whatList, i, round, 1, member_id);
 				}else if(rankCount == 5) {
 					for(int c = 0; c < testGame.size(); c++) {
 						if(testGame.get(c).equals(saveList.get(6))) {
@@ -314,21 +319,25 @@ public class InvestController {
 							rank02++;
 							rankCount = 0;
 							System.out.println("2등"+rank02);
+							investMapper.setRank(whatList, i, round, 2, member_id);
 						}
 					}
 					if(rankCount == 5) {
 						rank03++;
 						rankCount = 0;
 						System.out.println("3등"+rank03);
+						investMapper.setRank(whatList, i, round, 3, member_id);
 					}
 				}else if(rankCount == 4) {
 					rank04++;
 					rankCount = 0;
 					System.out.println("4등"+rank04);
+					investMapper.setRank(whatList, i, round, 4, member_id);
 				}else if(rankCount == 3) {
 					rank05++;
 					rankCount = 0;
 					System.out.println("5등"+rank05);
+					investMapper.setRank(whatList, i, round, 5, member_id);
 				}
 				
 				// List reset
@@ -341,10 +350,10 @@ public class InvestController {
 			double after_tax = revenue_total*0.7;
 			// 저장
 			if(whatDrop.equals("raindrop")) {
-				rainMapper.rainRankSave(member_id, rank01, rank02, rank03, rank04, rank05, round, total, revenue_total, after_tax);
+				rainMapper.rainRankSave(member_id, rank01, rank02, rank03, rank04, rank05, round, roundCount, revenue_total, after_tax);
 				rainMapper.rainConfirm(member_id, round);
 			}else if(whatDrop.equals("droptop")) {
-				dropMapper.dropRankSave(member_id, rank01, rank02, rank03, rank04, rank05, round, total, revenue_total, after_tax);
+				dropMapper.dropRankSave(member_id, rank01, rank02, rank03, rank04, rank05, round, roundCount, revenue_total, after_tax);
 				dropMapper.dropConfirm(member_id, round);
 			}
 			jsonData.put("gameResult", "true");
@@ -354,7 +363,7 @@ public class InvestController {
 			jsonData.put("rank3", rank03);
 			jsonData.put("rank4", rank04);
 			jsonData.put("rank5", rank05);
-			jsonData.put("total", total);
+			jsonData.put("total", roundCount);
 			jsonData.put("revenue_total", formater.format(revenue_total));
 			//result = 0 end
 		}else if(result >= 1){ // 회차 저장 있을때

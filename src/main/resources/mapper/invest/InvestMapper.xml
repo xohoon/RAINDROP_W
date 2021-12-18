@@ -44,4 +44,8 @@
 		VALUES(#{member_id}, #{point}, #{coin}, now())
 	</insert>
 	<!-- COIN HISTORY-->
+	
+	<update id="setRank">
+		UPDATE ${whatList} SET confirm_rank = #{rank} WHERE round = #{round} AND round_id = #{i} AND member_id = #{member_id}
+	</update>
 </mapper>

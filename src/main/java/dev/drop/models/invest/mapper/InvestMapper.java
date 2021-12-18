@@ -41,4 +41,12 @@ public interface InvestMapper {
 			@Param(value = "point") int point,
 			@Param(value = "coin") int coin
 	);
+
+	// 등수 저장
+	void setRank(@Param(value = "whatList") String whatList,
+				 @Param(value = "i") int round_id,
+				 @Param(value = "round") int round,
+				 @Param(value = "rank") int rank,
+				 @Param(value = "member_id") int member_id
+	);
 }
