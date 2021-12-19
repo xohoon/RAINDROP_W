@@ -21,19 +21,19 @@
 		  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 		  crossorigin="anonymous">
 	
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 		<div class="container-fluid">
 			<a class="navbar-brand" th:href="@{'/main'}">RAINDROP</a>
-			<div class="collapse navbar-collapse justify-content-end" id="navbarText">
+			<div class="collapse navbar-collapse" id="navbarText">
 				<ul class="navbar-nav mb-2 mb-lg-0">
-					<li class="nav-item" sec:authorize="hasRole('ROLE_MEMBER')"><a
-						class="nav-link" aria-current="page" href="/member/info">MY PAGE</a>
-					</li>
 					<li class="nav-item" sec:authorize="hasRole('ROLE_MEMBER')">
 						<a class="nav-link" href="/invest/raindrop">RAINDROP</a>
 					</li>
 					<li class="nav-item" sec:authorize="hasRole('ROLE_MEMBER')">
 						<a class="nav-link" href="/invest/droptop">DROPTOP</a>
+					</li>
+					<li class="nav-item" sec:authorize="hasRole('ROLE_MEMBER')"><a
+							class="nav-link" aria-current="page" href="/member/info">MY PAGE</a>
 					</li>
 
 					<li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
@@ -45,23 +45,28 @@
 					<li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
 						<a class="nav-link" aria-current="page" href="/admin/member_list">MEMBER</a>
 					</li>
-	
-					<li class="nav-item" sec:authorize="isAuthenticated()">
+				</ul>
+			</div>
+			<div class="collapse navbar-collapse justify-content-end" id="navbarText1">
+				<ul class="navbar-nav mb-2 mb-lg-0">
+					<li class="nav-item justify-content-end" sec:authorize="isAuthenticated()">
+						<a class="nav-link"><span sec:authentication="name" id="userCheck"></span></a>
+					</li>
+					<li class="nav-item justify-content-end" sec:authorize="isAuthenticated()">
 						<a class="nav-link" href="/member/logout">SIGN OUT</a>
 					</li>
-	
+
 					<li class="nav-item" sec:authorize="isAnonymous()">
 						<a class="nav-link" aria-current="page" href="/member/signin">SIGN IN</a>
 					</li>
 					<li class="nav-item" sec:authorize="isAnonymous()">
 						<a class="nav-link" href="/member/signup">SIGN UP</a>
 					</li>
-					<li class="nav-item" sec:authorize="isAuthenticated()">
-						<a class="nav-link"><span sec:authentication="name" id="userCheck"></span></a>
-					</li>
 				</ul>
 			</div>
 		</div>
 	</nav>
+	<div class="container common" style="height: 56px;">
+	</div>
 </head>
 </html>
