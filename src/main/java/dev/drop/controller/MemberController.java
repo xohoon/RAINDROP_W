@@ -92,7 +92,7 @@ public class MemberController {
 	@GetMapping(value="/signin/result")
 	public String In() {
 		
-		return "/main";
+		return "redirect:/main";
 	}
 
 	// 회원가입 폼
@@ -186,7 +186,7 @@ public class MemberController {
 	// 로그아웃 결과 페이지
 	@GetMapping(value="/logout/result")
 	public String Logout() {
-		return "/main";
+		return "redirect:/main";
 	}
 
 	// 접근 거부 페이지

@@ -29,7 +29,8 @@
 
 	<!-- 회원 정보 수정 -->
 	<update id="setUserInfo">
-		UPDATE member SET name = #{setName}, email = #{setEmail}, phone = #{setPhone} WHERE id = #{member_id}
+		UPDATE member SET name = #{setName}, email = #{setEmail}, phone = #{setPhone}, up_member = #{member_id}, up_date = now()
+		WHERE id = #{member_id}
 	</update>
 
 	<!-- 코인 내역 -->

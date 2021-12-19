@@ -8,32 +8,36 @@
 	<!-- link inculde -->
 </head>
 <body>
-	<div class="container">
-		<div class="card">
-			<div class="card-body">
-				<div style="text-align: center;">
-					<h5 class="card-title">회원 리스트</h5>
-				</div>
-				<table class="table">
-					<thead>
-						<tr>
-							<th scope="col">#</th>
-							<th scope="col">NAME</th>
-							<th scope="col">E-mail</th>
-							<th scope="col">Phone</th>
-						</tr>
-					</thead>
-					<tbody th:each="memberList, num:${list}">
-						<tr>
-							<th scope="row"><span th:text="${num.count}"></span></th>
-							<td><span th:text="${memberList.name}"></span></td>
-							<td><span th:text="${memberList.email}"></span></td>
-							<td><span th:text="${memberList.phone}"></span></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
+	<div class="container common">
+		<table class="table">
+			<thead>
+				<tr style="border-bottom: white">
+					<th scope="col" colspan="7"><h3>회원 리스트</h3></th>
+				</tr>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">NAME</th>
+					<th scope="col">E-mail</th>
+					<th scope="col">Phone</th>
+					<th scope="col">point</th>
+					<th scope="col">coin</th>
+					<th scope="col">cash</th>
+				</tr>
+			</thead>
+			<tbody>
+			<th:block th:each="memberList, num:${memberList}">
+				<tr>
+					<th scope="row" th:text="${num.count}">/th>
+					<td th:text="${memberList.name}"></td>
+					<td th:text="${memberList.email}"></td>
+					<td th:text="${memberList.phone}"></td>
+					<td th:text="${memberList.point}+'P'"></td>
+					<td th:text="${#numbers.formatInteger(memberList.coin, 0, 'COMMA')}+'coin'"></td>
+					<td th:text="${#numbers.formatInteger(memberList.cash, 0, 'COMMA')}+'원'"></td>
+				</tr>
+			</th:block>
+			</tbody>
+		</table>
 	</div>
 </body>
 <th:block th:include="fragments/footer"></th:block>

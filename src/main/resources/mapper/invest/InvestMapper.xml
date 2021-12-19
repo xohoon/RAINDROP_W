@@ -28,20 +28,20 @@
 	<!-- COIN HISTORY-->
 	<!-- 포인트 내역 -->
 	<insert id="setHistory">
-		INSERT INTO coin_history(member_id, in_point, in_date)
-		VALUES(#{member_id}, #{plusPoint}, now())
+		INSERT INTO coin_history(member_id, in_point, in_member, in_date)
+		VALUES(#{member_id}, #{plusPoint}, #{in_member}, now())
 	</insert>
 
 	<!-- 코인 내역 -->
 	<insert id="setOutCoin">
-		INSERT INTO coin_history(member_id, out_coin, in_date)
-		VALUES(#{member_id}, #{numCount}, now())
+		INSERT INTO coin_history(member_id, out_coin, member_id, in_date)
+		VALUES(#{member_id}, #{numCount}, #{member_id}, now())
 	</insert>
 
-	<!-- 코인 충전 -->
+	<!-- 포인트 -> 코인 충전 -->
 	<insert id="setExchangeCoin">
-		INSERT INTO coin_history(member_id, out_point, in_coin, in_date)
-		VALUES(#{member_id}, #{point}, #{coin}, now())
+		INSERT INTO coin_history(member_id, out_point, in_coin, in_member, in_date)
+		VALUES(#{member_id}, #{point}, #{coin}, #{member_id}, now())
 	</insert>
 	<!-- COIN HISTORY-->
 

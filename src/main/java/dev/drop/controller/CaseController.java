@@ -29,8 +29,6 @@ public class CaseController {
 			produces="application/json; charset=utf-8")
 	public Object save() {
 		JSONObject jsonData = new JSONObject();
-		System.out.println("::data save last::");
-		
 		/*
 		 * 
 		 * 마지막 회차 추가
@@ -52,7 +50,8 @@ public class CaseController {
 		String result_message = null;
 
 		if(lastRoundGap == 0) {
-			result_message = "모든회차 저장완료";
+			result_message = "이미 모든 회차 업데이트가 완료되었습니다.";
+			jsonData.put("result", result_message);
 		}else {
 			for (int i = 0; i < lastRoundGap; i++) {
 				// 저장된 최근 회차가 최신회차보다 작으면 실행

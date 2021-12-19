@@ -2,17 +2,44 @@ $(function(){
 	console.log("imitation jsFile");
 });
 
-var html = '';
-var admin = "admin";
-var wantCount = 0;
-var rankRound = 0;
-var numRound = 0;
-var numCount = 0;
+// 마지막 회차 추가
+$('#last_save').on('click', function() {
+	userCheck();
+	$.ajax({
+		type : 'GET',
+		url : '/case/save_last',
+		dataType : 'JSON',
+		data : {
+			},
+		success : function(result, data) {
+			alert(result.result);
+			location.reload();
+		},
+		beforeSend:function() {
+			$('.wrap-loading').removeClass('display-none');
+		},
+		complete:function() {
+			$('.wrap-loading').addClass('display-none');
+		},
+		error : function(result) {
+			console.log('ERROR');
+		}
+	});
+});
 
+
+
+
+/*
+* 폐기 코드
+* */
+/*
+// 번호 추출
 $('#numBtn').on('click', function() {
 	userCheck();
-	numRound = $('#numRound').val();
-	numCount = $('#numCount').val();
+	var admin = "admin";
+	var numRound = $('#numRound').val();
+	var numCount = $('#numCount').val();
 	if(numCount >= 150) {
 		alert('150개 이하로 입력 가능합니다.');
 		return false;
@@ -29,10 +56,10 @@ $('#numBtn').on('click', function() {
 		url : '/invest/imi',
 		dataType : 'JSON',
 		data : {
-			admin : admin, 
-			numCount : numCount, 
+			admin : admin,
+			numCount : numCount,
 			numRound : numRound
-			},
+		},
 		success : numView,
 		beforeSend:function() {
 			$('.wrap-loading').removeClass('display-none');
@@ -47,16 +74,18 @@ $('#numBtn').on('click', function() {
 });
 
 function numView(data) {
+	var html = '';
 	html += '<div>';
-  	html += '<h4>' + data.testData + '조합 성공</h4>';
-  	html += '</div>';
+	html += '<h4>' + data.testData + '조합 성공</h4>';
+	html += '</div>';
 	$('#ajaxReturn1').html(html);
 	html = '';
 }
 
+// 등수 확인
 $('#rankBtn').on('click', function() {
 	userCheck();
-	rankRound = $('#rankRound').val();
+	var rankRound = $('#rankRound').val();
 	if(!rankRound) {
 		alert('회차를 입력해주세요.');
 		return false;
@@ -67,7 +96,7 @@ $('#rankBtn').on('click', function() {
 		dataType : 'JSON',
 		data : {
 			rankRound : rankRound
-			},
+		},
 		success : rankView,
 		beforeSend:function() {
 			$('.wrap-loading').removeClass('display-none');
@@ -84,43 +113,19 @@ $('#rankBtn').on('click', function() {
 function rankView(data) {
 	$.each(data, function(idx, val) {
 		html += '<div>';
-	  	html += '<h3>1등 :: ' + val.rank1 +'</h3>';
-	  	html += '<h3>2등 :: ' + val.rank2 + '</h3>';
-	  	html += '<h3>3등 :: ' + val.rank3 + '</h3>';
-	  	html += '<h3>4등 :: ' + val.rank4 + '</h3>';
-	  	html += '<h3>5등 :: ' + val.rank5 + '</h3>';
-	  	html += '<h3>당첨 총 금액 :: ' + val.total + '</h3>';
-	  	html += '<h3>세금 제외금액 :: ' + val.tax + '</h3>';
-	  	html += '</div>';
+		html += '<h3>1등 :: ' + val.rank1 +'</h3>';
+		html += '<h3>2등 :: ' + val.rank2 + '</h3>';
+		html += '<h3>3등 :: ' + val.rank3 + '</h3>';
+		html += '<h3>4등 :: ' + val.rank4 + '</h3>';
+		html += '<h3>5등 :: ' + val.rank5 + '</h3>';
+		html += '<h3>당첨 총 금액 :: ' + val.total + '</h3>';
+		html += '<h3>세금 제외금액 :: ' + val.tax + '</h3>';
+		html += '</div>';
 	});
 	$('#ajaxReturn2').html(html);
 	html = '';
 }
 
-// 마지막 회차 추가
-$('#last_save').on('click', function() {
-	userCheck();
-	$.ajax({
-		type : 'GET',
-		url : '/case/save_last',
-		dataType : 'JSON',
-		data : {
-			},
-		success : last_view,
-		beforeSend:function() {
-			$('.wrap-loading').removeClass('display-none');
-		},
-		complete:function() {
-			$('.wrap-loading').addClass('display-none');
-		},
-		error : function(result) {
-			console.log('ERROR');
-		}
-	});
-});
-
-function last_view(data) {
-	/*
 	$.each(data, function(idx, val) {
 		var last = val.last;
 		html += '<div>';
@@ -130,13 +135,12 @@ function last_view(data) {
 	  	html += '<h3>' + val.result +'</h3>';
 	  	html += '</div>';
 	});
-	*/
 	html = '<div>' + data.result + '</div>';
 	$('#ajaxReturn3').html(html);
 	html = '';
 }
 
-/*
+
 // 전체 회차 추가
 $('#all_save').on('click', function() {
 	userCheck();

@@ -10,7 +10,7 @@ public class Member {
 	private int id;
 	private String email;
 	private String name;
-	private int phone;
+	private String phone;
 	private long point;
 	private int coin;
 	private long cash;

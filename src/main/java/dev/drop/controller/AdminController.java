@@ -3,6 +3,7 @@ package dev.drop.controller;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -43,9 +44,8 @@ public class AdminController {
 	// 회원 리스트
 	@GetMapping(value="/member_list")
 	public String List(Model model) {
-		ArrayList<MemberDTO> member = new ArrayList<>();
-		member.addAll(memberMapper.getUserList());
-		model.addAttribute("list", member);
+		List<MemberDTO> member = memberMapper.getUserList();
+		model.addAttribute("memberList", member);
 
 		return "/admin/member_list";
 	}
@@ -54,10 +54,21 @@ public class AdminController {
 
 	// imitation GET
 	@GetMapping(value="/imitation")
-	public String imitation() {
+	public String imitation(Model model) {
+		List<MemberDTO> member = memberMapper.getUserList();
+		model.addAttribute("memberList", member);
+
 		return "admin/imitation";
 	}
+
 	
+	// ***** 관리자  ***** //
+
+
+/*
+* 폐기기능
+* */
+
 	// 모의 번호 추출
 	@ResponseBody
 	@GetMapping(
@@ -74,7 +85,7 @@ public class AdminController {
 		int round = numRound;
 		int round_id = adminMapper.testIdGet(round);
 		int count = 0;
-		
+
 		for(int l = 1; l<=999999; l++) {
 			System.out.println(l+"번째 for문:::");
 			// 랜덤값 생성
@@ -104,7 +115,7 @@ public class AdminController {
 			ranList.add(Integer.toString(37));
 			ranList.add(Integer.toString(40));
 			 */
-			
+
 			// 저장된 정보
 			ArrayList<String> saveList = new ArrayList<String>();
 			int last = caseMapper.boujeeLastRound();
@@ -116,7 +127,7 @@ public class AdminController {
 				saveList.add(Integer.toString(saveDTO.getNum4()));
 				saveList.add(Integer.toString(saveDTO.getNum5()));
 				saveList.add(Integer.toString(saveDTO.getNum6()));
-				
+
 				// 저장된 조합과 랜덤 조합 일치여부 확인
 				if(saveList.containsAll(ranList)) {
 					System.out.println(i+"회 번호와 일치 ");
@@ -158,19 +169,19 @@ public class AdminController {
 				ranList = new ArrayList<>();
 			}
 			ranList = new ArrayList<>();
-			
+
 			if(count == numCount) {
 				System.out.println("번호 "+numCount+"개 추출완료");
 				break;
 			}
-		// for
+			// for
 		}
-		
+
 		jsonData.put("testData", numRound+"STOP");
 
 		return jsonData;
 	}
-	
+
 	// 모의번호 등수 뽑기
 	@ResponseBody
 	@GetMapping(
@@ -193,14 +204,14 @@ public class AdminController {
 		int rank03 = 0;
 		int rank04 = 0;
 		int rank05 = 0;
-		
+
 		/*
-		 * 
+		 *
 		 * 저장된 모의번호 round가져오는거 추가하기
 		 * for문에 1부터 total 갯수하면 1부터 찾으니까 round 찾아서 확인할수있도록 수정해야함 문제가많네 ㅜㅜ
-		 * 
-		*/
-		
+		 *
+		 */
+
 		for(int i = 1; i <= total; i++) {
 			imiDTO = adminMapper.imiData(i, round);
 			testGame.add(Integer.toString(imiDTO.getNum1()));
@@ -209,7 +220,7 @@ public class AdminController {
 			testGame.add(Integer.toString(imiDTO.getNum4()));
 			testGame.add(Integer.toString(imiDTO.getNum5()));
 			testGame.add(Integer.toString(imiDTO.getNum6()));
-			
+
 			saveDTO = caseMapper.boujeeRoundResult(round);
 			saveList.add(Integer.toString(saveDTO.getNum1()));
 			saveList.add(Integer.toString(saveDTO.getNum2()));
@@ -217,7 +228,7 @@ public class AdminController {
 			saveList.add(Integer.toString(saveDTO.getNum4()));
 			saveList.add(Integer.toString(saveDTO.getNum5()));
 			saveList.add(Integer.toString(saveDTO.getNum6()));
-			
+
 			for(int a = 0; a < testGame.size(); a++) {
 				for(int b = 0; b < saveList.size(); b++) {
 					if(testGame.get(a).equals(saveList.get(b))) {
@@ -225,10 +236,10 @@ public class AdminController {
 					}
 				}
 			}
-			
+
 			// 7번 -> 보너스 번호
 			saveList.add(Integer.toString(saveDTO.getNum7()));
-			
+
 			if(rankCount == 6) {
 				rank01++;
 				rankCount = 0;
@@ -255,19 +266,19 @@ public class AdminController {
 				rankCount = 0;
 				System.out.println("5등"+rank05);
 			}
-			
+
 			// List reset
 			rankCount = 0;
 			testGame = new ArrayList<>();
 			saveList = new ArrayList<>();
 		}
-		
+
 		long revenue_total = Revenue.total(round, rank01, rank02, rank03, rank04, rank05);
 		double after_tax = revenue_total*0.7;
 		adminMapper.saveRanking(rank01, rank02, rank03, rank04, rank05, round, total, revenue_total, after_tax);
-		
+
 		DecimalFormat formater = new DecimalFormat("###,###");
-		
+
 		jsonData.put("rank1", rank01);
 		jsonData.put("rank2", rank02);
 		jsonData.put("rank3", rank03);
@@ -275,12 +286,9 @@ public class AdminController {
 		jsonData.put("rank5", rank05);
 		jsonData.put("total", formater.format(revenue_total));
 		jsonData.put("tax", formater.format(after_tax));
-		
+
 		jsonArray.add(jsonData);
-		
+
 		return jsonArray;
 	}
-	
-	// ***** 관리자  ***** //
-
 }

@@ -1,59 +1,79 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
-<link href="/static/css/admin/imitation.css" rel="stylesheet" type="text/css">
+
 <head>
 	<meta charset="UTF-8">
-	<title>RINDROP</title>
+	<title>ADMIN DATA</title>
 	<!-- link inculde -->
 	<th:block th:include="fragments/header"></th:block>
-
 	<!-- link inculde -->
+	<link href="/static/css/admin/imitation.css" rel="stylesheet" type="text/css">
 	<script src="/static/js/invest/imitation.js" type="text/javascript" defer></script>
 </head>
 
 <body>
 	<div class="container common">
-		<div class="cardSet3">
-			<div class="card border-secondary mb-3 card3">
-				<div class="card-header">원하는 회차 원하는 개수 추출</div>
+		<div style="overflow: hidden;">
+			<div class="card border-secondary mb-3" style="margin-right: 1%;margin-top:10px;float: left; width: 69%;">
+				<div class="card-header">회원 포인트 및 코인 추가</div>
 				<div class="card-body text-dark">
-					<span> >> 기능설명 blablabla</span>
-					<div class="set_3">
-						<input type="text" id="numRound" class="form-control input_3" placeholder="회차 입력">
-						<input type="text" id="numCount" class="form-control input_3" placeholder="갯수 입력"> 
-						<input type="button" id="numBtn" class="btn btn-warning input_3" value="추출하기">
+					<div class="set_4">
+						<select id="memberSelect" class="form-select selectBox input_4" aria-label="Default select">
+							<option selected value=0>회원 선택</option>
+							<option th:each="list : ${memberList}"
+									th:value="${list.id}"
+									th:utext="${list.name}+'님:'+${list.email}"></option>
+						</select>
+						<select class="form-select selectBox input_4" aria-label="Default select">
+							<option selected value="type">타입</option>
+							<option value="point">포인트</option>
+							<option value="coin">코인</option>
+						</select>
+						<input type="text" class="form-control input_4" id="setNum" placeholder="개수 입력" style="text-align:center;">
+						<input type="button" id="setNumBtn" class="btn btn-warning input_4" value="추가하기">
 					</div>
-					<div class="returnSuccess" id="ajaxReturn1">결과</div>
 				</div>
 			</div>
-			<div class="card border-secondary mb-3 card3">
-				<div class="card-header">원하는 회차 당첨 확인</div>
+			<div class="card border-secondary mb-3" style="float: left;margin-top:10px;width: 30%;margin-right: 0;">
+				<div class="card-header">최신회차 결과 저장</div>
 				<div class="card-body text-dark">
-					<span> >> 기능설명 blablabla</span>
-					<div class="set_2">
-						<input type="text" id="rankRound" class="form-control input_2" placeholder="회차 입력">
-						<input type="button" id="rankBtn" class="btn btn-success input_2" value="등수 확인">
-					</div>
-					<div class="returnSuccess" id="ajaxReturn2">결과</div>
-				</div>
-			</div>
-			<div class="card border-secondary mb-3 card3">
-				<div class="card-header">저장된 회차 이후 결과 추가</div>
-				<div class="card-body text-dark">
-					<span> >> 기능설명 blablabla</span>
 					<div>
-						<input type="button" id="last_save" class="btn btn-info" value="최근회차">
+						<input type="button" id="last_save" class="btn btn-warning" value="최신 회차까지 추가하기">
 					</div>
-					<div class="returnSuccess" id="ajaxReturn3">결과</div>
 				</div>
 			</div>
-			<div class="wrap-loading display-none">
-				<div>
-					<img src="/static/images/e1.gif">
-				</div>
-			</div>
+		</div>
+		<div class="wrap-loading display-none">
+			<div><img src="/static/images/e1.gif"></div>
 		</div>
 	</div>
 </body>
 <th:block th:include="fragments/footer"></th:block>
 </html>
+
+
+<!--
+<div class="card border-secondary mb-3 card3">
+	<div class="card-header">원하는 회차 원하는 개수 추출</div>
+	<div class="card-body text-dark">
+		<span> >> 기능설명 blablabla</span>
+		<div class="set_3">
+			<input type="text" id="numRound" class="form-control input_3" placeholder="회차 입력">
+			<input type="text" id="numCount" class="form-control input_3" placeholder="갯수 입력">
+			<input type="button" id="numBtn" class="btn btn-warning input_3" value="추출하기">
+		</div>
+		<div class="returnSuccess" id="ajaxReturn1">결과</div>
+	</div>
+</div>
+<div class="card border-secondary mb-3 card3">
+	<div class="card-header">원하는 회차 당첨 확인</div>
+	<div class="card-body text-dark">
+		<span> >> 기능설명 blablabla</span>
+		<div class="set_2">
+			<input type="text" id="rankRound" class="form-control input_2" placeholder="회차 입력">
+			<input type="button" id="rankBtn" class="btn btn-success input_2" value="등수 확인">
+		</div>
+		<div class="returnSuccess" id="ajaxReturn2">결과</div>
+	</div>
+</div>
+-->
