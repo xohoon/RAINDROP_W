@@ -38,3 +38,8 @@ function userCheck() {
 function numberCommas(x) {
 	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+
+// 콤마 제거
+function removeCommas(x) {
+	return x.replace(/,/g, "");
+}

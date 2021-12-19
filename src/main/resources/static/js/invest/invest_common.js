@@ -175,7 +175,7 @@ exchangeModal.addEventListener('show.bs.modal', function (event) {
 
 // 환전 모달 view
 function exchangeResult(point) {
-	var possibleCoin = parseInt(point)/1000;
+	var possibleCoin = parseInt(removeCommas(point))/1000;
 	possibleCoin = Math.floor(possibleCoin);
 	var html = "";
 	html =

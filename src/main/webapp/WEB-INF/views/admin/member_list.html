@@ -19,9 +19,10 @@
 					<th scope="col">NAME</th>
 					<th scope="col">E-mail</th>
 					<th scope="col">Phone</th>
-					<th scope="col">point</th>
-					<th scope="col">coin</th>
-					<th scope="col">cash</th>
+					<th scope="col">Point</th>
+					<th scope="col">Coin</th>
+					<th scope="col">Cash</th>
+					<th scope="col">DATE</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -34,6 +35,7 @@
 					<td th:text="${memberList.point}+'P'"></td>
 					<td th:text="${#numbers.formatInteger(memberList.coin, 0, 'COMMA')}+'coin'"></td>
 					<td th:text="${#numbers.formatInteger(memberList.cash, 0, 'COMMA')}+'원'"></td>
+					<td th:text="${#strings.substring(memberList.in_date,0,10)}"></td>
 				</tr>
 			</th:block>
 			</tbody>
