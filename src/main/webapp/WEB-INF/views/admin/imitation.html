@@ -24,13 +24,13 @@
 									th:value="${list.id}"
 									th:utext="${list.name}+'님:'+${list.email}"></option>
 						</select>
-						<select class="form-select selectBox input_4" aria-label="Default select">
+						<select id="selectType" class="form-select selectBox input_4" aria-label="Default select">
 							<option selected value="type">타입</option>
 							<option value="point">포인트</option>
 							<option value="coin">코인</option>
 						</select>
 						<input type="text" class="form-control input_4" id="setNum" placeholder="개수 입력" style="text-align:center;">
-						<input type="button" id="setNumBtn" class="btn btn-warning input_4" value="추가하기">
+						<input type="button" id="setBonusBtn" class="btn btn-warning input_4" value="추가하기">
 					</div>
 				</div>
 			</div>
@@ -38,7 +38,7 @@
 				<div class="card-header">최신회차 결과 저장</div>
 				<div class="card-body text-dark">
 					<div>
-						<input type="button" id="last_save" class="btn btn-warning" value="최신 회차까지 추가하기">
+						<input type="button" id="lastSaveBtn" class="btn btn-warning" value="최신 회차까지 추가하기">
 					</div>
 				</div>
 			</div>

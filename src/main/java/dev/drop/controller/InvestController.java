@@ -118,7 +118,7 @@ public class InvestController {
 			return jsonArray;
 		}
 
-			int round = numRound;
+		int round = numRound;
 		int round_id = 0;
 		if(whatDrop.equals("raindrop")) {
 			round_id = rainMapper.rainRoundIdCount(round, member_id);

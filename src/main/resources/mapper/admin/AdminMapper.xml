@@ -10,7 +10,19 @@
 	<select id="userInfo" resultType="dev.drop.models.member.dto.MemberDTO">
     	SELECT * FROM member WHERE email = #{email};
     </select>
-    
+
+	<!-- 회원 포인트 및 코인 내역 추가 -->
+	<insert id="setBonus">
+		INSERT INTO coin_history(member_id, ${typeString}, in_member, in_date)
+		VALUES(#{target_id}, #{setNum}, #{member_id}, now())
+	</insert>
+
+	<!-- 회원 포인트 및 코인 추가 -->
+	<update id="setBonusMember">
+		UPDATE member SET ${type} = ${type} + #{setNum}, up_member = #{member_id}, up_date = now() WHERE id = #{target_id}
+	</update>
+
+
     <!-- 회차별 총 게임수 -->
 	<select id="gameTotal" resultType="int">
 		SELECT count(round_id) FROM test_saving WHERE round = #{round};
@@ -35,7 +47,7 @@
     
     <!-- 모의로또 등수 저장 -->
 	<insert id="saveRanking">
-		INSERT INTO c(round, rank01, rank02, rank03, rank04, rank05, game_total, revenue_total, revenue_after_tax)
+		INSERT INTO test_saving(round, rank01, rank02, rank03, rank04, rank05, game_total, revenue_total, revenue_after_tax)
 		VALUES(#{round}, #{rank01}, #{rank02}, #{rank03}, #{rank04}, #{rank05}, #{total}, #{revenue_total}, #{after_tax});
 	</insert>
 	

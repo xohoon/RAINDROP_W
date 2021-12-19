@@ -3,14 +3,12 @@ $(function(){
 });
 
 // 마지막 회차 추가
-$('#last_save').on('click', function() {
+$('#lastSaveBtn').on('click', function() {
 	userCheck();
 	$.ajax({
 		type : 'GET',
 		url : '/case/save_last',
 		dataType : 'JSON',
-		data : {
-			},
 		success : function(result, data) {
 			alert(result.result);
 			location.reload();
@@ -27,7 +25,39 @@ $('#last_save').on('click', function() {
 	});
 });
 
-
+// 포인트 및 코인 보너스
+$('#setBonusBtn').on('click', function() {
+	console.log("뭔데");
+	userCheck();
+	var target_id = $("#memberSelect").val();
+	var type = $("#selectType").val();
+	var setNum = $("#setNum").val();
+	if(parseInt(target_id) <= 0) {
+		alert("회원을 선택해주세요.");
+		return false;
+	}else if (type == "type") {
+		alert("타입을 선택해주세요.");
+		return false;
+	}else {
+		$.ajax({
+			type : 'GET',
+			url : '/admin/setBonus',
+			dataType : 'JSON',
+			data : {
+				target_id : target_id,
+				setNum : setNum,
+				type : type
+			},
+			success : function(result, data) {
+				alert(result.result);
+				location.reload();
+			},
+			error : function(result) {
+				console.log('ERROR');
+			}
+		});
+	}
+});
 
 
 /*

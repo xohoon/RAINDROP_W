@@ -1,10 +1,12 @@
 package dev.drop.controller;
 
+import java.security.Principal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import dev.drop.models.invest.mapper.InvestMapper;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +36,11 @@ public class AdminController {
 	private AdminMapper adminMapper;
 	@Autowired
 	private CaseMapper caseMapper;
-	
+	@Autowired
+	private InvestMapper investMapper;
+
 	// 어드민 페이지
+
 	@GetMapping("/index")
 	public String DispAdmin() {
 		return "/admin/index";
@@ -61,6 +66,33 @@ public class AdminController {
 		return "admin/imitation";
 	}
 
+	@ResponseBody
+	@GetMapping(
+			value="/setBonus",
+			produces="application/json; charset=utf-8")
+	public Object setBonus(String type, int setNum, int target_id, Principal principal) {
+		JSONObject jsonData = new JSONObject();
+		String result_message = null;
+		int member_id = investMapper.getMemberId(principal.getName());
+		String typeString = "";
+		if(type.equals("point")) {
+			typeString = "in_point";
+		} else if (type.equals("coin")) {
+			typeString = "in_coin";
+		}
+		try {
+			adminMapper.setBonus(typeString, setNum, target_id, member_id);
+			adminMapper.setBonusMember(type, setNum, target_id, member_id);
+			result_message = "추가가 완료되었습니다.";
+			jsonData.put("result", result_message);
+		}catch (Exception e) {
+			e.printStackTrace();
+			result_message = "오류가 발생하였습니다. 다시 확인해주세요.";
+			jsonData.put("result", result_message);
+		}
+
+		return jsonData;
+	}
 	
 	// ***** 관리자  ***** //
 
