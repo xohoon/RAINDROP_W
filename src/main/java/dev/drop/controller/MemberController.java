@@ -92,7 +92,7 @@ public class MemberController {
 	@GetMapping(value="/signin/result")
 	public String In() {
 		
-		return "redirect:/main";
+		return "main";
 	}
 
 	// 회원가입 폼
@@ -115,7 +115,7 @@ public class MemberController {
 	}
 	
 	@ResponseBody
-	@PostMapping(
+	@GetMapping(
 			value="/emailSend",
 			produces="application/json; charset=utf-8")
 	public Object EmailSend(String subject, String email) {
@@ -186,13 +186,13 @@ public class MemberController {
 	// 로그아웃 결과 페이지
 	@GetMapping(value="/logout/result")
 	public String Logout() {
-		return "redirect:/main";
+		return "main";
 	}
 
 	// 접근 거부 페이지
 	@GetMapping(value="/denied")
 	public String DispDenied() {
-		return "/member/denied";
+		return "member/denied";
 	}
 
 }

@@ -460,7 +460,7 @@ public class InvestController {
 			investMapper.setPoint(plusPoint, member_id);
 			// 포인트 충전 후 status update
 			dropMapper.dropExchangePoint(plusPoint, member_id, round);
-			investMapper.setHistory(plusPoint, member_id);
+			investMapper.setHistory(plusPoint, member_id, member_id);
 			jsonData.put("chk", "success");
 		}catch (Exception e){
 			jsonData.put("chk", "fail");

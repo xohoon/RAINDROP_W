@@ -1,0 +1,6 @@
+FROM mysql:5.7
+
+EXPOSE 3306:3306
+RUN MYSQL_DATABASE=droptop
+RUN MYSQL_ROOT_PASSWORD=1234
+VOLUME /home/ubuntu/raindrop/db/data:/var/lib/mysql

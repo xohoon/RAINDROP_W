@@ -1,0 +1,69 @@
+<link href="/static/css/invest/invest_common.css" rel="stylesheet" type="text/css">
+<script src="/static/js/invest/invest_common.js" type="text/javascript" defer></script>
+
+<div class="container common">
+	<div class="cardSet3">
+		<input type="hidden" id="coinCheck" />
+		<div class="card border-secondary mb-3 card3">
+			<div class="card-header">MY POINT</div>
+			<div class="card-body text-dark">
+				<div class="set_2">
+					<p class="card-text input_2">현재 포인트</p>
+					<button type="button" class="btn btn-outline-primary btn-sm input_2"
+							data-bs-toggle="modal" data-bs-target="#exchangePoint">환전
+					</button>
+				</div>
+				<h5 class="card-title"><span id="userPoint"></span>point</h5>
+			</div>
+		</div>
+		<div class="card border-secondary mb-3 card3">
+			<div class="card-header">MY COIN</div>
+			<div class="card-body text-dark">
+				<p class="card-text">현재 코인</p>
+				<h5 class="card-title"><span id="userCoin"></span>coin</h5>
+			</div>
+		</div>
+		<div class="card border-secondary mb-3 card3">
+			<div class="card-header">MY CASH</div>
+			<div class="card-body text-dark">
+				<p class="card-text">누적 당첨금</p>
+				<h5 class="card-title"><span id="userCash"></span>원</h5>
+			</div>
+		</div>
+	</div>
+
+</div>
+<!-- 상세 페이지 modal -->
+<div class="modal fade" id="detailModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="staticBackdropLabel">추첨 상세 페이지</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div id="detailModalView"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 포인트 환전 modal -->
+<div class="modal fade" id="exchangePoint" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">코인 충전(1,000P -> 1Coin)</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div id="exchangeModalView"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>

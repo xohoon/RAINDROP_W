@@ -79,7 +79,7 @@ $('#send_email').on('click', function() {
 	}else {
 		alert("메일이 전송되었습니다. 잠시만 기다려주세요.");
 		$.ajax({
-			type : 'POST',
+			type : 'GET',
 			url : '/member/emailSend',
 			dataType : "JSON",
 			data : {

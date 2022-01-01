@@ -34,7 +34,7 @@
 
 	<!-- 코인 내역 -->
 	<insert id="setOutCoin">
-		INSERT INTO coin_history(member_id, out_coin, member_id, in_date)
+		INSERT INTO coin_history(member_id, out_coin, in_member, in_date)
 		VALUES(#{member_id}, #{numCount}, #{member_id}, now())
 	</insert>
 

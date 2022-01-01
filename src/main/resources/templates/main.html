@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<link href="/static/css/main.css" rel="stylesheet" type="text/css">
+
+<head>
+<title>RINDROP</title>
+<th:header th:replace="fragments/header"></th:header>
+</head>
+
+<body>
+	<div id="demo" class="carousel slide" data-bs-ride="carousel">
+		<div class="carousel-inner">
+			<div class="carousel-item active">
+				<img src="/static/images/test.jpg" alt="first" class="d-block w-100">
+			</div>
+			<div class="carousel-item">
+				<img src="/static/images/iu6.png" alt="second" class="d-block w-100">
+			</div>
+			<div class="carousel-item">
+				<img src="/static/images/iu5.png" alt="third" class="d-block w-100">
+			</div>
+		</div>
+		<button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+			<span class="carousel-control-prev-icon"></span>
+		</button>
+		<button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+			<span class="carousel-control-next-icon"></span>
+		</button>
+	</div>
+	<div class="container">
+		<div class="main_list">
+			<div class="main_list_1 float-start">
+				<table class="table">
+					<thead>
+						<tr style="border-bottom: white">
+							<th scope="col" colspan="4">모의투자 당첨내역</th>
+						</tr>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">회원이름</th>
+							<th scope="col">누적 당첨 횟수</th>
+							<th scope="col">누적 당첨 금액</th>
+						</tr>
+					</thead>
+					<tbody>
+					<th:block th:each="dropList, num:${mainDropList}">
+						<tr>
+							<th scope="row"><span th:text="${num.count}"></span></th>
+							<td><span th:text="${#strings.substring(dropList.name,0,1)}+'**님'"></span></td>
+							<td><span th:text="${dropList.getCount}+'회'"></span></td>
+							<td><span th:text="${dropList.getPoint}+'원'"></span></td>
+						</tr>
+					</th:block>
+					</tbody>
+				</table>
+			</div>
+			<div class="main_list_2 float-end">
+				<table class="table">
+					<thead>
+					<tr style="border-bottom: white">
+						<th scope="col" colspan="4">실제 당첨내역</th>
+					</tr>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">회원이름</th>
+						<th scope="col">누적 당첨 횟수</th>
+						<th scope="col">누적 당첨 금액</th>
+					</tr>
+					</thead>
+					<tbody>
+					<th:block th:each="rainList, num:${mainRainList}">
+						<tr>
+							<th scope="row"><span th:text="${num.count}"></span></th>
+							<td><span th:text="${#strings.substring(rainList.name,0,1)+'**님'}"></span></td>
+							<td><span th:text="${rainList.getCount}+'회'"></span></td>
+							<td><span th:text="${rainList.getPoint}+'원'"></span></td>
+						</tr>
+					</th:block>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+<th:block th:include="fragments/footer"></th:block>
+</html>

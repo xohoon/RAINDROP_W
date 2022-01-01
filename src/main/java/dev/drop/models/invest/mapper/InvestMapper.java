@@ -23,7 +23,9 @@ public interface InvestMapper {
 	void setPoint(@Param(value = "plusPoint") int plusPoint, @Param(value = "member_id") int member_id);
 
 	// 포인트 내역
-	void setHistory(@Param(value = "plusPoint") int plusPoint, @Param(value = "member_id") int member_id);
+	void setHistory(@Param(value = "plusPoint") int plusPoint,
+					@Param(value = "member_id") int member_id,
+					@Param(value = "in_member") int in_member);
 
 	// 코인 내역
 	void setOutCoin(@Param(value="member_id") int member_id, @Param(value = "numCount") int numCount);

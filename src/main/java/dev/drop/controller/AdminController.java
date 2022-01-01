@@ -43,7 +43,7 @@ public class AdminController {
 
 	@GetMapping("/index")
 	public String DispAdmin() {
-		return "/admin/index";
+		return "admin/index";
 	}
 
 	// 회원 리스트
@@ -52,7 +52,7 @@ public class AdminController {
 		List<MemberDTO> member = memberMapper.getUserList();
 		model.addAttribute("memberList", member);
 
-		return "/admin/member_list";
+		return "admin/member_list";
 	}
 	
 	// ***** 관리자  ***** //
