@@ -16,11 +16,8 @@ $('#rainSaveBtn').on('click', function() {
 		return false;
 	}
 	if(coinCheck == 0) {
-		if(confirm("코인이 부족합니다. 모의로또 페이지로 이동합니다.") == true) {
-			location.href="/invest/droptop";
-		}else {
-			return false;
-		}
+		alert("코인이 부족합니다."+coinCheck+"개 이하로 입력해주세요.");
+		return false;
 	}else if(parseInt(numCount) > parseInt(coinCheck)) {
 		alert("코인이 부족합니다."+coinCheck+"개 이하로 입력해주세요.");
 		return false;
