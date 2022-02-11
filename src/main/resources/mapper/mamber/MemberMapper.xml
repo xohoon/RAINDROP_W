@@ -43,7 +43,7 @@
 		SELECT m.name, m.cash as getPoint, sum(r.rank_count) as getCount,
 			   sum(r.revenue_total) as getTotal
 		FROM member m LEFT JOIN raindrop_result r ON m.id = r.member_id
-		GROUP BY m.id ORDER BY cash desc LIMIT 5;
+		GROUP BY m.id ORDER BY getTotal desc LIMIT 5;
 
 	</select>
 
@@ -52,6 +52,6 @@
 		SELECT m.name, (m.coin*1000)+m.point as getPoint, sum(d.rank_count) as getCount,
 				sum(d.revenue_total) as getTotal
 		FROM member m LEFT JOIN droptop_result d ON m.id = d.member_id
-		GROUP BY m.id ORDER BY getPoint desc LIMIT 5;
+		GROUP BY m.id ORDER BY getTotal desc LIMIT 5;
 	</select>
 </mapper>

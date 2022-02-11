@@ -16,10 +16,10 @@ $('#rainSaveBtn').on('click', function() {
 		return false;
 	}
 	if(coinCheck == 0) {
-		alert("코인이 부족합니다."+coinCheck+"개 이하로 입력해주세요.");
+		alert("코인이 부족합니다. "+coinCheck+"개 이하로 입력해주세요.");
 		return false;
 	}else if(parseInt(numCount) > parseInt(coinCheck)) {
-		alert("코인이 부족합니다."+coinCheck+"개 이하로 입력해주세요.");
+		alert("코인이 부족합니다. "+coinCheck+"개 이하로 입력해주세요.");
 		return false;
 	}else if(parseInt(numCount) > 10) {
 		alert("너무 많은 도박은 해롭습니다. 매주 10코인 이하로 가능합니다.");
