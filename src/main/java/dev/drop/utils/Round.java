@@ -35,7 +35,7 @@ public class Round {
 		Elements last1 = last_doc.select("div.win_result");
 		Elements last_1 = last1.get(0).select("h4");
 		String last_result = last_1.text();
-		int last_num = Integer.parseInt(last_result.substring(0, 3));
+		int last_num = Integer.parseInt(last_result.substring(0, 4));
 
 		return last_num;
 	}

@@ -42,9 +42,11 @@ public class InvestController {
 			value="/raindrop",
 			produces="application/json; charset=utf-8")
 	public String Raindrop(Model model, Principal principal) {
+		System.out.println("principal.getName() = " + principal.getName());
+		System.out.println("principal.getClass() = " + principal.getClass());
 		// 최근 회차 가지고오는 코드
 		int member_id = investMapper.getMemberId(principal.getName());
-		int last_num = Round.lastRound();
+		int last_num = caseMapper.boujeeLastRound();
 		List<Integer> rainBeforeConfirm = rainMapper.rainBeforeConfirmList(member_id);
 		List<SaveResultDTO> rainResultList = rainMapper.rainResultList(member_id);
 		model.addAttribute("comming_round", last_num+1);
@@ -62,7 +64,7 @@ public class InvestController {
 	public String Dropdop(Model model, Principal principal) {
 		// 최근 회차 가지고오는 코드
 		int member_id = investMapper.getMemberId(principal.getName());
-		int last_num = Round.lastRound();
+		int last_num = caseMapper.boujeeLastRound();
 		List<Integer> roundList = caseMapper.getRoundList();
 		List<Integer> removeList = dropMapper.getRound(member_id);
 		roundList.removeAll(removeList);

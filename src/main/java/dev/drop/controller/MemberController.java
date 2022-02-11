@@ -127,7 +127,6 @@ public class MemberController {
 		String returnData = "";
 		
 		// 이메일 중복방지 코드
-		/*
 		if(mailCheck != 0) {
 			System.out.println("이메일 중복");
 			returnData = "overlap";
@@ -144,9 +143,9 @@ public class MemberController {
 			jsonData.put("check", returnData);
 			System.out.println("::: mail test success :::");
 		}
-		 */
 		
 		// 이메일 중복없이 test version
+		/*
 		subject = "[RINDROP Code] 인증메일";
 		String text = "RINDROP 회원가입 인증번호 :: " + random;
 		EmailService esi = new EmailService();
@@ -155,7 +154,7 @@ public class MemberController {
 		returnData = random;
 		jsonData.put("check", returnData);
 		System.out.println("::: mail test success :::");
-
+		*/
 		return jsonData;
 	}
 
