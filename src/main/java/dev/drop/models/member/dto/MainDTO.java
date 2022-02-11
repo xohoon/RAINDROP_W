@@ -8,4 +8,5 @@ public class MainDTO {
     private String name;
     private long getPoint;
     private long getCount;
+    private long getTotal;
 }
