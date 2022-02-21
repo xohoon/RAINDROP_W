@@ -193,7 +193,7 @@ function exchangeResult(point) {
 		'			<th scope="row">'+point+'</th>' +
 		'			<td>'+possibleCoin+'</td>' +
 		'			<td><input class="form-control form-control-sm" type="text" id="changeCoin"></td>' +
-		'			<td><button class="btn btn-success btn-sm" type="button" onclick="chargeCoin('+point+', '+possibleCoin+')">충전</button></td>' +
+		'			<td><button class="btn btn-success btn-sm" type="button" onclick="chargeCoin('+possibleCoin+')">충전</button></td>' +
 		'		</tr>'+
 		'	</tbody>' +
 		'</table>';
@@ -201,7 +201,7 @@ function exchangeResult(point) {
 }
 
 // 충전 버튼 클릭시
-function chargeCoin(point, possibleCoin) {
+function chargeCoin(possibleCoin) {
 	var changeCoin = $('#changeCoin').val();
 	if(isNaN(changeCoin)) {
 		alert("숫자만 입력 가능합니다.");

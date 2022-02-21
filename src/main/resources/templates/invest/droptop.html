@@ -78,7 +78,7 @@
 								th:if="${dropList.revenue_total == 0} and ${dropList.exchange_status} == 0">정산불가</button>
 						<button type="button" class="btn btn-success btn-sm"
 							th:if="${dropList.revenue_total != 0} and ${dropList.exchange_status} == 0"
-							th:onclick="'javascript:exchangeAjax('+${dropList.round}+', '+${dropList.revenue_total}+');'">충전하기</button>
+							th:onclick="'javascript:exchangePoint('+${dropList.round}+', '+${dropList.revenue_total}+');'">충전하기</button>
 					</td>
 				</tr>
 			</th:block>

@@ -17,7 +17,7 @@ $('#dropSaveBtn').on('click', function() {
 	}
 });
 
-function exchangeAjax(data, point) {
+function exchangePoint(data, point) {
 	if(point == 0) {
 		alert("금액이 부족합니다.");
 		return false;
