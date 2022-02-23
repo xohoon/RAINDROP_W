@@ -18,7 +18,7 @@
 			<div class="card sign_card">
 				<div class="card-body">
 					<div id="join_form">
-						<h3>회원가입 페이지</h3><br />
+						<h3 style="text-align: center;">회원가입</h3><br />
 						<form name="fm" th:action="@{/member/signup}" method="POST" onsubmit="return signupSubmit();">
 							<input type="hidden" id="secretCode">
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -48,9 +48,6 @@
 							<input type="submit" id="joinBtn" value="가입하기" class="btn btn-success" style="width:100%;">
 						</form>
 					</div>
-					<br />
-					<a th:href="@{'/member/signin'}">로그인</a>
-					<a th:href="@{'/main'}">메인으로</a>
 				</div>
 			</div>
 		</div>

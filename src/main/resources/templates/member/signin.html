@@ -15,7 +15,7 @@
 		<div class="container sign_container">
 			<div class="card sign_card">
 				<div class="card-body">
-					<h3>로그인 페이지</h3><br />
+					<h3 style="text-align: center;">로그인</h3><br />
 					<form class="form-signin" name="fm" th:action="@{/member/signin}" method="POST" onsubmit="return SigninSubmit();">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						<!--
@@ -33,12 +33,9 @@
 						<input type="password" name="password" id="password" placeholder="비밀번호" class="form-control" autocomplete="new-password">
 						<br />
 						<div style="text-align: center;">
-							<button type="submit" id="loginBtn" class="btn btn-lg btn-success btn-block" style="width:80%;"> 로그인</button>
+							<button type="submit" id="loginBtn" class="btn btn-lg btn-success btn-block" style="width:100%;"> 로그인</button>
 						</div>
 					</form>
-					<br />
-					<a th:href="@{'/member/signup'}">회원가입</a>
-					<a th:href="@{'/main'}">메인으로</a>
 				</div>
 			</div>
 		</div>
