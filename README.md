@@ -1,4 +1,5 @@
 # RAINDROP
+모의투자를 통해 포인트 적립, 적립된 포인트로 무료 로또 번호 추첨 플랫폼
 * O S & TOOL<br>
   mac(m1), IntelliJ, workbench
 * SKILL<br>
